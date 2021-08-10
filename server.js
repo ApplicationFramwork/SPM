@@ -29,3 +29,10 @@ connection.once("open", () => {
 app.listen(PORT, () => {
     console.log("Server is up and running")
 })
+
+//import routes
+const subjectRoutes = require("./routes/SubjectRoutes");
+
+
+//Assign routes
+app.use("/Subjects", subjectRoutes);
