@@ -8,6 +8,7 @@ import assignSubjectsComponent from './components/assignSubjectsComponent';
 import teacherDashboardComponent from './components/teacherDashboardComponent';
 import sideNavBarComponent from './components/sideNavBarComponent';
 import allocatedSubjectsComponents from './components/allocatedSubjectsComponents';
+import AdminSideNavBar from './components/Admin-SideNavBar';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/teacherDashboard" component={teacherDashboardComponent}></Route>
         <Route path="/sidenav" component={sideNavBarComponent}></Route>
         <Route path="/allocatedSub" component={allocatedSubjectsComponents}></Route>
+        <Route path="/AdminSideNavBar" component={AdminSideNavBar}></Route>
        
 
       </Switch>

@@ -2,19 +2,18 @@
 header{
   z-index: 4;
   position: fixed;
-  background: #00ccff;
+  background: antiquewhite;
   padding: 20px;
   width: calc(100% - 0%);
   top: 0;
   height: 90px;
-  border-style: solid;
 }
 
 .left_area h3{
   color: #fff;
-  margin: 0;
+  margin-top: -25px;
   text-transform: uppercase;
-  font-size: 22px;
+  font-size: 35px;
   font-weight: 900;
 }
 
@@ -28,7 +27,7 @@ header{
   background: #19B3D3;
   text-decoration: none;
   float: right;
-  margin-top: -20px;
+  margin-top: -40px;
   margin-right: 40px;
   border-radius: 2px;
   font-size: 15px;
@@ -44,7 +43,7 @@ header{
 .sidebar{
   z-index: 1;
   top: 0;
-  background: #222;
+  background: #f8f9fa;
   margin-top: 70px;
   padding-top: 30px;
   position: fixed;
@@ -77,7 +76,7 @@ header{
 }
 
 .sidebar a{
-  color: #fff;
+  color: #000;
   display: block;
   width: 100%;
   line-height: 60px;
@@ -89,13 +88,13 @@ header{
 .sidebar .active{
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
-  background: #fff;
+  background: #00ccff;
 }
 .sidebar .active span{
-  color: #222;
+  color: #fff;
 }
 .sidebar .active i{
-  color: #222;
+  color: #fff;
 }
 
 .sidebar a:hover{
@@ -119,7 +118,7 @@ label #sidebar_btn{
 }
 
 label #sidebar_btn:hover{
-  color: #fff;
+  color: #00ccff;
 }
 
 #check:checked ~ .sidebar{
@@ -150,11 +149,19 @@ label #sidebar_btn:hover{
 .glass {
   background: #fff;
   border-radius: 1rem;
-  border-style: solid;
+  border-style:double;
   z-index: 2;
-  height: 90vh;
+  height:fit-content;
   opacity: 0.7;
 }
+.glass2 {
+  background: #fff;
+  border-radius: 1rem;
+  border-style:double;
+  z-index: 2;
+  height:fit-content;
+}
+
 .glass h1{
   color: #426696;
   font-weight: 750;
@@ -193,6 +200,7 @@ label #sidebar_btn:hover{
   border: none;
   padding: 0.5rem;
   border-radius: 2rem;
+  width: 100%;
 }
 .glass .breake{
   width:200px;
@@ -305,9 +313,9 @@ label #sidebar_btn:hover{
     padding-right: 10px;
   }
 
-  .active{
+  /* .active{
     display: block;
-  }
+  } */
 
   /*.mobile_nav_items{
     background: #2F323A;
@@ -340,4 +348,37 @@ label #sidebar_btn:hover{
   .active{
     max-height: 1000px;
   }*/
+}
+
+/* maleesha */
+.topicRow{
+  color: #00ccff;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background-color: antiquewhite;
+  padding: 20px;
+}
+.NavItem{
+  font-weight: bold;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 90%;
+}
+.NavItem:hover{
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 90%;
+  background-color: #00ccff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.NavItem2{
+  font-weight: bold;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 90%;
+}
+.nav_body{
+  height: 100%;
 }
