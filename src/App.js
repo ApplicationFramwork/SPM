@@ -9,6 +9,7 @@ import teacherDashboardComponent from './components/teacherDashboardComponent';
 import sideNavBarComponent from './components/sideNavBarComponent';
 import allocatedSubjectsComponents from './components/allocatedSubjectsComponents';
 import AdminSideNavBar from './components/Admin-SideNavBar';
+import backEndTeacherComponent from './components/backEndTeacherComponent';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/sidenav" component={sideNavBarComponent}></Route>
         <Route path="/allocatedSub" component={allocatedSubjectsComponents}></Route>
         <Route path="/AdminSideNavBar" component={AdminSideNavBar}></Route>
+        <Route path="/BackendTeacher" component={backEndTeacherComponent}></Route>
        
 
       </Switch>

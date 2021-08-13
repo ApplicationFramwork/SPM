@@ -62,7 +62,7 @@ export default class teacherDashboardComponent extends Component {
                                 <div className="glass2 bg-info mb-2 ml-3 mr-3">
                                     <div className="row ">
                                         <div className="col-12 mt-2 ml-2">
-                                            <h3>DETAILS</h3>
+                                            <h5>DETAILS</h5>
                                             <div className="row ">
                                                 <div className="col-md-2 mb-2">
                                                     <div className="breake">
@@ -118,7 +118,7 @@ export default class teacherDashboardComponent extends Component {
                             <div className="container mb-3">
                                 <div className="row ">
                                     <div className="col-12 mt-3 ml-2">
-                                        <h3>ALLOCATED STUDENTS</h3>
+                                        <h5>ALLOCATED STUDENTS</h5>
                                         <div className="row ">
                                             <div className="col-md-2 mb-2">
                                                 <div className="breake">
