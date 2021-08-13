@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
-const teacherSchema = new mongoose.Schema({
+const teacherSchema = new Schema({
 
     teacher_ID: {
         type: String,
@@ -20,6 +20,10 @@ const teacherSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    profile_Picture: {
+        type: String,
+        required: true
+    },
     allocated_Grade: {
         type: String,
         required: true
@@ -28,7 +32,7 @@ const teacherSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    allocated_Subjects: [{
+    subject: [{
         type: mongoose.Schema.Types.ObjectId,
         required: false,
         ref: 'Subject'
@@ -36,6 +40,6 @@ const teacherSchema = new mongoose.Schema({
 
 })
 
-const Teacher = mongoose.model("Teacher", teacherSchema);
+const teacher = mongoose.model("Teacher", teacherSchema);
 
-module.exports = Teacher;
+module.exports = teacher;

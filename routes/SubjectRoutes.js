@@ -1,13 +1,12 @@
 const router = require("express").Router();
 const Subject = require("../models/Subject");
-let Subjcet = require("../models/Subject");
 
 //add new subject
 router.route("/add").post((req, res) => {
 
     const { subject_ID, subject_Name, allocated_Grade, description } = req.body;
 
-    const newSubject = new Subjcet({
+    const newSubject = new Subject({
         subject_ID,
         subject_Name,
         allocated_Grade,
