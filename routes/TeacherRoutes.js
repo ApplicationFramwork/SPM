@@ -27,7 +27,7 @@ var upload = multer({
 //add new Teacher
 router.route("/add").post(upload.single('profile_Picture'), (req, res) => {
 
-    const { teacher_ID, teacher_Name, email, NIC, allocated_Grade, description } = req.body;
+    const { teacher_ID, teacher_Name, email, NIC, allocated_Grade, subject, description } = req.body;
     const profile_Picture = req.file.filename;
 
     const newTeacher = new Teacher({
@@ -36,6 +36,7 @@ router.route("/add").post(upload.single('profile_Picture'), (req, res) => {
         email,
         NIC,
         profile_Picture,
+        subject,
         allocated_Grade,
         description
     })
@@ -58,7 +59,7 @@ router.route("/GetAllTeacaher").get((req, res) => {
         })
 })
 
-//get subjects details using subject id
+//get Teacher details using Teacher id
 router.route("/GetTeacher/:id").get((req, res) => {
 
     let teacherID = req.params.id;
@@ -67,6 +68,32 @@ router.route("/GetTeacher/:id").get((req, res) => {
             res.json(subject)
         }).catch((err) => {
             console.log(err);
+        })
+
+})
+//update only teacher details without picture using teacher id
+router.route("/assgin/:id").put(async (req, res) => {
+
+    let TeacherID = req.params.id;
+    const { teacher_ID, teacher_Name, email, NIC, allocated_Grade, profile_Picture, subject, description } = req.body;
+
+    const updateTeacher = {
+        teacher_ID,
+        teacher_Name,
+        email,
+        NIC,
+        allocated_Grade,
+        profile_Picture,
+        subject,
+        description
+    }
+
+    const update = await Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
+        .then(() => {
+            res.status(200).send({ status: "Teacher Updated" })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
         })
 
 })
