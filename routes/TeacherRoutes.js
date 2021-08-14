@@ -2,6 +2,16 @@ const router = require("express").Router();
 const Teacher = require("../models/Teacher");
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
+const nodemailer = require('nodemailer');
+
+let mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'applicationframeworkproject@gmail.com',
+        pass: 'malisha1996'
+    }
+});
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -42,6 +52,23 @@ router.route("/add").post(upload.single('profile_Picture'), (req, res) => {
     })
 
     newTeacher.save().then(() => {
+        let mailDetails = {
+            from: 'applicationframeworkproject@gmail.com',
+            to: newTeacher.email,
+            subject: 'YOU ADDED AS A TEACHER IN KIDZ SCHOOL',
+            text: 'Mr./Mrs. ' + newTeacher.teacher_Name + ",\n\n"
+                + "Congradulations!\n\n"
+                + "Succesfully, You added as a Teacher in SLIIT_ICMS\n\n"
+                + "You email is " + newTeacher.email + " \n\n"
+                + "You password is " + newTeacher.NIC + " \n\n"
+        };
+        mailTransporter.sendMail(mailDetails, function (err, data) {
+            if (err) {
+                console.log('Error Occurs');
+            } else {
+                console.log('Email sent successfully');
+            }
+        });
         console.log("Teacher Added")
         res.json("Teacher Added")
     }).catch((err) => {
@@ -98,13 +125,75 @@ router.route("/assgin/:id").put(async (req, res) => {
 
 })
 
-//delete the Subject
-router.route("/Delete/:id").delete(async (req, res) => {
+//update teacher with new image
+router.route("/update/:id/:picturename").put(upload.single('profile_Picture'), (req, res) => {
+
+    let TeacherID = req.params.id;
+    const { teacher_ID, teacher_Name, email, NIC, allocated_Grade, description } = req.body;
+    const profile_Picture = req.file.filename;
+    let picturename = req.params.picturename;
+
+    const updateTeacher = {
+        teacher_ID,
+        teacher_Name,
+        email,
+        NIC,
+        allocated_Grade,
+        profile_Picture,
+        description
+    }
+
+    const update = Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
+        .then(() => {
+            res.status(200).send({ status: "Teacher Updated" })
+            fs.unlink('C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/teachers/' + picturename, function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
+        })
+
+})
+//update teacher without new image
+router.route("/update/:id").put(async (req, res) => {
+
+    let TeacherID = req.params.id;
+    const { teacher_ID, teacher_Name, email, NIC, allocated_Grade, profile_Picture, description } = req.body;
+
+    const updateTeacher = {
+        teacher_ID,
+        teacher_Name,
+        email,
+        NIC,
+        profile_Picture,
+        allocated_Grade,
+        description
+    }
+
+    const update = await Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
+        .then(() => {
+            res.status(200).send({ status: "Reviwer Updated" })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updationg data" })
+        })
+
+})
+
+//delete the teacher with file
+router.route("/Delete/:id/:filename").delete(async (req, res) => {
 
     let teacherID = req.params.id;
+    let filename = req.params.filename;
 
     await Teacher.findByIdAndDelete(teacherID)
         .then(() => {
+            fs.unlink('C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/teachers/' + filename, function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
             res.status(200).send({ status: "Teacher Deleted" })
         }).catch((err) => {
             console.log(err);
