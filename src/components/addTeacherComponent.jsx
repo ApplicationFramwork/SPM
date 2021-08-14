@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import SideNavBarComponent from './sideNavBarComponent';
 
 export default class addTeacherComponent extends Component {
     constructor(props) {

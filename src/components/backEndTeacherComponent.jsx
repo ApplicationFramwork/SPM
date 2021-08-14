@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import Select from 'react-select';
 import service from '../services/SchoolManagementSystemServices'
 import "../../../../FRONTEND/frontend/node_modules/datatables.net-dt/css/jquery.dataTables.css";
 import Animation from './Animation';
 import $ from 'jquery'
-$.DataTable = require('datatables.net')
+$.DataTable = require('datatables.net');
+const Imageurl = "http://localhost:8070/uploads/teachers/";
+
 
 
 
@@ -14,6 +17,7 @@ export default class backEndTeacherComponent extends Component {
 
         this.state = {
             loading: false,
+            // form Variables
             teacher_ID: '',
             teacher_Name: '',
             email: '',
@@ -21,7 +25,25 @@ export default class backEndTeacherComponent extends Component {
             profile_Picture: '',
             allocated_Grade: '',
             description: '',
-            teacher: []
+
+            //asign subject variables
+            allSubjects: [],
+            options: [],
+            selecteSubjects: [],
+
+            //get all details variables
+            teacher: [],
+
+            // view variables
+            viewTeacherDatabaseID: '',
+            viewTeacherID: '',
+            viewTeacherName: '',
+            viewTeacherEmail: '',
+            viewTeacherNIC: '',
+            viewTeacherGrade: '',
+            viewTeacherSubjects: [],
+            viewTeacherDescription: '',
+            viewTeacherProdilePicture: ''
 
 
         }
@@ -31,7 +53,7 @@ export default class backEndTeacherComponent extends Component {
         this.changeTeacherNICHandler = this.changeTeacherNICHandler.bind(this);
         this.changeTeacherAllocatedGrade = this.changeTeacherAllocatedGrade.bind(this);
         this.changeTeacherDescriptionHandler = this.changeTeacherDescriptionHandler.bind(this);
-        // this.changeTeacherSubjectsHandler = this.changeTeacherSubjectsHandler.bind(this);
+        this.changeTeacherSubjectsHandler = this.changeTeacherSubjectsHandler.bind(this);
         this.changeTeacherProfilePictureHandler = this.changeTeacherProfilePictureHandler.bind(this);
     }
     changeTeacherIDHandler = (event) => {
@@ -55,12 +77,32 @@ export default class backEndTeacherComponent extends Component {
     changeTeacherProfilePictureHandler = (event) => {
         this.setState({ profile_Picture: event.target.files[0] });
     }
+    changeTeacherSubjectsHandler = (e) => {
+        this.setState({ selecteSubjects: e ? e.map(item => item.value) : [] });
+    }
     componentDidMount() {
         service.GetAllTeachers().then((res => {
             this.setState({ teacher: res.data });
 
+        })).then((res => {
+            service.getAllSubjects().then(res => {
+                this.setState({ allSubjects: res.data }, () => {
+                    let data = [];
+                    this.state.allSubjects.map((item) => {
+                        let allSubject = {
+                            value: item._id,
+                            label: item.allocated_Grade + " " + item.subject_Name
+                        }
+                        data.push(allSubject)
+                    });
+                    this.setState({ options: data });
+                });
+            });
         }))
-
+    }
+    componentDidUpdate() {
+        this.$el = $(this.el);
+        this.$el.DataTable();
     }
     addTeacher = (e) => {
         e.preventDefault();
@@ -89,10 +131,50 @@ export default class backEndTeacherComponent extends Component {
         console.log(this.state.subject)
 
     }
-    componentDidUpdate() {
-        this.$el = $(this.el);
-        this.$el.DataTable();
+    viewteacher(e, teacherid) {
+        e.preventDefault();
+        service.GetOneTeachers(teacherid).then((res => {
+            let OneTeacher = res.data;
+            console.log(res.data)
+            this.setState({
+                viewTeacherDatabaseID: OneTeacher._id,
+                viewTeacherID: OneTeacher.teacher_ID,
+                viewTeacherName: OneTeacher.teacher_Name,
+                viewTeacherEmail: OneTeacher.email,
+                viewTeacherNIC: OneTeacher.NIC,
+                viewTeacherGrade: OneTeacher.allocated_Grade,
+                viewTeacherSubjects: OneTeacher.subject,
+                viewTeacherDescription: OneTeacher.description,
+                viewTeacherProdilePicture: OneTeacher.profile_Picture
+            });
+            console.log(this.state.viewTeacherSubjects)
+
+        }))
     }
+    assignsubjects = (e) => {
+        e.preventDefault();
+        let AssignSubjects = {
+            teacher_ID: this.state.viewTeacherID, teacher_Name: this.state.viewTeacherName, email: this.state.viewTeacherEmail,
+            NIC: this.state.viewTeacherNIC, allocated_Grade: this.state.viewTeacherGrade, profile_Picture: this.state.viewTeacherProdilePicture,
+            subject: this.state.selecteSubjects, description: this.state.viewTeacherDescription
+        };
+        console.log('AssignSubjects => ' + JSON.stringify(AssignSubjects));
+
+        service.assginsubjects(AssignSubjects, this.state.viewTeacherDatabaseID).then(res => {
+            console.log('success');
+            this.props.history.push('/BackendTeacher');
+            window.location.reload();
+        })
+
+    }
+    delete(e, teacherid) {
+        e.preventDefault();
+        service.Deleteteacher(teacherid).then(res => {
+            this.props.history.push('/BackendTeacher');
+            window.location.reload();
+        });
+    }
+
     render() {
         if (this.state.loading === true) {
             return <Animation />;
@@ -108,11 +190,75 @@ export default class backEndTeacherComponent extends Component {
                     </div>
 
 
+                    <div className="container glass2 mt-5 mb-5">
+                        <table
+                            className="display"
+                            ref={(el) => (this.el = el)}
+                            style={{ boxShadow: "8px 8px  #dce3e0", marginBottom: "20px", marginTop: "20px" }}
+                        >
+                            <thead>
+                                <tr>
+                                    <th>TEACHER ID</th>
+                                    <th>TEACHER NAME</th>
+                                    <th>Email</th>
+                                    <th>NIC</th>
+                                    <th>ALLOCATED GRADE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {
+                                    this.state.teacher.map(
+                                        teacher =>
+                                            <tr>
+
+                                                <th>{teacher.teacher_ID}</th>
+                                                <th>{teacher.teacher_Name}</th>
+                                                <th>{teacher.email}</th>
+                                                <th>{teacher.NIC}</th>
+                                                <th>{teacher.allocated_Grade}</th>
+                                                <th>
+                                                    <div className="row">
+
+                                                        <div className="col-md-3">
+                                                            <button className="btn btn-info btn-block fa fa-eye" onClick={e => this.viewteacher(e, teacher._id)} data-toggle="modal" data-target="#exampleModal2"></button>
+                                                        </div>
+                                                        <div className="col-md-3">
+                                                            <button className="btn btn-warning btn-block fa fa-book" onClick={e => this.viewteacher(e, teacher._id)} data-toggle="modal" data-target="#exampleModal3"></button>
+                                                        </div>
+                                                        <div className="col-md-3">
+                                                            <button className="btn btn-success btn-block fa fa-pencil" ></button>
+                                                        </div>
+                                                        <div className="col-md-3">
+                                                            <button className="btn btn-danger btn-block fa fa-trash" onClick={e => this.delete(e, teacher._id)}></button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+
+                                            </tr>
+
+                                    )
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>TEACHER ID</th>
+                                    <th>TEACHER NAME</th>
+                                    <th>Email</th>
+                                    <th>NIC</th>
+                                    <th>ALLOCATED GRADE</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    {/* form modal */}
                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
-                            <div class="modal-content  bg-info">
-                                <div class="modal-header glass">
-                                    <h1 class="modal-title " id="exampleModalLongTitle">ADD TEACHER</h1>
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title " id="exampleModalLongTitle">ADD TEACHER FORM</h1>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -185,17 +331,6 @@ export default class backEndTeacherComponent extends Component {
                                                             value={this.state.email} onChange={this.changeTeacherEmailHandler} required />
                                                     </div>
                                                 </div>
-                                                {/* <div className="col-md-3 ml-2 mr-2 mt-4">
-                                <div className="form-group names">
-                                    <h5>Allocated Subjects</h5>
-                                    <Select
-                                        options={this.state.options}
-                                        onChange={this.changeTeacherSubjectsHandler}
-                                        className="basic-multi-select"
-                                        isMulti
-                                    />
-                                </div>
-                            </div> */}
                                             </div>
 
                                             <div className="row d-flex justify-content-center">
@@ -210,64 +345,187 @@ export default class backEndTeacherComponent extends Component {
                                         </form>
                                     </div>
                                 </div>
-                                <div class="modal-footer glass3  bg-info">
+                                <div class="modal-footer">
                                     <button type="button" class="btn btn-success" onClick={this.addTeacher}>Add Details</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="container glass mt-5 mb-5">
-                        <table
-                            className="display mb-2"
-                            ref={(el) => (this.el = el)}
-                            style={{ boxShadow: "8px 8px  #dce3e0" }}
-                        >
-                            <thead>
-                                <tr>
-                                    <th>teacher_ID</th>
-                                    <th>teacher_Name</th>
-                                    <th>Email</th>
-                                    <th>NIC</th>
-                                    <th>allocated_Grade</th>
-                                    <th>description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
 
-                                {
-                                    this.state.teacher.map(
-                                        teacher =>
-                                            <tr>
+                    {/* view modal */}
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title" id="exampleModalLabel"> {this.state.viewTeacherName}</h1>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div className="container">
+                                        <div className="glass bg-info mb-2 ml-3 mr-3">
+                                            <div className="row ">
+                                                <div className="col-12 mt-2 ml-2">
+                                                    <h5>{this.state.viewTeacherName}'s Details</h5>
+                                                    <div className="row ">
+                                                        <div className="col-md-2 mb-2">
+                                                            <div className="breake">
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-10"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row ml-3 mr-3 mb-3">
+                                                <div className="col-md-3 d-flex justify-content-center align-items-center border border-light bg-light rounded">
+                                                    <img src={Imageurl + this.state.viewTeacherProdilePicture} alt="" srcset="" style={{ width: "100%", height: "80%", zIndex: "revert" }} />
+                                                </div>
+                                                <div className="col-md-9">
+                                                    <div className="row">
+                                                        <div className="col-md-3">
+                                                            <label className="font-weight-bold" htmlFor="">TEACHER ID:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherID} style={{}} />
+                                                        </div>
 
-                                                <th>{teacher.teacher_ID}</th>
-                                                <th>{teacher.teacher_Name}</th>
-                                                <th>{teacher.email}</th>
-                                                <th>{teacher.NIC}</th>
-                                                <th>{teacher.allocated_Grade}</th>
-                                                <th>
-                                                    <button>hello</button>
-                                                    <button>hello</button>
-                                                    <button>hello</button>
-                                                </th>
+                                                        <div className="col-md-9">
+                                                            <label className="font-weight-bold" htmlFor="">TEACHER NAME:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherName} style={{}} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-md-7">
+                                                            <label className="font-weight-bold" htmlFor="">EMAIL:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherEmail} style={{}} />
+                                                        </div>
 
-                                            </tr>
-                                    )
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Country</th>
-                                    <th>User Type</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                                                        <div className="col-md-5">
+                                                            <label className="font-weight-bold" htmlFor="">NIC:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherNIC} style={{}} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="row mt-3">
+                                                        <div className="col-md-4">
+                                                            <label className="font-weight-bold" htmlFor="">ALLOCATED GRAGE:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherGrade} style={{}} />
+                                                        </div>
+                                                        <div className="col-md-8">
+                                                            <label className="font-weight-bold" htmlFor="">ALLOCATED SUBJECTS:-</label>
+                                                            {
+                                                                this.state.viewTeacherSubjects.map(
+                                                                    subjects =>
+                                                                        <input disabled placeholder={subjects.allocated_Grade + ' ' + subjects.subject_Name} className="mt-1" />
+
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-md-12">
+                                                            <h5>Description</h5>
+                                                            <textarea placeholder={this.state.viewTeacherDescription} class="form-control" name="description"
+                                                                rows="3" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    {/* assign subjects modal */}
+                    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                            <div class="modal-content ">
+                                <div class="modal-header">
+                                    <h1 class="modal-title" id="exampleModalLabel">ASSIGN SUBJECTS FOR TEACHERS</h1>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div className="container mb-5">
+                                        <div className="glass bg-info mb-2 ml-3 mr-3">
+                                            <div className="row ">
+                                                <div className="col-12 mt-2 ml-2">
+                                                    <h5>{this.state.viewTeacherName}'s Details</h5>
+                                                    <div className="row ">
+                                                        <div className="col-md-2 mb-2">
+                                                            <div className="breake">
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-10"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row ml-3 mr-3 mb-3">
+
+                                                <div className="col-12">
+                                                    <div className="row">
+                                                        <div className="col-md-3">
+                                                            <label className="font-weight-bold" htmlFor="">TEACHER ID:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherID} style={{}} />
+                                                        </div>
+
+                                                        <div className="col-md-9">
+                                                            <label className="font-weight-bold" htmlFor="">TEACHER NAME:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherName} style={{}} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="row mt-3">
+                                                        <div className="col-md-4">
+                                                            <label className="font-weight-bold" htmlFor="">ALLOCATED GRAGE:-</label>
+                                                            <input disabled placeholder={this.state.viewTeacherGrade} style={{}} />
+                                                        </div>
+                                                        <div className="col-md-8">
+                                                            <label className="font-weight-bold" htmlFor="">ALLOCATED SUBJECTS:-</label>
+                                                            {
+                                                                this.state.viewTeacherSubjects.map(
+                                                                    subjects =>
+                                                                        <input disabled placeholder={subjects.allocated_Grade + ' ' + subjects.subject_Name} className="mt-1" />
+
+                                                                )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-md-12">
+                                                            <h5>Allocat Subjects For Teacher</h5>
+                                                            <Select
+                                                                options={this.state.options}
+                                                                onChange={this.changeTeacherSubjectsHandler}
+                                                                className="basic-multi-select"
+                                                                isMulti
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onClick={this.assignsubjects}>Assign Subjects</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
             )
         }
     }
