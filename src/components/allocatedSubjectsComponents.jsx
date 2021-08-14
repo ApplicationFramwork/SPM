@@ -1,6 +1,33 @@
 import React, { Component } from 'react'
+import service from '../services/SchoolManagementSystemServices'
 
 export default class allocatedSubjectsComponents extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            // view edit variables
+            viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
+            viewTeacherSubjects: []
+
+        }
+    }
+    componentDidMount() {
+        service.GetOneTeachers(this.state.viewTeacherDatabaseID).then((res => {
+            let OneTeacher = res.data;
+            console.log(res.data)
+            this.setState({
+                viewTeacherSubjects: OneTeacher.subject
+            });
+            console.log(this.state.viewTeacherSubjects)
+
+        }))
+    }
+    ViewSubjectsInside(e, subjectid) {
+        e.preventDefault();
+        this.props.history.push('/subjectdetails/' + subjectid);
+        
+    }
     render() {
         return (
             // navbar
@@ -41,8 +68,8 @@ export default class allocatedSubjectsComponents extends Component {
                 {/* end navbar */}
                 <div class="content mt-4" >
                     <div className="container-fluid mt-5">
-                        <div className="glass d-flex justify-content-center">
-                            <div className="row">
+                        <div className="glass">
+                            <div className="row  text-center">
                                 <div className="col-12 mt-2">
                                     <h1>ALLOCATED SUBJECTS</h1>
                                     <div className="row ">
@@ -54,6 +81,23 @@ export default class allocatedSubjectsComponents extends Component {
                                         <div className="col-md-4"></div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="row d-flex justify-content-center mb-5">
+                                {
+                                    this.state.viewTeacherSubjects.map(
+                                        subjects =>
+                                            <div className="col-md-3 ml-3 mr-3 mt-3 " style={{ cursor: "pointer"}}>
+                                                <div className="card bg-info subjectinfo" onClick={e => this.ViewSubjectsInside(e, subjects._id)} onMouseOver="" style={{ cursor: "pointer" }}>
+                                                    <div class="card-body" style={{ cursor: "pointer" }}>
+                                                        <h1 style={{ cursor: "pointer"}}>{subjects.subject_ID + " " + subjects.subject_Name}</h1>
+                                                        <input disabled placeholder={subjects.allocated_Grade} className="mt-1" style={{ cursor: "pointer"}}/>
+                                                        <input disabled placeholder={subjects.subject_Name} className="mt-1" style={{ cursor: "pointer"}}/>
+                                                        <input disabled placeholder={subjects.description} className="mt-1" style={{ cursor: "pointer"}}/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>

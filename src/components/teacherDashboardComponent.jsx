@@ -1,8 +1,44 @@
 import React, { Component } from 'react'
-import image from '../Images/spiderman.png'
+import service from '../services/SchoolManagementSystemServices'
+const Imageurl = "http://localhost:8070/uploads/teachers/";
 
 export default class teacherDashboardComponent extends Component {
+    constructor(props) {
+        super(props)
 
+        this.state = {
+            // view edit variables
+            viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
+            viewTeacherID: '',
+            viewTeacherName: '',
+            viewTeacherEmail: '',
+            viewTeacherNIC: '',
+            viewTeacherGrade: '',
+            viewTeacherSubjects: [],
+            viewTeacherDescription: '',
+            viewTeacherProdilePicture: '',
+            EditProdilePicture: ''
+
+        }
+    }
+    componentDidMount() {
+        service.GetOneTeachers(this.state.viewTeacherDatabaseID).then((res => {
+            let OneTeacher = res.data;
+            console.log(res.data)
+            this.setState({
+                viewTeacherID: OneTeacher.teacher_ID,
+                viewTeacherName: OneTeacher.teacher_Name,
+                viewTeacherEmail: OneTeacher.email,
+                viewTeacherNIC: OneTeacher.NIC,
+                viewTeacherGrade: OneTeacher.allocated_Grade,
+                viewTeacherSubjects: OneTeacher.subject,
+                viewTeacherDescription: OneTeacher.description,
+                viewTeacherProdilePicture: OneTeacher.profile_Picture
+            });
+            console.log(this.state.viewTeacherSubjects)
+
+        }))
+    }
     render() {
         return (
 
@@ -59,62 +95,68 @@ export default class teacherDashboardComponent extends Component {
                                 </div>
                             </div>
                             <div className="container">
-                                <div className="glass2 bg-info mb-2 ml-3 mr-3">
-                                    <div className="row ">
-                                        <div className="col-12 mt-2 ml-2">
-                                            <h5>DETAILS</h5>
-                                            <div className="row ">
-                                                <div className="col-md-2 mb-2">
-                                                    <div className="breake">
+                                    <div className="glass2 bg-info mb-2 ml-3 mr-3">
+                                        <div className="row ">
+                                            <div className="col-12 mt-2 ml-2">
+                                                <h5>Details</h5>
+                                                <div className="row ">
+                                                    <div className="col-md-2 mb-2">
+                                                        <div className="breake">
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-10"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row ml-3 mr-3 mb-3">
+                                            <div className="col-md-3 d-flex justify-content-center align-items-center border border-light bg-light rounded">
+                                                <img src={Imageurl + this.state.viewTeacherProdilePicture} alt="" srcset="" style={{ width: "100%", height: "80%", zIndex: "revert" }} />
+                                            </div>
+                                            <div className="col-md-9">
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        <label className="font-weight-bold" htmlFor="">TEACHER ID:-</label>
+                                                        <input disabled placeholder={this.state.viewTeacherID} style={{}} />
+                                                    </div>
+
+                                                    <div className="col-md-9">
+                                                        <label className="font-weight-bold" htmlFor="">TEACHER NAME:-</label>
+                                                        <input disabled placeholder={this.state.viewTeacherName} style={{}} />
                                                     </div>
                                                 </div>
-                                                <div className="col-md-10"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row ml-3 mr-3 mb-3">
-                                        <div className="col-md-2 d-flex justify-content-center align-items-center border border-light bg-light rounded">
-                                            <img src={image} alt="" srcset="" style={{ width: "100%", height: "90%" }} />
-                                        </div>
-                                        <div className="col-md-10">
-                                            <div className="row">
-                                                <div className="col-md-3">
-                                                    <label className="font-weight-bold" htmlFor="">TEACHER ID:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
+                                                <div className="row mt-3">
+                                                    <div className="col-md-7">
+                                                        <label className="font-weight-bold" htmlFor="">EMAIL:-</label>
+                                                        <input disabled placeholder={this.state.viewTeacherEmail} style={{}} />
+                                                    </div>
+
+                                                    <div className="col-md-5">
+                                                        <label className="font-weight-bold" htmlFor="">NIC:-</label>
+                                                        <input disabled placeholder={this.state.viewTeacherNIC} style={{}} />
+                                                    </div>
                                                 </div>
 
-                                                <div className="col-md-9">
-                                                    <label className="font-weight-bold" htmlFor="">TEACHER NAME:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
-                                                </div>
-                                            </div>
-                                            <div className="row mt-3">
-                                                <div className="col-md-7">
-                                                    <label className="font-weight-bold" htmlFor="">EMAIL:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
-                                                </div>
+                                                <div className="row mt-3">
+                                                    <div className="col-md-4">
+                                                        <label className="font-weight-bold" htmlFor="">ALLOCATED GRAGE:-</label>
+                                                        <input disabled placeholder={this.state.viewTeacherGrade} style={{}} />
+                                                    </div>
+                                                    <div className="col-md-8">
+                                                        <label className="font-weight-bold" htmlFor="">ALLOCATED SUBJECTS:-</label>
+                                                        {
+                                                            this.state.viewTeacherSubjects.map(
+                                                                subjects =>
+                                                                    <input disabled placeholder={subjects.allocated_Grade + ' ' + subjects.subject_Name} className="mt-1" />
 
-                                                <div className="col-md-5">
-                                                    <label className="font-weight-bold" htmlFor="">NIC:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
-                                                </div>
-                                            </div>
-
-                                            <div className="row mt-3">
-                                                <div className="col-md-4">
-                                                    <label className="font-weight-bold" htmlFor="">ALLOCATED GRAGE:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
-                                                </div>
-
-                                                <div className="col-md-8">
-                                                    <label className="font-weight-bold" htmlFor="">ALLOCATED SUBJECTS:-</label>
-                                                    <input disabled placeholder="Name" style={{}} />
+                                                            )
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
                             <div className="container mb-3">
                                 <div className="row ">
                                     <div className="col-12 mt-3 ml-2">

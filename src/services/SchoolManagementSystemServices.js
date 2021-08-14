@@ -2,8 +2,10 @@
 import axios from 'axios';
 
 const AddNewTeacherAPI = "http://localhost:8070/Teacher/add";
+const AddNewSubjectrAPI = "http://localhost:8070/Subjects/add";
 const AssignSubjectTeacherAPI = "http://localhost:8070/Teacher/assgin"
 const DeleteTeacherAPI = "http://localhost:8070/Teacher/Delete";
+const DeleteSubjectAPI = "http://localhost:8070/Subjects/Delete";
 const GetAllSubjectsAPI = "http://localhost:8070/Subjects/GetAllSubjects";
 const GetAllTeachersAPI = "http://localhost:8070/Teacher/GetAllTeacaher";
 const GetAllOneTeachersAPI = "http://localhost:8070/Teacher/GetTeacher";
@@ -16,6 +18,10 @@ class SchoolManagementSystemServices {
     addNewTeacher(teacher) {
         return axios.post(AddNewTeacherAPI,teacher);
     }
+    //Add New Subect
+    addNewSubject(subject) {
+        return axios.post(AddNewSubjectrAPI, subject);
+    }
     //assign subjects to teacher
     assginsubjects(assignSubjects, id) {
         return axios.put(AssignSubjectTeacherAPI + '/' + id, assignSubjects);
@@ -23,6 +29,10 @@ class SchoolManagementSystemServices {
     //delete teacher
     Deleteteacher(id, profile_Picture) {
         return axios.delete(DeleteTeacherAPI + '/' + id + '/' + profile_Picture);
+    }
+    //delete subject
+    Deletesubjects(id,) {
+        return axios.delete(DeleteSubjectAPI + '/' + id);
     }
     //get All Subjects
     getAllSubjects() {

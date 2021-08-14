@@ -239,6 +239,12 @@ label #sidebar_btn:hover{
   opacity: 0.6;
   border-radius: 50px;
 }
+.glass .subjectinfo{
+  border-top-left-radius: 50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 50px;
+   border-bottom-left-radius: 10px;
+}
 
 #check:checked ~ .content{
   margin-left: 60px;
