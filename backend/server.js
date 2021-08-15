@@ -27,8 +27,10 @@ connection.once("open", () => {
 })
 
 const studentRouter = require("./routes/Students.js");
+const AttendanceRouter = require("./routes/Attendance.js");
 
 app.use("/students",studentRouter);
+app.use("/attendance",AttendanceRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port number: ${PORT} `)
