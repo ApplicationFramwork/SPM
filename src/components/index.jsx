@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import sideNavBarComponent from './sideNavBarComponent'
+
 
 export default class index extends Component {
     render() {
