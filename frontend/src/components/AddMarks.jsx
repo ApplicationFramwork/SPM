@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import Adm from "./Admin-SideNavBar";
 import AdminHeader from "./AdminHeader";
-
-
 
 function AddMarks(){
     const [inputFields, setInputFields] = useState([
