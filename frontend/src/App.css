@@ -210,6 +210,7 @@ a{
   background-color: white;
   padding: 10px;
   border-radius: 17px;
+  width: 95%;
 }
 .dateTime{
   border: none;
@@ -253,4 +254,12 @@ a{
   border-radius: 7px;
   font-weight: 700;
   font-size: 20px;
+}
+.dropdownBtn{
+  text-align: right;
+  horiz-align: right;
+}
+.background{
+  background-image: url("images/backgroundj.jpg");
+  background-size: cover;
 }

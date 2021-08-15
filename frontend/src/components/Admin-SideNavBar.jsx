@@ -48,6 +48,13 @@ class AdminSideNavBar extends Component {
                     <div className="row">
                         <a><p className="NavItem"><i class="fas fa-tasks m-2"></i>Notices</p> </a>
                     </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                 </div>
             </div>
         );

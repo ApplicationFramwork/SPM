@@ -27,7 +27,7 @@ function AddMarks(){
         console.log("Input Fields", inputFields);
     }
     return(
-        <Container class="bg-light">
+        <Container class="background">
             <div className="row">
                 <div className="col-sm-3">
                     <Adm />

@@ -7,11 +7,17 @@ import studentImg from "../images/studentImg.png"
 import teacher from "../images/TeacherImg.png"
 import income from "../images/income.jpg"
 class AdminDashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentDateTime: Date().toLocaleString()
+        }
+    }
     render() {
         return (
-            <div className="container-fluid dashBody">
+            <div className="container-fluid background dashBody">
                 <div className="row">
-                    <div className="col-sm-3">
+                    <div className="col-sm-3" style={{height:"100%"}}>
                         <Adm />
                     </div>
 
@@ -24,7 +30,7 @@ class AdminDashboard extends Component {
                             </div>
                             <div className="col-sm-9 dashSecondColumn">
                                 <ul className="buttonList">
-                                    <li><small className="DashDateTime text-muted">32-Sep-2019  05.25PM</small></li>
+                                    <li><small className="DashDateTime text-muted">{this.state.currentDateTime }</small></li>
                                     <li> <p className="shareButton">Share</p></li>
                                     <li> <p className="moreDetailsButton">More Details</p> </li>
                                 </ul>

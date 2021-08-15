@@ -3,54 +3,39 @@ import Adm from "./Admin-SideNavBar";
 import AdminHeader from "./AdminHeader";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 
-class AttendanceMark extends Component {
+class ViewAttendance extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Students:[],
-            status:'',
-            cName:''
+            Students:[]
 
         }
         this.changeClassnameHander = this.changeClassnameHander.bind(this);
     }
-
-
-    ViewDetails(e,admissionNumber){
-        e.preventDefault();
-        this.setState({
-            stID : admissionNumber
-        }
-        )
-    }
     changeClassnameHander = (event) =>{
         this.setState({cName : event.target.value});
     }
-    changeStatus = (event) => {
-        this.setState({ status: event.target.value });
-
+    ViewDetails(e,admissionNumber){
+        e.preventDefault();
+        this.setState({
+                stID : admissionNumber
+            }
+        )
     }
+
     VIewStudents = (e) =>{
         e.preventDefault();
         if(this.state.cName != ""){
-            SchoolManagementSystemServices.GetAllStudentsForAttendanceMark(this.state.cName).then((res) => {
+            SchoolManagementSystemServices.ViewAttendance(this.state.cName).then((res) => {
                 this.setState({ Students: res.data});
             });
         }else{
             alert("Class Name is empty!")
         }
     }
-
-    saveChanges =(e) =>{
-        e.preventDefault();
-        let attendance = {StudentId : this.state.stID, status : this.state.status, className : this.state.cName}
-        SchoolManagementSystemServices.MarkAttendance(attendance).then(()=>{
-            this.props.history.push("/MarkAttendance");
-        })
-    }
     render() {
         return (
-            <div className="row background">
+            <div className="row bg-light">
                 <div className="col-sm-3">
                     <Adm />
                 </div>
@@ -58,7 +43,7 @@ class AttendanceMark extends Component {
                     <AdminHeader />
 
                     <div className="row">
-                        <h3><b>Mark Attendance</b></h3>
+                        <h3><b>View Attendance</b></h3>
                     </div>
 
                     <div className="row m-2 searchRow">
@@ -93,27 +78,38 @@ class AttendanceMark extends Component {
                         {
                             this.state.Students.map(
                                 student =>
-                                    <div  className="col-sm-6  m-2 card" onClick={e => this.ViewDetails(e,student.admissionNumber)} data-bs-toggle="modal" data-bs-target="#exampleModal" key = {student.admissionNumber }>
-                                        <p className={"m-2"}>{student.admissionNumber}</p>
-                                        <p className={"m-2"}>{student.firstName + " " + student.lastName}</p>
-
+                                    <div  className="col-sm-6 m-2 card" onClick={e => this.ViewDetails(e,student.StudentId)}
+                                          data-bs-toggle="modal" data-bs-target="#exampleModal" key = {student.admissionNumber }>
+                                        <div className="row">
+                                            <div className="col-sm-9">
+                                                <p className={"m-2"}>Student Admission Number : {student.StudentId}</p>
+                                                <p className={"m-2"}>Date : {student.date}</p>
+                                                <p className={"m-2"}>Status  : {student.status}</p>
+                                            </div>
+                                            <div className="col-sm-3 mt-4">
+                                                <i className="removeIcon fas fa-minus-circle"></i>
+                                            </div>
+                                        </div>
                                     </div>
                             )
                         }
                     </div>
-
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Mark Attendance</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Edit Attendance</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div className="modal-body">
                                     <input type="text" className="form-control m-2" placeholder="Student ID "
-                                           aria-label="Student ID" aria-describedby="basic-addon1" value={this.state.stID}/>
+                                           aria-label="Student ID" aria-describedby="basic-addon1"
+                                           value={this.state.stID}/>
                                     <div className="input-group mb-3">
-                                        <select className="custom-select" name="point" type="allocated_Grade" placeholder={"Allocated Grade"}
+                                        <select className="custom-select" name="point" type="allocated_Grade"
+                                                placeholder={"Allocated Grade"}
                                                 onChange={this.changeStatus}>
                                             <option selected>Choose...</option>
                                             <option value="Present">Present</option>
@@ -122,21 +118,20 @@ class AttendanceMark extends Component {
                                     </div>
 
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onClick={this.saveChanges}>Save changes</button>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="button" className="btn btn-primary" onClick={this.saveChanges}>Save
+                                        changes
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                {/*    End Second column*/}
-
             </div>
-
         );
     }
 }
 
-export default AttendanceMark;
+export default ViewAttendance;
