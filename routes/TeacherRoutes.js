@@ -58,7 +58,7 @@ router.route("/add").post(upload.single('profile_Picture'), (req, res) => {
             subject: 'YOU ADDED AS A TEACHER IN KIDZ SCHOOL',
             text: 'Mr./Mrs. ' + newTeacher.teacher_Name + ",\n\n"
                 + "Congradulations!\n\n"
-                + "Succesfully, You added as a Teacher in SLIIT_ICMS\n\n"
+                + "Succesfully, You added as a Teacher IN KIDZ SCHOOL\n\n"
                 + "You email is " + newTeacher.email + " \n\n"
                 + "You password is " + newTeacher.NIC + " \n\n"
         };
