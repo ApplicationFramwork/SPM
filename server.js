@@ -33,9 +33,11 @@ app.listen(PORT, () => {
 //import routes
 const subjectRoutes = require("./routes/SubjectRoutes");
 const teacherRoutes = require("./routes/TeacherRoutes");
+const studentRouter = require("./routes/students");
 
 
 //Assign routes
 app.use("/Subjects", subjectRoutes);
 app.use("/Teacher", teacherRoutes);
+app.use("/students", studentRouter);
 app.use("/uploads", express.static('uploads'));
