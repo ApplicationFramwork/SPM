@@ -7,6 +7,7 @@ const AssignSubjectTeacherAPI = "http://localhost:8070/Teacher/assgin"
 const DeleteTeacherAPI = "http://localhost:8070/Teacher/Delete";
 const DeleteSubjectAPI = "http://localhost:8070/Subjects/Delete";
 const GetAllSubjectsAPI = "http://localhost:8070/Subjects/GetAllSubjects";
+const GetAllOneSubjectsAPI = "http://localhost:8070/Subjects/GetSubject";
 const GetAllTeachersAPI = "http://localhost:8070/Teacher/GetAllTeacaher";
 const GetAllOneTeachersAPI = "http://localhost:8070/Teacher/GetTeacher";
 const UpdateTeacherAPI = "http://localhost:8070/Teacher/update"
@@ -41,6 +42,10 @@ class SchoolManagementSystemServices {
     //get All Teachers
     GetAllTeachers() {
         return axios.get(GetAllTeachersAPI);
+    }
+    //get One Subject
+    GetOneSubject(ID) {
+        return axios.get(GetAllOneSubjectsAPI + '/' + ID);
     }
     //get One Teachers
     GetOneTeachers(ID) {
