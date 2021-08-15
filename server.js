@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 
 const app = express();
 require("dotenv").config();
-
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
@@ -25,7 +24,13 @@ const connection = mongoose.connection;
 connection.once("open", () => {
     console.log("MongoDB Connection success!");
 })
+//import routes
+const noticesRouter = require("./routes/notices");
+const studentRouter = require("./routes/students");
 
+app.use("/uploads",express.static('uploads'))
+app.use("/notices",noticesRouter);
+app.use("/students",studentRouter);
 app.listen(PORT, () => {
     console.log("Server is up and running")
 })
