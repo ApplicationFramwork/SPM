@@ -14,11 +14,11 @@ class AdminSideNavBar extends Component {
                     </div>
 
                     <div className="row">
-                       <a><p className="NavItem"><i className="fas fa-cogs m-2"></i>Management</p> </a>
+                        <a><p className="NavItem"><i className="fas fa-cogs m-2"></i>Management</p> </a>
                     </div>
 
                     <div className="row">
-                       <a><p className="NavItem"><i className="fas fa-chalkboard-teacher m-2"></i>Teacher</p> </a>
+                        <a href="/BackendTeacher"><p className="NavItem"><i className="fas fa-chalkboard-teacher m-2"></i>Teacher</p> </a>
                     </div>
 
                     <div className="row">
@@ -38,7 +38,7 @@ class AdminSideNavBar extends Component {
                     </div>
 
                     <div className="row">
-                        <a><p className="NavItem"><i className="fas fa-book m-2"></i>Subject</p> </a>
+                        <a href="/BackendSubject"><p className="NavItem"><i className="fas fa-book m-2"></i>Subject</p> </a>
                     </div>
 
                     <div className="row">

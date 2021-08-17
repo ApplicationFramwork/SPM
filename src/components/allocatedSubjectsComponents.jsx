@@ -68,7 +68,7 @@ export default class allocatedSubjectsComponents extends Component {
                 {/* end navbar */}
                 <div class="content mt-4" >
                     <div className="container-fluid mt-5">
-                        <div className="glass">
+                        <div className="glass scroll">
                             <div className="row  text-center">
                                 <div className="col-12 mt-2">
                                     <h1>ALLOCATED SUBJECTS</h1>
@@ -90,7 +90,7 @@ export default class allocatedSubjectsComponents extends Component {
                                                 <div className="card bg-info subjectinfo" onClick={e => this.ViewSubjectsInside(e, subjects._id)} onMouseOver="" style={{ cursor: "pointer" }}>
                                                     <div class="card-body" style={{ cursor: "pointer" }}>
                                                         <h1 style={{ cursor: "pointer"}}>{subjects.subject_ID + " " + subjects.subject_Name}</h1>
-                                                        <input disabled placeholder={subjects.allocated_Grade} className="mt-1" style={{ cursor: "pointer"}}/>
+                                                        <input disabled placeholder={"Grade-" +subjects.allocated_Grade} className="mt-1" style={{ cursor: "pointer"}}/>
                                                         <input disabled placeholder={subjects.subject_Name} className="mt-1" style={{ cursor: "pointer"}}/>
                                                         <input disabled placeholder={subjects.description} className="mt-1" style={{ cursor: "pointer"}}/>
                                                     </div>

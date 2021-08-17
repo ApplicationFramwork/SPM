@@ -10,6 +10,8 @@ import allocatedSubjectsComponents from './components/allocatedSubjectsComponent
 import backEndTeacherComponent from './components/backEndTeacherComponent';
 import BackEndSubjectComponent from './components/BackEndSubjectComponent';
 import subjectDetailsComponent from './components/subjectDetailsComponent';
+import StudetnsubjectDetailsComponent from './components/studentSubjectdetialsComponent';
+import sstudentallocatedsubjects from './components/StudentAllocatedSubject';
 
 function App() {
   return (
@@ -21,9 +23,12 @@ function App() {
         <Route path="/" exact component={IndexPageComponent}></Route>
         <Route path="/teacherDashboard" component={teacherDashboardComponent}></Route>
         <Route path="/allocatedSub" component={allocatedSubjectsComponents}></Route>
+        <Route path="/studentallocatedSub" component={sstudentallocatedsubjects}></Route>
         <Route path="/subjectdetails/:id" component={subjectDetailsComponent}></Route>
+        <Route path="/Studentsubjectdetails/:id" component={StudetnsubjectDetailsComponent}></Route>
         <Route path="/BackendTeacher" component={backEndTeacherComponent}></Route>
         <Route path="/BackendSubject" component={BackEndSubjectComponent}></Route>
+        
        
 
       </Switch>

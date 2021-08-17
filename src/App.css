@@ -245,6 +245,18 @@ label #sidebar_btn:hover{
   border-bottom-right-radius: 50px;
    border-bottom-left-radius: 10px;
 }
+.content .scroll{
+  overflow-y: scroll;
+  overflow-x:hidden;
+   height:82vh;
+
+}
+.container-fluid .scroll{
+  overflow-y: scroll;
+  overflow-x:hidden;
+   height:82vh;
+
+}
 
 #check:checked ~ .content{
   margin-left: 60px;
