@@ -28,6 +28,17 @@ router.route("/GetAllSubjects").get((req, res) => {
         console.log(err)
     })
 })
+//get subjects details using Section
+router.route("/GetSubjectusignSection/:section").get((req, res) => {
+
+    let section = req.params.section;
+    Subject.find({ allocated_Grade : section}).then((subject) => {
+        res.json(subject)
+    }).catch((err) => {
+        console.log(err);
+    })
+
+})
 
 //get subjects details using subject id
 router.route("/GetSubject/:id").get((req, res) => {

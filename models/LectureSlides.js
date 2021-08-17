@@ -8,17 +8,21 @@ const LectureSlideSchema = new Schema({
         type: String,
         required: true
     },
-    Lesson_Topic: {
+    Topic: {
         type: String,
         required: true
     },
-    Lesson_Description: {
+    Description: {
         type: String,
         required: true
     },
-    filename: {
+    type: {
         type: String,
         required: true
+    },
+    lectureslide: {
+        type: String,
+        required: false,
     }
 })
 

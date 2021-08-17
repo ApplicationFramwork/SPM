@@ -34,10 +34,14 @@ app.listen(PORT, () => {
 const subjectRoutes = require("./routes/SubjectRoutes");
 const teacherRoutes = require("./routes/TeacherRoutes");
 const studentRouter = require("./routes/students");
+const noticeRouter = require("./routes/notices");
+const lectureslidesRouter = require("./routes/LectureSlidesRoutes");
 
 
 //Assign routes
 app.use("/Subjects", subjectRoutes);
 app.use("/Teacher", teacherRoutes);
 app.use("/students", studentRouter);
+app.use("/Notice", noticeRouter);
+app.use("/lectureslides", lectureslidesRouter);
 app.use("/uploads", express.static('uploads'));
