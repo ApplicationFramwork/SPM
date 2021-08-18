@@ -46,17 +46,25 @@ router.route("/:className").get((req, res) => {
 })
 //Edit attendance
 router.route("/editAttendance").post(async (req,res) =>{
-    const {StudentId,status} = req.body;
-    const updateAttendance = {
-        status
-    }
-
-    await Attendance.findByIdAndUpdate(StudentId,updateAttendance).then(()=>{
-        res.json(Attendance)
+    const {attId,status} = req.body;
+    console.log(attId + "   |  "+status );
+    await Attendance.findByIdAndUpdate(attId,status).then(()=>{
+        res.status(200).send({status: "Updated!"});
     }).catch((err) =>{
         res.status(500).send({status: "Error with updating data"});
     })
 })
+
 //delete attendance
+router.route("/delete/:id").delete(async (req,res)=>{
+    let attId = req.params.id;
+    await Attendance.findOneAndDelete(attId).then(()=>{
+        res.status(200).send({status: "Attendance Deleted Successfully"});
+    }).catch((err)=>{
+        console.log(err.message);
+        res.status(500).send({status: "Error with delete"});
+    })
+})
+
 
 module.exports = router;
