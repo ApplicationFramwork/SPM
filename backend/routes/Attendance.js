@@ -44,4 +44,19 @@ router.route("/:className").get((req, res) => {
         console.log(err);
     })
 })
+//Edit attendance
+router.route("/editAttendance").post(async (req,res) =>{
+    const {StudentId,status} = req.body;
+    const updateAttendance = {
+        status
+    }
+
+    await Attendance.findByIdAndUpdate(StudentId,updateAttendance).then(()=>{
+        res.json(Attendance)
+    }).catch((err) =>{
+        res.status(500).send({status: "Error with updating data"});
+    })
+})
+//delete attendance
+
 module.exports = router;
