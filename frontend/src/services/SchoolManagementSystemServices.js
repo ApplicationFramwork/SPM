@@ -4,6 +4,7 @@ const getStudentsForMarkAttendance = "http://localhost:8070/students/getStudents
 const addAttendanceDetails = "http://localhost:8070/attendance/mark";
 const viewAttendanceByClassName = "http://localhost:8070/attendance";
 const deleteAttendance = "http://localhost:8070/attendance/delete";
+const login = "http://localhost:8070/users/login";
 
 class SchoolManagementSystemServices {
 
@@ -24,6 +25,10 @@ class SchoolManagementSystemServices {
 
     DeleteAttendance(attId){
         return axios.delete(deleteAttendance +'/'+ attId);
+    }
+
+    Login(user){
+        return axios.post(login,user);
     }
 }
 export default new SchoolManagementSystemServices();

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import img1 from "../images/img_s1.png"
 import img2 from "../images/img_s2.png"
 import img3 from "../images/img_s3.png"
-
+import cms from  "../services/SchoolManagementSystemServices";
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -19,15 +19,31 @@ class Login extends Component {
     changePasswordHander = (event) =>{
         this.setState({password : event.target.value});
     }
+    User;
     Login = (e) =>{
         e.preventDefault();
         if(this.state.username != '' && this.state.password != ''){
             if(this.state.username.startsWith('T') || this.state.username.startsWith('t')){
-                let User = {teacher_ID : this.state.username, password: this.state.password, type : 'Teacher'};
-                alert('it is teacher');
+                let User = {Username : this.state.username, password: this.state.password, type : 'Teacher'};
+                cms.Login(User).then(res =>{
+                    console.log(res.data.token);
+                    localStorage.setItem("token",res.data.token);
+                    alert('Login success!!!');
+                    this.props.history.push("/dashboard");
+                }).catch(err =>{
+                    alert('Login failed!!!');
+                });
+
             }else if(this.state.username.startsWith('S') || this.state.username.startsWith('s')){
-                let user = {admissionNumber : this.state.username, password : this.state.password, type : 'Student'};
-                alert('student')
+                let user = {Username : this.state.username, password : this.state.password, type : 'Student'};
+                cms.Login(this.User).then(res =>{
+                    console.log(res.data.token);
+                    localStorage.setItem("token",res.data.token);
+                    alert('Login success!!!');
+                    this.props.history.push("/dashboard");
+                }).catch(err =>{
+                    alert('Login failed!!!');
+                });
             }else if(this.state.username.equals('Admin') && this.state.password.equals('123')){
                 this.props.history.push("/dashboard");
             }else{
