@@ -75,6 +75,7 @@ class AdminStudentDashboard extends Component {
         this.editGuardianMobileNumberHandler = this.editGuardianMobileNumberHandler.bind(this);
         this.editGuardianEmailHandler = this.editGuardianEmailHandler.bind(this);
     }
+    //add student
     addStudent = (e) => {
         e.preventDefault();
         const formData = new FormData();

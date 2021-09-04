@@ -29,6 +29,7 @@ class AddViewDeleteNotices extends Component {
         this.EditDescriptionHandler = this.EditDescriptionHandler.bind(this);
 
     }
+    //add Notice
     addNotice = (e) => {
         e.preventDefault();
         const formData = new FormData();
