@@ -3,6 +3,8 @@ let Notices = require("../models/Notices");
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
+
+//multer for file handling
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'uploads');
