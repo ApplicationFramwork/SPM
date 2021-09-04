@@ -19,6 +19,7 @@ class StudentDashboard extends Component {
             this.setState({ notices: res.data});
         });
     }
+    //view notices
     viewNotice(e, noticeId) {
         e.preventDefault();
         SchoolManagementSystemServices.getNoticeByID(noticeId).then((res => {
