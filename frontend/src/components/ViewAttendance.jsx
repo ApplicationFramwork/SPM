@@ -23,6 +23,15 @@ class ViewAttendance extends Component {
         )
     }
 
+    deleteAttendance(e,attId){
+        e.preventDefault();
+        SchoolManagementSystemServices.DeleteAttendance(attId).then(r => {
+            this.props.history.push("/MarkAttendance");
+        }).catch((err)=>{
+            alert("Can not delete" + attId);
+        })
+    }
+
     VIewStudents = (e) =>{
         e.preventDefault();
         if(this.state.cName != ""){
@@ -35,7 +44,7 @@ class ViewAttendance extends Component {
     }
     render() {
         return (
-            <div className="row bg-light">
+            <div className="row bg-light background">
                 <div className="col-sm-3">
                     <Adm />
                 </div>
@@ -78,16 +87,15 @@ class ViewAttendance extends Component {
                         {
                             this.state.Students.map(
                                 student =>
-                                    <div  className="col-sm-6 m-2 card" onClick={e => this.ViewDetails(e,student.StudentId)}
-                                          data-bs-toggle="modal" data-bs-target="#exampleModal" key = {student.admissionNumber }>
+                                    <div className="col-sm-6 bg-warning m-2"  key = {student._id }>
                                         <div className="row">
                                             <div className="col-sm-9">
-                                                <p className={"m-2"}>Student Admission Number : {student.StudentId}</p>
-                                                <p className={"m-2"}>Date : {student.date}</p>
-                                                <p className={"m-2"}>Status  : {student.status}</p>
+                                                <p className={"m-2"}><b>Student Admission Number </b>: {student.StudentId}</p>
+                                                <p className={"m-2"}><b>Date </b>: {student.date}</p>
+                                                <p className={"m-2"}><b>Status  </b>: {student.status}</p>
                                             </div>
                                             <div className="col-sm-3 mt-4">
-                                                <i className="removeIcon fas fa-minus-circle"></i>
+                                                <i onClick={e => this.deleteAttendance(e,student._id)} className="removeIcon fas fa-minus-circle"></i>
                                             </div>
                                         </div>
                                     </div>

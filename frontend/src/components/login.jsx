@@ -4,6 +4,45 @@ import img2 from "../images/img_s2.png"
 import img3 from "../images/img_s3.png"
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username:'',
+            password:''
+        }
+        this.changeUserNameHander = this.changeUserNameHander.bind(this);
+        this.changePasswordHander = this.changePasswordHander.bind(this);
+    }
+    changeUserNameHander = (event) =>{
+        this.setState({username : event.target.value});
+    }
+    changePasswordHander = (event) =>{
+        this.setState({password : event.target.value});
+    }
+    Login = (e) =>{
+        e.preventDefault();
+        if(this.state.username != '' && this.state.password != ''){
+            if(this.state.username.startsWith('T') || this.state.username.startsWith('t')){
+                let User = {teacher_ID : this.state.username, password: this.state.password, type : 'Teacher'};
+                alert('it is teacher');
+            }else if(this.state.username.startsWith('S') || this.state.username.startsWith('s')){
+                let user = {admissionNumber : this.state.username, password : this.state.password, type : 'Student'};
+                alert('student')
+            }else if(this.state.username.equals('Admin') && this.state.password.equals('123')){
+                this.props.history.push("/dashboard");
+            }else{
+                alert('Please enter your username!');
+            }
+        }else {
+            if(this.state.username == '' && this.state.password == ''){
+                alert('UserName and Password can not be empty!');
+            }else if(this.state.username == ''){
+                alert('Please enter your username!');
+            }else{
+                alert('Please enter your password!');
+            }
+        }
+    }
     render() {
         return (
             <div className="login-body">
@@ -47,10 +86,10 @@ class Login extends Component {
                         <h1 className="">Sign in</h1>
                         <center>
                             <form action="#">
-                                <input type="text" placeholder="User Name" className="form-control loginInputs mt-2"/> <br/>
-                                <input type="password" placeholder="Password" className="form-control loginInputs mt-2"/> <br/>
+                                <input type="text" placeholder="User Name" onChange={this.changeUserNameHander} className="form-control loginInputs mt-2"/> <br/>
+                                <input type="password" onChange={this.changePasswordHander} placeholder="Password" className="form-control loginInputs mt-2"/> <br/>
                                 <a href="#"> <small className="text-secondary">Forgot your password ? </small> </a> <br/>
-                                <button type="button" className=" mt-2 btn-lg btn-signin">SIGN IN</button>
+                                <button type="button" onClick={this.Login} className=" mt-2 btn-lg btn-signin">SIGN IN</button>
                             </form>
                         </center>
 
