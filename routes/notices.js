@@ -2,7 +2,7 @@ const router = require("express").Router();
 let Notices = require("../models/Notices");
 const path = require('path');
 const multer = require('multer');
-
+const fs = require('fs');
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'uploads');
@@ -48,22 +48,7 @@ router.route("/allNotices").get((req,res)=>{
         console.log(err)
     })
 })
-//update notices
-router.route("/updateNotice/:id").put(upload.single('image'),async (req, res)=>{
-    let noticeId = req.params.id;
-    const {image,title, description} = req.body;
-    const updateNotice = {
-        image,
-        title,
-        description
-    }
-    const update = await Notices.findByIdAndUpdate(noticeId, updateNotice ).then(()=> {
-        res.status(200).send({status: "Notice Updated Successfully"})
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send({status: "Error with updating data"});
-    })
-})
+
 //delete Notices
 router.route("/delete/:id").delete(async (req, res)=>{
     let noticeId= req.params.id;
@@ -72,6 +57,56 @@ router.route("/delete/:id").delete(async (req, res)=>{
     }).catch((err)=>{
         console.log(err.message);
         res.status(500).send({status: "Error with delete ", noticeerror: err.message});
+    })
+})
+
+//update notices with the image
+router.route("/update/:id/:picturename").put(upload.single('image'), (req, res) => {
+    let noticeID = req.params.id;
+    const { title, description } = req.body;
+    const image = req.file.filename;
+    let picturename = req.params.picturename;
+    const updateNotice = {
+        image,
+        title,
+        description
+    }
+    const update = Notices.findByIdAndUpdate(noticeID, updateNotice)
+        .then(() => {
+            res.status(200).send({ status: "Notice Updated" })
+            fs.unlink('D:/Y3S2/SPM/SPM/BACKEND/uploads/' + picturename, function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
+        })
+})
+//update notice without new image
+router.route("/update/:id").put(async (req, res) => {
+    let noticeID = req.params.id;
+    const { title, description } = req.body;
+    const updateNotice = {
+        title,
+        description
+    }
+    const update = await Notices.findByIdAndUpdate(noticeID, updateNotice)
+        .then(() => {
+            res.status(200).send({ status: "Notice Updated" })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
+        })
+
+})
+//get notice by ID
+router.route("/get/:id").get(async (req, res)=>{
+    let noticeId = req.params.id;
+    Notices.findById(noticeId).then((notices)=>{
+        res.json(notices)
+    }).catch((err)=>{
+        console.log(err);
     })
 })
 

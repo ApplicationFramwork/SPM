@@ -2,7 +2,7 @@ const router = require("express").Router();
 let Students = require("../models/Students");
 const path = require('path');
 const multer = require('multer');
-
+const fs = require('fs');
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'uploads');
@@ -83,5 +83,104 @@ router.route("/delete/:id").delete(async (req, res)=>{
         res.status(500).send({status: "Error with delete ", studenterror: err.message});
     })
 })
+//get student by ID
+router.route("/get/:id").get(async (req, res)=>{
+    let studentId = req.params.id;
+    Students.findById(studentId).then((students)=>{
+        res.json(students)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
 
+//update notices with the image
+router.route("/update/:id/:picturename").put(upload.single('image'), (req, res) => {
+    let studentID = req.params.id;
+    const { admissionNumber,
+        firstName,
+        lastName,
+        section,
+        className,
+        gender,
+        dateOfBirth,
+        mobileNumber,
+        email,
+        address,
+        guardianName,
+        guardianRelationship,
+        guardianMobileNumber,
+        guardianEmail} = req.body;
+    const image = req.file.filename;
+    let picturename = req.params.picturename;
+    const updateStudent = {
+        image,
+        admissionNumber,
+        firstName,
+        lastName,
+        section,
+        className,
+        gender,
+        dateOfBirth,
+        mobileNumber,
+        email,
+        address,
+        guardianName,
+        guardianRelationship,
+        guardianMobileNumber,
+        guardianEmail
+    }
+    const update = Students.findByIdAndUpdate(studentID, updateStudent)
+        .then(() => {
+            res.status(200).send({ status: "Student Updated" })
+            fs.unlink('D:/Y3S2/SPM/SPM/BACKEND/uploads/' + picturename, function (err) {
+                if (err) throw err;
+                console.log('File deleted!');
+            });
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
+        })
+})
+//update student without new image
+router.route("/update/:id").put(async (req, res) => {
+    let studentID = req.params.id;
+    const { admissionNumber,
+        firstName,
+        lastName,
+        section,
+        className,
+        gender,
+        dateOfBirth,
+        mobileNumber,
+        email,
+        address,
+        guardianName,
+        guardianRelationship,
+        guardianMobileNumber,
+        guardianEmail } = req.body;
+    const updateStudent = {
+        admissionNumber,
+        firstName,
+        lastName,
+        section,
+        className,
+        gender,
+        dateOfBirth,
+        mobileNumber,
+        email,
+        address,
+        guardianName,
+        guardianRelationship,
+        guardianMobileNumber,
+        guardianEmail
+    }
+    const update = await Students.findByIdAndUpdate(studentID, updateStudent)
+        .then(() => {
+            res.status(200).send({ status: "Student Updated" })
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send({ status: "Error with Updating data" })
+        })
+
+})
 module.exports = router;
