@@ -116,6 +116,7 @@ class AdminStudentDashboard extends Component {
         }
         //console.log(this.state.subject)
     }
+    //view student
     viewStudent(e, studentId) {
         e.preventDefault();
         SchoolManagementSystemServices.getStudentByID(studentId).then((res => {
