@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+//Student Schema
 const studentSchema = new Schema({
     image : {
         type : String,
