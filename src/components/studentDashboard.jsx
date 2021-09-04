@@ -6,13 +6,32 @@ class StudentDashboard extends Component {
     constructor(props){
         super(props)
         this.state = {
-            notices: []
+            notices: [],
+            // view edit variables
+            viewNoticePicture: '',
+            viewTitle: '',
+            viewDescription: '',
+            ID: ''
         }
     }
     componentDidMount(){
         SchoolManagementSystemServices.getAllNotices().then((res) => {
             this.setState({ notices: res.data});
         });
+    }
+    viewNotice(e, noticeId) {
+        e.preventDefault();
+        SchoolManagementSystemServices.getNoticeByID(noticeId).then((res => {
+            let notice = res.data;
+            console.log(res.data)
+            this.setState({
+                ID: notice._id,
+                viewNoticePicture: notice.image,
+                viewTitle: notice.title,
+                viewDescription: notice.description
+            });
+            console.log(this.state.ID);
+        }))
     }
     render() {
         return (
@@ -62,7 +81,7 @@ class StudentDashboard extends Component {
                                                             <span className="text1 d-block mb-3">{notices.description}</span>
                                                         </div>
                                                         <div className="mt-3 info">
-                                                            <button className="btn btn-warning btn-block">
+                                                            <button className="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdropNoticeUpdate" onClick={e => this.viewNotice(e, notices._id)}>
                                                                 <i className="fas fa-edit"></i>&nbsp;
                                                                 View
                                                             </button>
@@ -73,6 +92,51 @@ class StudentDashboard extends Component {
                                     )
                                 }
                                 <br/>
+                            </div>
+                        </div>
+                        <div className="container">
+                            <div className="row">
+                                {/*View Notice Details and Update*/}
+                                <div className="modal fade" id="staticBackdropNoticeUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabelNoticeUpdate" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title" id="staticBackdropLabelNoticeUpdate">Update Notice Details</h5>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form>
+                                                    <center>
+                                                        <div className="mb-3">
+                                                            <img src={imageUrl + this.state.viewNoticePicture} alt="" srcSet="" style={{width: "100%", height: "80%", zIndex: "revert"}}/>
+                                                        </div>
+                                                    </center>
+                                                    <div className="mb-3">
+                                                        <label className="form-label"><i className="fa fa-user-o" aria-hidden="true"></i>&nbsp;
+                                                            Notice Info
+                                                        </label>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <div className="input-group mb-3">
+                                                            <input type="text" value={this.state.viewTitle} className="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <div className="input-group mb-3">
+                                                            <textarea type="text" value={this.state.viewDescription} className="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
+                                                    <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <br/>

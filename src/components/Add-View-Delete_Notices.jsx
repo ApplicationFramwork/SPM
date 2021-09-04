@@ -3,6 +3,7 @@ import AdminSideNavBar from "./Admin-SideNavBar";
 import axios from "axios";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 const imageUrl = "http://localhost:8070/uploads/";
+
 class AddViewDeleteNotices extends Component {
     constructor(props){
         super(props)
@@ -10,10 +11,22 @@ class AddViewDeleteNotices extends Component {
             notices: [],
             image: '',
             title: '',
-            description: ''
+            description: '',
+            // view edit variables
+            viewNoticePicture: '',
+            viewTitle: '',
+            viewDescription: '',
+            EditNoticePicture: '',
+            ID: ''
+
         }
+        //add notice handlers
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
         this.changeDescriptionHandler = this.changeDescriptionHandler.bind(this);
+        //edit notice handlers
+        this.EditChangeNoticePictureHandler = this.EditChangeNoticePictureHandler.bind(this);
+        this.EditTitleHandler = this.EditTitleHandler.bind(this);
+        this.EditDescriptionHandler = this.EditDescriptionHandler.bind(this);
 
     }
     addNotice = (e) => {
@@ -30,21 +43,73 @@ class AddViewDeleteNotices extends Component {
         const refreshPage = () => {
             window.location.reload();
         }
-        axios.post("http://localhost:8070/notices/addNotices", formData, config).then(res => {
-            this.props.history.push('/notices');
-            refreshPage();
-        })
+        if(this.state.title !=='' && this.state.description !=='' && this.state.image !==''){
+            axios.post("http://localhost:8070/notices/addNotices", formData, config).then(res => {
+                this.props.history.push('/notices');
+                refreshPage();
+            })
+        }else{
+            alert("Cannot leave empty field");
+        }
+
     }
     delete(id){
        SchoolManagementSystemServices.deleteNotice(id).then(res=>{
             this.setState({notices: this.state.notices.filter(notice => notice._id !==id)});
         })
     }
+    viewNotice(e, noticeId) {
+        e.preventDefault();
+        SchoolManagementSystemServices.getNoticeByID(noticeId).then((res => {
+            let notice = res.data;
+            console.log(res.data)
+            this.setState({
+                ID: notice._id,
+                viewNoticePicture: notice.image,
+                viewTitle: notice.title,
+                viewDescription: notice.description
+            });
+            console.log(this.state.ID);
+        }))
+    }
+    editNotice = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('title', this.state.viewTitle);
+        formData.append('description', this.state.viewDescription);
+        formData.append('image', this.state.EditNoticePicture);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        };
+        const refreshPage = () => {
+            window.location.reload();
+        }
+        if (this.state.EditNoticePicture !== '') {
+            axios.put("http://localhost:8070/notices/update/" + this.state.ID + "/" + this.state.viewNoticePicture, formData, config).then(res => {
+                this.props.history.push('/notices');
+                refreshPage();
+            })
+        } else {
+            let AssignNotice = {
+                title: this.state.viewTitle, description: this.state.viewDescription, image: this.state.viewNoticePicture,
+            };
+            console.log('AssignNotice => ' + JSON.stringify(AssignNotice));
+            console.log(this.state.ID);
+            SchoolManagementSystemServices.updateNoticeWithoutImage(AssignNotice, this.state.ID).then(res => {
+                console.log('success');
+                this.props.history.push('/notices');
+                window.location.reload();
+            })
+        }
+    }
     componentDidMount(){
         SchoolManagementSystemServices.getAllNotices().then((res) => {
             this.setState({ notices: res.data});
         });
     }
+    //add notice handlers
     changeImageHandler = (notices)=> {
         this.setState({image: notices.target.files[0]});
     }
@@ -53,6 +118,17 @@ class AddViewDeleteNotices extends Component {
     }
     changeDescriptionHandler = (notices)=> {
         this.setState({description: notices.target.value});
+    }
+    //edit notice handlers
+    //edit handlers
+    EditChangeNoticePictureHandler = (notices) => {
+        this.setState({  EditNoticePicture: notices.target.files[0] });
+    }
+    EditTitleHandler = (notices) => {
+        this.setState({ viewTitle: notices.target.value });
+    }
+    EditDescriptionHandler = (notices) => {
+        this.setState({ viewDescription: notices.target.value });
     }
     render() {
         return (
@@ -114,7 +190,7 @@ class AddViewDeleteNotices extends Component {
                                                     <div className="row mt-8">
                                                         <div className="col-md-6">
                                                             <div className="p-3 text-center text-white mt-2 cursor">
-                                                                <button className="btn btn-warning btn-block">
+                                                                <button className="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdropNoticeUpdate" onClick={e => this.viewNotice(e, notices._id)}>
                                                                     <i className="fas fa-edit"></i>&nbsp;
                                                                     View
                                                                 </button>
@@ -189,6 +265,59 @@ class AddViewDeleteNotices extends Component {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="container">
+                            <div className="row">
+                                {/*View Notice Details and Update*/}
+                                <div className="modal fade" id="staticBackdropNoticeUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabelNoticeUpdate" aria-hidden="true">
+                                    <div className="modal-dialog">
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                                <h5 className="modal-title" id="staticBackdropLabelNoticeUpdate">Update Notice Details</h5>
+                                            </div>
+                                            <div className="modal-body">
+                                                <form>
+                                                    <center>
+                                                        <div className="mb-3">
+                                                            <img src={imageUrl + this.state.viewNoticePicture} alt="" srcSet="" style={{width: "100%", height: "80%", zIndex: "revert"}}/>
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <input className="form-control bg-primary mt-2 mb-3" type="file" name="image"
+                                                                   onChange={this.EditChangeNoticePictureHandler} /> {console.log(this.state.EditNoticePicture)}
+                                                        </div>
+                                                    </center>
+                                                    <div className="mb-3">
+                                                        <label className="form-label"><i className="fa fa-user-o" aria-hidden="true"></i>&nbsp;
+                                                            Notice Info
+                                                        </label>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <div className="input-group mb-3">
+                                                            <input type="text" value={this.state.viewTitle} onChange={this.EditTitleHandler} className="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-3">
+                                                        <div className="input-group mb-3">
+                                                            <textarea type="text" value={this.state.viewDescription} onChange={this.EditDescriptionHandler} className="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
+                                                    <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                                    Cancel
+                                                </button>
+                                                <button type="button" onClick={this.editNotice} className="btn btn-success">
+                                                    <i className="fas fa-pen"></i>&nbsp;
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

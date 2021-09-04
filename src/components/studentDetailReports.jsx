@@ -94,6 +94,7 @@ class StudentDetailReports extends Component {
                                                 <th scope="col">Profile Picture</th>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Admission Number</th>
+                                                <th scope="col">Section</th>
                                                 <th scope="col"> Class</th>
                                                 <th scope="col"> Gender</th>
                                                 <th scope="col"> Date of Birth</th>
@@ -114,7 +115,8 @@ class StudentDetailReports extends Component {
                                                             <td><img src={imageUrl+student.image} style={{height:"100px",width:"100px"}}/></td>
                                                             <td> {student.admissionNumber}</td>
                                                             <td> {student.firstName+" "+student.lastName}</td>
-                                                            <td> {student.section+" "+student.className}</td>
+                                                            <td> {student.section}</td>
+                                                            <td> {student.className}</td>
                                                             <td> {student.gender}</td>
                                                             <td> {student.dateOfBirth}</td>
                                                             <td> {student.mobileNumber}</td>
