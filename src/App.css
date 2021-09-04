@@ -257,7 +257,14 @@ label #sidebar_btn:hover{
    height:82vh;
 
 }
+.container-fluid .background{
+  background-image: url(./Images/Background.png);
+  background-position: center;
+  background-size: auto;
+  height: 100vh;
+  transition: 0.5s;
 
+}
 #check:checked ~ .content{
   margin-left: 60px;
 }

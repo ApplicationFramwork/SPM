@@ -331,7 +331,7 @@ export default class backEndTeacherComponent extends Component {
                         <div className="col-md-2">
                             <AdminSideNavBar />
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-md-10 background">
 
 
                             <div className="container-fluid">
@@ -682,7 +682,7 @@ export default class backEndTeacherComponent extends Component {
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" onClick={this.assignsubjects}>Assign Subjects</button>
+                                            <button type="button" class="btn btn-success" onClick={this.assignsubjects}>Assign Subjects</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>

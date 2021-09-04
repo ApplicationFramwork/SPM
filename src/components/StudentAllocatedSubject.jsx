@@ -9,7 +9,7 @@ export default class StudentAllocatedSubject extends Component {
         this.state = {
             // view edit variables
             viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
-            grade: '1',
+            grade: '10',
             viewstudentSubjects: []
 
         }

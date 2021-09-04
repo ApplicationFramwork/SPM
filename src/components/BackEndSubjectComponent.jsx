@@ -136,7 +136,7 @@ export default class BackEndSubjectComponent extends Component {
                         <div className="col-md-2">
                             <AdminSideNavBar />
                         </div>
-                        <div className="col-md-10">
+                        <div className="col-md-10 background">
 
 
                             <div className="container-fluid">
