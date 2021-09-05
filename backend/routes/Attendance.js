@@ -66,5 +66,13 @@ router.route("/delete/:id").delete(async (req,res)=>{
     })
 })
 
-
+//report
+router.route("/report/:id").get(async (req,res)=>{
+    let id = req.params.id;
+    Attendance.find({StudentId:id}).then((Attendance) =>{
+        res.json(Attendance);
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
 module.exports = router;
