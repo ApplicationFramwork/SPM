@@ -2,6 +2,23 @@ a{
   text-decoration: none;
   color: black;
 }
+.indexBody{
+  background-image: url("images/IndexBody.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  max-width: 99%;
+}
+.topic{
+  padding-top: 100px;
+}
+.getStartBtn{
+  border: 3px solid #00ccff;
+  text-align: center;
+  margin: 20px;
+  padding: 10px;
+  color: #00ccff;
+}
 .login-body{
   background-image: url("images/login.png");
   background-repeat: no-repeat;
