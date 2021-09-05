@@ -44,7 +44,7 @@ class Login extends Component {
                 }).catch(err =>{
                     alert('Login failed!!!');
                 });
-            }else if(this.state.username.equals('Admin') && this.state.password.equals('123')){
+            }else if(this.state.username =='Admin' && this.state.password == '123'){
                 this.props.history.push("/dashboard");
             }else{
                 alert('Please enter your username!');
