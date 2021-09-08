@@ -1,0 +1,41 @@
+[
+  {
+    "subject": [
+      {
+        "_id": "611f3166cb05cf074c82a663",
+        "subject_ID": "S001",
+        "subject_Name": "Science",
+        "allocated_Grade": "10",
+        "description": "O/L subjects"
+      },
+      {
+        "_id": "611f3182cb05cf074c82a666",
+        "subject_ID": "S002",
+        "subject_Name": "Mathematics",
+        "allocated_Grade": "10",
+        "description": "O/L subjects"
+      }
+    ],
+    "_id": "6117e6a3f6cc893e0c6b5dea",
+    "teacher_ID": "T003",
+    "teacher_Name": "gagan malshan",
+    "email": "52projectsliit@gmail.com",
+    "NIC": "980740676V",
+    "profile_Picture": "1629433662767-1628950817317-images.jfif-14-08-2021.jfif-20-08-2021.jfif",
+    "allocated_Grade": "2",
+    "description": "Good teacher",
+    "__v": 0
+  },
+  {
+    "subject": [],
+    "_id": "611f3278cb05cf074c82a69a",
+    "teacher_ID": "T002",
+    "teacher_Name": "Kithmini de silva",
+    "email": "vihangamalshan12346@gmail.com",
+    "NIC": "980740666V",
+    "profile_Picture": "1629434488329-1628951060725-Ericka_Pena_1-2-Edit-76898d15.jpg-14-08-2021.jpg-20-08-2021.jpg",
+    "allocated_Grade": "2",
+    "description": "new teacher",
+    "__v": 0
+  }
+]

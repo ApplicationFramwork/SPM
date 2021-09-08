@@ -4,6 +4,8 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
+const pdf = require('html-pdf');
+const pdfTemplate = require('./documents');
 
 let mailTransporter = nodemailer.createTransport({
     service: 'gmail',
@@ -200,5 +202,17 @@ router.route("/Delete/:id/:filename").delete(async (req, res) => {
             res.status(500).send({ status: "Error with deleting data" })
         })
 })
+router.route("/print").post((req, res) => {
 
+    pdf.create(pdfTemplate(req.body), {}).toFile('./routes/result.pdf', (err) => {
+     
+    if(err) {
+        return console.log('error');
+    }
+    res.send(Promise.resolve())
+  });
+})
+router.route("/getpdf").get((req, res) => {
+    res.sendFile(__dirname + '/result.pdf');
+})
 module.exports = router;
