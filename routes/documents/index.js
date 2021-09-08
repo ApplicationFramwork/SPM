@@ -1,10 +1,10 @@
-module.exports = ({  teacher }) => {
-   const today = new Date();
-   teacher.forEach(element => {
-      teacherid = element.teacher_ID;
-      console.log(teacherid);
-   });
-return `
+module.exports = ({ teacher }) => {
+  const today = new Date();
+  teacher.forEach((element) => {
+    teacherid = element.teacher_ID;
+    console.log(teacherid);
+  });
+  return `
     <!doctype html>
     <html>
        <head>
@@ -89,7 +89,9 @@ return `
                       <table>
                          <tr>
                             <td>
-                               Date: ${`${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.`}
+                               Date: ${`${today.getDate()}. ${
+                                 today.getMonth() + 1
+                               }. ${today.getFullYear()}.`}
                             </td>
                          </tr>
                       </table>
