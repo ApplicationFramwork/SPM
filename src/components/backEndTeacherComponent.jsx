@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 import service from '../services/SchoolManagementSystemServices'
 import AdminSideNavBar from './Admin-SideNavBar';
 import "../../../../FRONTEND/frontend/node_modules/datatables.net-dt/css/jquery.dataTables.css";
@@ -9,14 +10,12 @@ import $ from 'jquery'
 $.DataTable = require('datatables.net');
 const Imageurl = "http://localhost:8070/uploads/teachers/";
 
-
-
-
 export default class backEndTeacherComponent extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            name:'vihanga',
             loading: false,
             // form Variables
             teacher_ID: '',
@@ -318,6 +317,14 @@ export default class backEndTeacherComponent extends Component {
             }
         })
     }
+    createAndDownloadPdf = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8070/Teacher/print', this.state)
+            .then(() => axios.get('http://localhost:8070/Teacher/getpdf', { responseType: 'blob' }).then((res) => {
+                const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
+                saveAs(pdfBlob, 'generatedDocument.pdf')
+            }))
+    }
 
     render() {
         // if (this.state.loading === true) {
@@ -348,7 +355,7 @@ export default class backEndTeacherComponent extends Component {
                                         </button>
                                     </div>
                                     <div className="col-md-2">
-                                        <button type="button" class="btn  btn-danger" disabled>
+                                        <button type="button" class="btn  btn-danger" onClick={e => this.createAndDownloadPdf(e)}>
                                             Genarate Report
                                         </button>
                                     </div>
