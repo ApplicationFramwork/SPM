@@ -54,6 +54,13 @@ class AddViewDeleteNotices extends Component {
         }
 
     }
+    //for search notices
+    changeNoticeSearchHandler = (notices)=> {
+        this.setState({title: notices.target.value});
+        SchoolManagementSystemServices.getNoticeByTitle(notices.target.value).then(res=>{
+            this.setState({notices : res.data});
+        })
+    }
     delete(id){
        SchoolManagementSystemServices.deleteNotice(id).then(res=>{
             this.setState({notices: this.state.notices.filter(notice => notice._id !==id)});
@@ -157,7 +164,7 @@ class AddViewDeleteNotices extends Component {
                                         </li>
                                     </ul>
                                     <form className="d-flex">
-                                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.title} onChange={this.changeNoticeSearchHandler}/>
                                         <button className="btn btn-outline-success" type="submit">Search</button>
                                     </form>
                                 </div>

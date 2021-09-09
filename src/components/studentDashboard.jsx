@@ -19,6 +19,13 @@ class StudentDashboard extends Component {
             this.setState({ notices: res.data});
         });
     }
+    //for search notices
+    changeNoticeSearchHandler = (notices)=> {
+        this.setState({title: notices.target.value});
+        SchoolManagementSystemServices.getNoticeByTitle(notices.target.value).then(res=>{
+            this.setState({notices : res.data});
+        })
+    }
     //view notices
     viewNotice(e, noticeId) {
         e.preventDefault();
@@ -50,7 +57,7 @@ class StudentDashboard extends Component {
                                 </button>
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <form className="d-flex">
-                                        <input className="form-control me-2" type="search" placeholder="Filter by Title" aria-label="Search"/>
+                                        <input className="form-control me-2" type="search" placeholder="Filter by Title" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.title} onChange={this.changeNoticeSearchHandler}/>
                                         <button className="btn btn-outline-success" type="submit">Search</button>
                                     </form>
 

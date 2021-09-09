@@ -3,17 +3,208 @@ import AdminSideNavBar from "./Admin-SideNavBar";
 import {Table} from "react-bootstrap";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 const imageUrl = "http://localhost:8070/uploads/";
+
+const sections = [
+    {
+        label : "Grade 1",
+        value : 1
+    },
+    {
+        label : "Grade 2",
+        value : 2
+    },
+    {
+        label : "Grade 3",
+        value : 3
+    },
+    {
+        label : "Grade 3",
+        value : 3
+    },
+    {
+        label : "Grade 4",
+        value : 4
+    },
+    {
+        label : "Grade 5",
+        value : 5
+    },
+    {
+        label : "Grade 6",
+        value : 6
+    },
+    {
+        label : "Grade 7",
+        value : 7
+    },
+    {
+        label : "Grade 8",
+        value : 8
+    },
+    {
+        label : "Grade 9",
+        value : 9
+    },
+    {
+        label : "Grade 10",
+        value : 10
+    },
+    {
+        label : "Grade 11",
+        value : 11
+    },
+    {
+        label : "Grade 12",
+        value : 12
+    },
+    {
+        label : "Grade 13",
+        value : 13
+    },
+]
+const className = [
+    {
+        label : "1-A",
+        value : "1-A"
+    },
+    {
+        label : "1-B",
+        value : "1-B"
+    },
+    {
+        label : "2-A",
+        value : "2-A"
+    },
+    {
+        label : "2-B",
+        value : "2-B"
+    },
+    {
+        label : "3-A",
+        value : "3-A"
+    },
+    {
+        label : "3-B",
+        value : "3-B"
+    },
+    {
+        label : "4-A",
+        value : "4-A"
+    },
+    {
+        label : "4-B",
+        value : "4-B"
+    },
+    {
+        label : "5-A",
+        value : "5-A"
+    },
+    {
+        label : "5-B",
+        value : "5-B"
+    },
+    {
+        label : "6-A",
+        value : "6-A"
+    },
+    {
+        label : "6-B",
+        value : "6-B"
+    },
+    {
+        label : "7-A",
+        value : "7-A"
+    },
+    {
+        label : "7-B",
+        value : "7-B"
+    },{
+        label : "8-A",
+        value : "8-A"
+    },
+    {
+        label : "8-B",
+        value : "8-B"
+    },
+    {
+        label : "9-A",
+        value : "9-A"
+    },
+    {
+        label : "9-B",
+        value : "9-B"
+    },
+    {
+        label : "10-A",
+        value : "10-A"
+    },
+    {
+        label : "10-B",
+        value : "10-B"
+    },
+    {
+        label : "11-A",
+        value : "11-A"
+    },
+    {
+        label : "11-B",
+        value : "11-B"
+    },
+    {
+        label : "12-A",
+        value : "12-A"
+    },
+    {
+        label : "12-B",
+        value : "12-B"
+    },
+    {
+        label : "13-A",
+        value : "13-A"
+    },
+    {
+        label : "13-B",
+        value : "13-B"
+    }
+
+]
 class StudentDetailReports extends Component {
     constructor(props){
         super(props)
         this.state = {
-            students: []
+            students: [],
+            SectionType : '',
+            ClassType : ''
         }
     }
     componentDidMount(){
         SchoolManagementSystemServices.getAllStudents().then((res) => {
             this.setState({ students: res.data});
         });
+    }
+    changeAdmissionHandler = (students)=> {
+        this.setState({admissionNumber: students.target.value});
+        SchoolManagementSystemServices.getStudentByAdmissionNumber(students.target.value).then(res=>{
+            this.setState({students : res.data});
+        })
+    }
+    changeSectionHandler = (students)=> {
+        this.setState({SectionType: students.target.value});
+        SchoolManagementSystemServices.getStudentBySection(students.target.value).then(res=>{
+            this.setState({students : res.data});
+        })
+    }
+    changeClassHandler = (students)=> {
+        this.setState({ClassType: students.target.value});
+        SchoolManagementSystemServices.getStudentByClass(students.target.value).then(res=>{
+            this.setState({students : res.data});
+        })
+    }
+    changeNameHandler = (students)=> {
+        this.setState({firstName: students.target.value});
+        SchoolManagementSystemServices.getStudentByName(students.target.value).then(res=>{
+            this.setState({students : res.data});
+        })
     }
     render() {
         return (
@@ -38,7 +229,7 @@ class StudentDetailReports extends Component {
                                         </li>
                                     </ul>
                                     <form className="d-flex">
-                                        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                                        <input className="form-control me-2" type="search" placeholder="Search by Admission" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.admissionNumber} onChange={this.changeAdmissionHandler}/>
                                         <button className="btn btn-outline-success" type="submit">Search</button>
                                     </form>
                                 </div>
@@ -58,27 +249,27 @@ class StudentDetailReports extends Component {
                                         Download</button>
                                 </div>
                                 <div className="col-md-3" >
-                                    <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style={{backgroundColor:"white",width:"100%"}}>
-                                       Select by Grade
-                                    </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
+                                    <select className="custom-select" style={{height:"40px",width:"100%"}} value={this.state.SectionType} onChange={this.changeSectionHandler}>
+                                        <option selected>Select by Section</option>
+                                        {
+                                            sections.map((option) =>(
+                                                <option value={option.value}>{option.label}</option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
                                 <div className="col-md-3">
-                                    <button className="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style={{backgroundColor:"white",width:"100%"}}>
-                                        Select by Class
-                                    </button>
-                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                        <li><a className="dropdown-item" href="#">Action</a></li>
-                                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
+                                    <select className="custom-select" style={{height:"40px",width:"100%"}} value={this.state.ClassType} onChange={this.changeClassHandler}>
+                                        <option selected>Select by Class</option>
+                                        {
+                                            className.map((option) =>(
+                                                <option value={option.value}>{option.label}</option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
                                 <div className="col-md-3">
-                                    <input className="form-control" placeholder="Search by Name or ID"/>
+                                    <input className="form-control" placeholder="Search by Name or ID" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.firstName} onChange={this.changeNameHandler}/>
                                 </div>
 
                             </div>
@@ -92,8 +283,8 @@ class StudentDetailReports extends Component {
                                             <tr>
 
                                                 <th scope="col">Profile Picture</th>
-                                                <th scope="col">Name</th>
                                                 <th scope="col">Admission Number</th>
+                                                <th scope="col">Name</th>
                                                 <th scope="col">Section</th>
                                                 <th scope="col"> Class</th>
                                                 <th scope="col"> Gender</th>

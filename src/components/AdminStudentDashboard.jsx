@@ -207,6 +207,13 @@ class AdminStudentDashboard extends Component {
             this.setState({students: this.state.students.filter(student => student._id !==id)});
         })
     }
+    //for search function
+    changeClassSearchHandler = (students)=> {
+        this.setState({className: students.target.value});
+        SchoolManagementSystemServices.getStudentByClass(students.target.value).then(res=>{
+            this.setState({students : res.data});
+        })
+    }
     changeImageHandler = (students)=> {
         this.setState({image: students.target.files[0]});
     }
@@ -330,7 +337,7 @@ class AdminStudentDashboard extends Component {
                                         </li>
                                     </ul>
                                     <form className="d-flex">
-                                        <input className="form-control me-2" type="search" placeholder="Filter by Class" aria-label="Search"/>
+                                        <input className="form-control me-2" type="search" placeholder="Filter by Class" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.className} onChange={this.changeClassSearchHandler}/>
                                             <button className="btn btn-outline-success" type="submit">Search</button>
                                     </form>
 
