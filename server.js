@@ -45,3 +45,4 @@ app.use("/students", studentRouter);
 app.use("/Notice", noticeRouter);
 app.use("/lectureslides", lectureslidesRouter);
 app.use("/uploads", express.static('uploads'));
+app.use("/outputFiles", express.static('outputFiles'));

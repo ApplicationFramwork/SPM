@@ -4,8 +4,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
-const pdf = require('html-pdf');
-const pdfTemplate = require('./documents');
+const exportUsersToExcel = require('./documents/exportService');
 
 let mailTransporter = nodemailer.createTransport({
     service: 'gmail',
@@ -204,15 +203,22 @@ router.route("/Delete/:id/:filename").delete(async (req, res) => {
 })
 router.route("/print").post((req, res) => {
 
-    pdf.create(pdfTemplate(req.body), {}).toFile('./routes/result.pdf', (err) => {
-     
-    if(err) {
-        return console.log('error');
-    }
-    res.send(Promise.resolve())
-  });
+    let teachers = req.body.teacher;
+    
+
+const workSheetColumnName = [
+    "ID",
+    "Name",
+    "Email",
+    "NIC",
+    "Allocated Grade",
+    "Description"
+]
+
+const workSheetName = 'Teachers';
+const filePath = './outputFiles/excel-from-js.xlsx';
+
+exportUsersToExcel(teachers, workSheetColumnName, workSheetName, filePath);
 })
-router.route("/getpdf").get((req, res) => {
-    res.sendFile(__dirname + '/result.pdf');
-})
+
 module.exports = router;
