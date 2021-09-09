@@ -9,6 +9,7 @@ import "../../../../FRONTEND/frontend/node_modules/datatables.net-dt/css/jquery.
 import $ from 'jquery'
 $.DataTable = require('datatables.net');
 const Imageurl = "http://localhost:8070/uploads/teachers/";
+const Docurl = "http://localhost:8070/outputFiles/excel-from-js.xlsx";
 
 export default class backEndTeacherComponent extends Component {
     constructor(props) {
@@ -320,10 +321,6 @@ export default class backEndTeacherComponent extends Component {
     createAndDownloadPdf = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8070/Teacher/print', this.state)
-            .then(() => axios.get('http://localhost:8070/Teacher/getpdf', { responseType: 'blob' }).then((res) => {
-                const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
-                saveAs(pdfBlob, 'generatedDocument.pdf')
-            }))
     }
 
     render() {
@@ -355,8 +352,8 @@ export default class backEndTeacherComponent extends Component {
                                         </button>
                                     </div>
                                     <div className="col-md-2">
-                                        <button type="button" class="btn  btn-danger" onClick={e => this.createAndDownloadPdf(e)}>
-                                            Genarate Report
+                                        <button type="button" class="btn  btn-danger" data-toggle="modal" data-target="#datareport">
+                                            Genarate Report 
                                         </button>
                                     </div>
                                 </div>
@@ -798,6 +795,39 @@ export default class backEndTeacherComponent extends Component {
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success" onClick={this.editteacher}>Edit Details</button>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Report model */}
+                            <div class="modal fade" id="datareport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title " id="exampleModalLongTitle">DATA REPORT</h1>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div className="glass bg-info mb-2 ml-3 mr-3">
+                                                <div className="row text-center">
+                                                    <div className="col-12 mt-3 mb-3">
+                                                        <h1>Create All Teachers Data Report</h1>
+                                                        <button type="button" class="btn btn-success" onClick={e => this.createAndDownloadPdf(e)}>Create Report</button>
+                                                    </div>
+                                                    <div className="col-12 mt-3 mb-3">
+                                                        <h1>Create All Teachers Data Report</h1>
+                                                        <button type="button" class="btn btn-success" onClick={e => this.createAndDownloadPdf(e)}>Create Report</button>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a type="button" class="btn btn-success" href={Docurl}>Download Report</a>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
