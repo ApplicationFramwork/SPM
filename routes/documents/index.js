@@ -1,10 +1,14 @@
 module.exports = ({ teacher }) => {
-  const today = new Date();
-  teacher.forEach((element) => {
-    teacherid = element.teacher_ID;
-    console.log(teacherid);
-  });
-  return `
+   const today = new Date();
+   const teacher_ID = [];
+   console.log(teacher);
+   for (i = 0; i < teacher.length; i++) {
+      teacher[i] = (teacher[i].teacher_ID);
+      console.log(teacher[i]);
+   } 
+  
+
+   return `
     <!doctype html>
     <html>
        <head>
@@ -89,9 +93,8 @@ module.exports = ({ teacher }) => {
                       <table>
                          <tr>
                             <td>
-                               Date: ${`${today.getDate()}. ${
-                                 today.getMonth() + 1
-                               }. ${today.getFullYear()}.`}
+                               Date: ${`${today.getDate()}. ${today.getMonth() + 1
+      }. ${today.getFullYear()}.`}
                             </td>
                          </tr>
                       </table>
@@ -109,14 +112,6 @@ module.exports = ({ teacher }) => {
                       </table>
                    </td>
                 </tr>
-                <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
-                </tr>
-                <tr class="item">
-                   <td>First item:</td>
-                   <td>${teacherid}</td>
-                </tr>
                 <tr class="item">
                    <td>Second item:</td>
                    <td>${teacher}</td>
@@ -126,5 +121,6 @@ module.exports = ({ teacher }) => {
           </div>
        </body>
     </html>
-    `;
+    `
 };
+
