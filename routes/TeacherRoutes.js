@@ -216,7 +216,7 @@ const workSheetColumnName = [
 ]
 
 const workSheetName = 'Teachers';
-const filePath = './outputFiles/excel-from-js.xlsx';
+const filePath = './outputFiles/teacher.xlsx';
 
 exportUsersToExcel(teachers, workSheetColumnName, workSheetName, filePath);
 })
