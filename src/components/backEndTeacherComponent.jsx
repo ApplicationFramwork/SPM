@@ -9,7 +9,7 @@ import "../../../../FRONTEND/frontend/node_modules/datatables.net-dt/css/jquery.
 import $ from 'jquery'
 $.DataTable = require('datatables.net');
 const Imageurl = "http://localhost:8070/uploads/teachers/";
-const Docurl = "http://localhost:8070/outputFiles/excel-from-js.xlsx";
+const Docurl = "http://localhost:8070/outputFiles/teacher.xlsx";
 
 export default class backEndTeacherComponent extends Component {
     constructor(props) {
