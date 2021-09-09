@@ -111,5 +111,13 @@ router.route("/get/:id").get(async (req, res)=>{
         console.log(err);
     })
 })
-
+//search notice by title
+router.route("/getNotice/:notice").get((req,res)=>{
+    let notice = req.params.notice;
+    Notices.find({ title: notice}).then((notices)=>{
+        res.json(notices)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
 module.exports = router;

@@ -183,6 +183,43 @@ router.route("/update/:id").put(async (req, res) => {
             console.log(err);
             res.status(500).send({ status: "Error with Updating data" })
         })
-
 })
+//get student by admissionNumber
+router.route("/getStudent/:studentNumber").get((req,res)=>{
+    let studentNumber = req.params.studentNumber;
+    Students.find({admissionNumber : studentNumber}).then((students)=>{
+        res.json(students)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+//get student by section
+router.route("/getStudentBySection/:grade").get((req,res)=>{
+    let grade = req.params.grade;
+    Students.find({section : grade}).then((students)=>{
+        res.json(students)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+//get student by class
+router.route("/getStudentByClass/:classname").get((req,res)=>{
+    let classname = req.params.classname;
+    Students.find({className : classname}).then((students)=>{
+        res.json(students)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+//get student by name
+router.route("/getStudentByName/:studentName").get((req,res)=>{
+    let studentName = req.params.studentName;
+    Students.find({ firstName: studentName}).then((students)=>{
+        res.json(students)
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+
+
 module.exports = router;
