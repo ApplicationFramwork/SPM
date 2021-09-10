@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Subject = require("../models/Subject");
+const exportUsersToExcel = require('./documents/exportSubjectService');
 
 //add new subject
 router.route("/add").post((req, res) => {
@@ -64,6 +65,25 @@ router.route("/Delete/:id").delete(async (req, res) => {
             console.log(err);
             res.status(500).send({ status: "Error with deleting data" })
         })
+})
+//genrate report
+router.route("/print").post((req, res) => {
+
+    let subjects = req.body.report;
+    console.log(subjects)
+    
+
+const workSheetColumnName = [
+    "Subject ID",
+    "Subject Name",
+    "Allocated Grade",
+    "Description"
+]
+
+const workSheetName = 'Subject';
+const filePath = './outputFiles/Subject.xlsx';
+
+exportUsersToExcel(subjects, workSheetColumnName, workSheetName, filePath);
 })
 
 module.exports = router;

@@ -86,6 +86,16 @@ router.route("/GetAllTeacaher").get((req, res) => {
             console.log(err)
         })
 })
+//get all Teacher details using grade
+router.route("/GetAllTeacaherUsingGrade/:grade").get((req, res) => {
+    let grade = req.params.grade;
+    Teacher.find({allocated_Grade : grade}).populate('subject', 'subject_ID subject_Name allocated_Grade description')
+        .then((events => {
+            res.json(events)
+        })).catch((err) => {
+            console.log(err)
+        })
+})
 
 //get Teacher details using Teacher id
 router.route("/GetTeacher/:id").get((req, res) => {
@@ -201,9 +211,10 @@ router.route("/Delete/:id/:filename").delete(async (req, res) => {
             res.status(500).send({ status: "Error with deleting data" })
         })
 })
+//genrate report
 router.route("/print").post((req, res) => {
 
-    let teachers = req.body.teacher;
+    let teachers = req.body.report;
     
 
 const workSheetColumnName = [
