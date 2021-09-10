@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import service from '../services/SchoolManagementSystemServices'
 import AdminSideNavBar from './Admin-SideNavBar';
 import "../../../../FRONTEND/frontend/node_modules/datatables.net-dt/css/jquery.dataTables.css";
 import $ from 'jquery'
 $.DataTable = require('datatables.net');
+const Docurl = "http://localhost:8070/outputFiles/Subject.xlsx";
 
 export default class BackEndSubjectComponent extends Component {
     constructor(props) {
@@ -19,7 +21,11 @@ export default class BackEndSubjectComponent extends Component {
             description: '',
 
             //get all details variables
-            allSubjects: []
+            allSubjects: [],
+
+            //get report
+            report: [],
+            report_grade:'',
 
         }
         // //add Handlers
@@ -27,6 +33,8 @@ export default class BackEndSubjectComponent extends Component {
         this.changeSUbjectNameHandler = this.changeSUbjectNameHandler.bind(this);
         this.changeSUbjectAllocatedGrade = this.changeSUbjectAllocatedGrade.bind(this);
         this.changeSUbjectDescriptionHandler = this.changeSUbjectDescriptionHandler.bind(this);
+        //reprt handlers
+        this.ReportTeacherAllocatedGrade = this.ReportTeacherAllocatedGrade.bind(this);
     }
     //add handler
     changeSUbjectIDHandler = (event) => {
@@ -41,6 +49,11 @@ export default class BackEndSubjectComponent extends Component {
     changeSUbjectDescriptionHandler = (event) => {
         this.setState({ description: event.target.value });
     }
+    //report handlers
+    ReportTeacherAllocatedGrade = (event) => {
+        this.setState({ report_grade: event.target.value });
+    }
+    
     componentDidMount() {
         service.getAllSubjects().then(res => {
             this.setState({ allSubjects: res.data });
@@ -128,6 +141,24 @@ export default class BackEndSubjectComponent extends Component {
             }
         })
     }
+    createAndDownloadPdf = (e) => {
+        e.preventDefault();
+        service.getAllSubjects().then(res => {
+            this.setState({ report: res.data });
+        }).then(() => {
+            axios.post('http://localhost:8070/Subjects/print', this.state)
+        })
+        console.log(this.state.report);
+    }
+    createAndDownloadGradePdf = (e) => {
+        e.preventDefault();
+        service.getAllsubjectUsingSection(this.state.report_grade).then((res => {
+            this.setState({ report: res.data });
+
+        })).then(() => {
+            axios.post('http://localhost:8070/Subjects/print', this.state)
+        })
+    }
     render() {
         return (
             <div>
@@ -153,8 +184,8 @@ export default class BackEndSubjectComponent extends Component {
                                         </button>
                                     </div>
                                     <div className="col-md-2">
-                                        <button type="button" class="btn  btn-danger" disabled>
-                                            Genarate Report
+                                        <button type="button" class="btn  btn-danger" data-toggle="modal" data-target="#datareport">
+                                            Genarate Report 
                                         </button>
                                     </div>
                                 </div>
@@ -280,6 +311,67 @@ export default class BackEndSubjectComponent extends Component {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success" onClick={this.addSubject}>Add Details</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Report model */}
+                            <div class="modal fade" id="datareport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title " id="exampleModalLongTitle">GENARATE REPORT</h1>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div className="glass bg-info mb-2 ml-3 mr-3">
+                                                <div className="row text-center">
+                                                    <div className="col-12 mt-3 mb-3">
+                                                        <h1>Get All Subjects's Data Report</h1>
+                                                        <button type="button" class="btn btn-warning ml-5 mr-5" onClick={e => this.createAndDownloadPdf(e)}>Create Report</button>
+                                                        <a type="button" class="btn btn-success ml-5 mr-5" href={Docurl}>Download Report</a>
+                                                    </div>
+                                                    <div className="col-12 mt-3 mb-3">
+                                                        <h1>Get All Subjects's Data Report According To Grade</h1>
+                                                        <div className="row ml-3 mr-3">
+                                                            <div className="col-md-4">
+                                                                        <select className="custom-select" name="point" type="allocated_Grade" placeholder={"Allocated Grade"}
+                                                                            onChange={this.ReportTeacherAllocatedGrade}>
+                                                                            <option selected>Choose...</option>
+                                                                            <option value="1">Grade-01</option>
+                                                                            <option value="2">Grade-02</option>
+                                                                            <option value="3">Grade-03</option>
+                                                                            <option value="4">Grade-04</option>
+                                                                            <option value="5">Grade-05</option>
+                                                                            <option value="6">Grade-06</option>
+                                                                            <option value="7">Grade-07</option>
+                                                                            <option value="8">Grade-08</option>
+                                                                            <option value="9">Grade-09</option>
+                                                                            <option value="10">Grade-10</option>
+                                                                            <option value="11">Grade-11</option>
+                                                                            <option value="12">Grade-12</option>
+                                                                            <option value="13">Grade-13</option>
+                                                                        </select>
+                                                            </div>
+                                                            {console.log(this.state.report_grade)}
+                                                            <div className="col-md-4">
+                                                                <button type="button" class="btn btn-warning ml-5 mr-5" onClick={e => this.createAndDownloadGradePdf(e)}>Create Report</button>
+                                                            </div>
+                                                            <div className="col-md-4">
+                                                                <a type="button" class="btn btn-success ml-5 mr-5" href={Docurl}>Download Report</a>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>

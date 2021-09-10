@@ -15,6 +15,7 @@ const GetAllSubjectsAPI = "http://localhost:8070/Subjects/GetAllSubjects";
 const GetAllLectureNotices = "http://localhost:8070/lectureslides/getsubjectNotices"
 const GetAllLectureslides = "http://localhost:8070/lectureslides/getsubjeclectureslides"
 const GetAllOneSubjectsAPI = "http://localhost:8070/Subjects/GetSubject";
+const GetAllTeachersUsingGradeAPI = "http://localhost:8070/Teacher/GetAllTeacaherUsingGrade";
 const GetAllTeachersAPI = "http://localhost:8070/Teacher/GetAllTeacaher";
 const GetAllOneTeachersAPI = "http://localhost:8070/Teacher/GetTeacher";
 const UpdateTeacherAPI = "http://localhost:8070/Teacher/update"
@@ -79,6 +80,10 @@ class SchoolManagementSystemServices {
     //get All Teachers
     GetAllTeachers() {
         return axios.get(GetAllTeachersAPI);
+    }
+    //get all the teachers using grade
+    getallteachersUsingGrade(Grade) {
+        return axios.get(GetAllTeachersUsingGradeAPI + '/' + Grade);
     }
     //get One Subject
     GetOneSubject(ID) {
