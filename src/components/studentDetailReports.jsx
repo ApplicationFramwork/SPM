@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import { saveAs } from 'file-saver';
+import axios from "axios";
 import AdminSideNavBar from "./Admin-SideNavBar";
 import {Table} from "react-bootstrap";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 const imageUrl = "http://localhost:8070/uploads/";
+
 
 const sections = [
     {
@@ -182,6 +185,7 @@ class StudentDetailReports extends Component {
             this.setState({ students: res.data});
         });
     }
+
     changeAdmissionHandler = (students)=> {
         this.setState({admissionNumber: students.target.value});
         SchoolManagementSystemServices.getStudentByAdmissionNumber(students.target.value).then(res=>{
@@ -205,6 +209,15 @@ class StudentDetailReports extends Component {
         SchoolManagementSystemServices.getStudentByName(students.target.value).then(res=>{
             this.setState({students : res.data});
         })
+    }
+    createAndDownloadPdf=(e)=>{
+        e.preventDefault();
+        console.log(this.state.students);
+        axios.post('http://localhost:8070/students/create-pdf', this.state)
+        .then(() => axios.get('http://localhost:8070/students/getpdf', { responseType: 'blob' }).then((res) => {
+            const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
+            saveAs(pdfBlob, 'StudentDetailReport.pdf')
+        }))
     }
     render() {
         return (
@@ -245,7 +258,8 @@ class StudentDetailReports extends Component {
                         <div className="container p-2"style={{backgroundColor:"orange"}}>
                             <div className="row">
                                 <div className="col-md-3">
-                                    <button className="btn btn-success"><i className="fas fa-download"></i>&nbsp;
+
+                                    <button className="btn btn-success" onClick={e => this.createAndDownloadPdf(e)}><i className="fas fa-download" ></i>&nbsp;
                                         Download</button>
                                 </div>
                                 <div className="col-md-3" >
