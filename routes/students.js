@@ -3,7 +3,8 @@ let Students = require("../models/Students");
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
-
+const pdf = require('html-pdf');
+const pdfTemplate = require('./documents');
 //multer for image handling
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
@@ -220,6 +221,21 @@ router.route("/getStudentByName/:studentName").get((req,res)=>{
         console.log(err);
     })
 })
+//create pdf
+router.post('/create-pdf', (req, res) => {
+
+    pdf.create(pdfTemplate(req.body), {}).toFile('student.pdf', (err) => {
+
+        if(err) {
+            return console.log('error');
+        }
+        res.send(Promise.resolve())
+    });
+})
+
+router.get('/getpdf', (req, res) => {
+    res.sendFile('D:\\Y3S2\\SPM\\SPM\\BACKEND\\student.pdf');
+});
 
 
 module.exports = router;
