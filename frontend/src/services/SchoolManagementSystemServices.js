@@ -6,8 +6,13 @@ const addMarks = "http://localhost:8070/marks/add";
 const viewAttendanceByClassName = "http://localhost:8070/attendance";
 const deleteAttendance = "http://localhost:8070/attendance/delete";
 const login = "http://localhost:8070/users/login";
+const viewMark = "http://localhost:8070/marks/report";
 
 class SchoolManagementSystemServices {
+
+    ViewMarks(id){
+        return axios.get(viewMark + '/' + id);
+    }
 
     AddMarks(marks){
         return axios.post(addMarks,marks);

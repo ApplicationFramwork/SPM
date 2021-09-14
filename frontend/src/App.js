@@ -8,13 +8,14 @@ import AddMarks from "./components/AddMarks";
 import ViewAttendance from "./components/ViewAttendance";
 import Login from "./components/login";
 import Index from "./components";
+import ViewMarks from "./components/ViewMarks";
 
 function App() {
   return (
       <Router>
 
         <Switch>
-            <Route path="/" exact component={Index} />
+            <Route path="/" exact component={ViewMarks} />
             {/*<Route path="/" exact component={Login} />*/}
             <Route path="/dashboard" exact component={AdminDashboard} />
             <Route path="/MarkAttendance" exact component={AttendanceMark} />
