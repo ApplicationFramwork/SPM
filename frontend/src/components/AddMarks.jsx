@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import Adm from "./Admin-SideNavBar";
 import AdminHeader from "./AdminHeader";
+import cms from '../services/SchoolManagementSystemServices';
 
 function AddMarks(){
     const [inputFields, setInputFields] = useState([
@@ -27,7 +28,10 @@ function AddMarks(){
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
-        let marks = {StudentId:StudentId,Name:'Amal',Grade:Grade,Term:Term,Marks:inputFields}
+        let marks = {StudentId:StudentId,Name:'Amal',Grade:Grade,Term:Term,Status:'Pass',marks:inputFields}
+        cms.AddMarks(marks).then(()=>{
+            alert("Successfully Added!");
+        })
     }
 
 
