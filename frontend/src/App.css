@@ -19,6 +19,13 @@ a{
   padding: 10px;
   color: #00ccff;
 }
+.map{
+  margin-top: 150px;
+
+  width: 99%;
+  height: 300px;
+  vertical-align: bottom;
+}
 .login-body{
   background-image: url("images/login.png");
   background-repeat: no-repeat;

@@ -12,6 +12,9 @@ class Index extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="row map">
+                    <iframe  src="https://maps.wrld3d.com/embed/?mapscene=bc7d3f6"></iframe>
+                </div>
             </div>
         );
     }

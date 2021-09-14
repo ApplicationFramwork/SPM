@@ -8,6 +8,9 @@ function AddMarks(){
     const [inputFields, setInputFields] = useState([
         {subjectName : '', mark:''},
     ]);
+    const [Grade,SetGrade] = useState('');
+    const [Term,SetTerm] = useState('');
+    const [StudentId,SetStudentId] = useState('');
 
     const handleChangeInput = (index, event) =>{
         const values = [...inputFields];
@@ -24,10 +27,12 @@ function AddMarks(){
     }
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log("Input Fields", inputFields);
+        let marks = {StudentId:StudentId,Name:'Amal',Grade:Grade,Term:Term,Marks:inputFields}
     }
+
+
     return(
-        <Container class="background">
+        <Container class="backgroundnpm ">
             <div className="row">
                 <div className="col-sm-3">
                     <Adm />
@@ -41,7 +46,7 @@ function AddMarks(){
 
                     <div className="row m-2 searchRow">
                         <div className="col-sm-6">
-                            <input type="text" className="form-control" placeholder="Search By Class ID" aria-label="Username"
+                            <input type="text" className="form-control" onChange={e => SetStudentId(e.target.value)}  placeholder="Search By Student ID" aria-label="Username"
                                    aria-describedby="basic-addon1"/>
                         </div>
                         <div className="col-sm-4">
@@ -60,9 +65,9 @@ function AddMarks(){
                             </div>
                             <div className="row  mt-2">
                                 <div className="card crdDetailsMarks p-2">
-                                    <input type="text" className="mt-2 p-2 form-control" placeholder="Enter Grade" aria-label="Username"
+                                    <input type="text" className="mt-2 p-2 form-control" name="Grade" onChange={e => SetGrade(e.target.value)} placeholder="Enter Grade" aria-label="Username"
                                            aria-describedby="basic-addon1"/>
-                                    <input type="text" className="mt-2 form-control p-2" placeholder="Enter Term" aria-label="Username"
+                                    <input type="text" className="mt-2 form-control p-2" onChange={e => SetTerm(e.target.value)} placeholder="Enter Term" aria-label="Username"
                                            aria-describedby="basic-addon1"/>
                                 </div>
                             </div>
