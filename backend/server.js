@@ -29,12 +29,12 @@ connection.once("open", () => {
 const studentRouter = require("./routes/Students.js");
 const AttendanceRouter = require("./routes/Attendance.js");
 const UserRouter = require("./routes/Users.js");
-const MarksRouter = require('./routes/Marks');
+const MarksRouter = require('./routes/Marks.js');
 
 app.use("/students",studentRouter);
 app.use("/attendance",AttendanceRouter);
 app.use("/users",UserRouter);
-app.use("/marks",UserRouter);
+app.use("/marks",MarksRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port number: ${PORT} `)

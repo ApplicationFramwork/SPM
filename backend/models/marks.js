@@ -19,11 +19,22 @@ const MarksSchema = new mongoose.Schema({
     },
     status :{
         type : String,
-        required : true
+        required : false
     },
-    Marks : {marks:[]}
+    marks : [
+        {
+            subjectName :{
+                type: String,
+                required : false
+            },
+            mark : {
+                type: String,
+                required : false
+            },
+        },
+    ],
 });
 
-const Marks = mongoose.model("attendance",MarksSchema);
+const Marks = mongoose.model("marks",MarksSchema);
 
 module.exports = Marks;

@@ -13,6 +13,8 @@ router.route("/").get(async (req,res)=>{
 //Add marks
 router.route("/add").post(async (req,res)=>{
     const {StudentId,Name,Grade,Term,Status,marks} = req.body;
+    console.log(req.body)
+
     const newMark = new Marks({
         StudentId,
         Name,
@@ -20,6 +22,7 @@ router.route("/add").post(async (req,res)=>{
         Term,
         Status,
         marks
+
     });
     newMark.save().then(() =>{
         res.status(200).send({status: "Attendance Added!"});
@@ -47,3 +50,5 @@ router.route("/report/:id").get(async (req,res)=>{
         console.log(err);
     })
 })
+
+module.exports = router;
