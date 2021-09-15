@@ -287,3 +287,31 @@ a{
   background-image: url("images/backgroundj.jpg");
   background-size: cover;
 }
+.reportdiv{
+  border: 1px solid #000;
+}
+.reportLogo{
+  width: 150px;
+  margin: 10px;
+}
+.form-control-input{
+  border: 1px solid transparent;
+}
+.rowHeader{
+  background-color:#00ccff;
+}
+.textNote{
+  text-align: right;
+}
+.print{
+  font-size: 30px;
+}
+.print:hover{
+  cursor: pointer;
+}
+.rowFull{
+  border: 1px solid #000;
+}
+.br{
+  border: 2px solid #000;
+}

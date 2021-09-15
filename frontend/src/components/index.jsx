@@ -7,9 +7,11 @@ class Index extends Component {
                 <div className={"row"}>
                     <div className="col-sm-5 m-5">
                         <h1 className={"topic"}>Kidz School Management System</h1>
-                        <div className=" m-3 col-sm-3 getStartBtn">
-                            <h6>Get Started</h6>
-                        </div>
+                        <a href={"/login"}>
+                            <div className=" m-3 col-sm-3 getStartBtn">
+                                <h6>Get Started</h6>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div className="row map">

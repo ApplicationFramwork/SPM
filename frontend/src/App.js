@@ -15,8 +15,9 @@ function App() {
       <Router>
 
         <Switch>
-            <Route path="/" exact component={ViewMarks} />
-            {/*<Route path="/" exact component={Login} />*/}
+            <Route path="/" exact component={Index} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/viewMarks" exact component={ViewMarks} />
             <Route path="/dashboard" exact component={AdminDashboard} />
             <Route path="/MarkAttendance" exact component={AttendanceMark} />
             <Route path="/AddMarks" exact component={AddMarks} />
