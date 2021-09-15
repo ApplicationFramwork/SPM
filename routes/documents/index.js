@@ -1,7 +1,9 @@
 
 module.exports = ({ students }) => {
     const today = new Date();
+    const Imageurl = 'http://localhost:8070/uploads/';
     students.forEach(function() {
+        studentProfilePicture = (students[0].image)
         admissionNumber = (students[0].admissionNumber)
         firstName = (students[0].firstName)
         lastname = (students[0].lastName)
@@ -17,7 +19,9 @@ module.exports = ({ students }) => {
         guardianMobileNumber = (students[0].guardianMobileNumber)
         guardianEmail = (students[0].guardianEmail)
 
-    });
+    })
+
+
         //console.log(firstName);
     return `
     <!doctype html>
@@ -32,7 +36,7 @@ module.exports = ({ students }) => {
              padding: 30px;
              border: 1px solid #eee;
              box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-             font-size: 16px;
+             font-size: 20px;
              line-height: 24px;
              font-family: 'Helvetica Neue', 'Helvetica',
              color: #555;
@@ -131,10 +135,18 @@ module.exports = ({ students }) => {
                 <tr class="information">
                    <td colspan="2">
                       <table>
+                      <tr>
+                        <td>
+                        <img  src=${Imageurl + studentProfilePicture}
+                               style="width:100%; max-width:200px;margin-left:300px;border: 3px solid black;">
+                        </td>
+                      
+                       </tr>
                          <tr>
                          <td>
                                Admission Number: ${admissionNumber}
                             </td>
+                            
                             <td>
                                Firstname: ${firstName}
                             </td>
@@ -183,6 +195,7 @@ module.exports = ({ students }) => {
                     <td>Address:</td>
                     <td>${address}</td>
                 </tr>
+                <br/><br/>
                 <tr class="heading">
                     <td>Parent/Guardian Info:</td>
                     <td>Guardian Details</td>
