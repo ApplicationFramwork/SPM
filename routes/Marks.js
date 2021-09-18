@@ -23,7 +23,7 @@ router.route("/add").post(async (req,res)=>{
 
     });
     newMark.save().then(() =>{
-        res.status(200).send({status: "Attendance Added!"});
+        res.status(200).send({status: "Marks Added!"});
     })
 
 })
