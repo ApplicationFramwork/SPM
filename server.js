@@ -27,10 +27,17 @@ connection.once("open", () => {
 //import routes
 const noticesRouter = require("./routes/notices");
 const studentRouter = require("./routes/students");
+const subjectRoutes = require("./routes/SubjectRoutes");
+const teacherRoutes = require("./routes/TeacherRoutes");
+const lectureslidesRouter = require("./routes/LectureSlidesRoutes");
 
 app.use("/uploads",express.static('uploads'))
 app.use("/notices",noticesRouter);
 app.use("/students",studentRouter);
+app.use("/Subjects", subjectRoutes);
+app.use("/Teacher", teacherRoutes);
+app.use("/lectureslides", lectureslidesRouter);
+app.use("/outputFiles", express.static('outputFiles'));
 app.listen(PORT, () => {
     console.log("Server is up and running")
 })

@@ -237,5 +237,17 @@ router.get('/getpdf', (req, res) => {
     res.sendFile('D:\\Y3S2\\SPM\\SPM\\BACKEND\\student.pdf');
 });
 
+// get student using section number
+router.route("/getpStudentUsingSection/:SectionNumber").get((req, res) => {
+
+    let SectionNumber = req.params.SectionNumber;
+
+    Students.find({ section: SectionNumber }).then((Students) => {
+        res.json(Students)
+    }).catch((err) => {
+        console.log(err);
+    })
+})
+
 
 module.exports = router;
