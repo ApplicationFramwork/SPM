@@ -30,6 +30,9 @@ const studentRouter = require("./routes/students");
 const subjectRoutes = require("./routes/SubjectRoutes");
 const teacherRoutes = require("./routes/TeacherRoutes");
 const lectureslidesRouter = require("./routes/LectureSlidesRoutes");
+const AttendanceRouter = require("./routes/Attendance.js");
+const UserRouter = require("./routes/Users.js");
+const MarksRouter = require('./routes/Marks.js');
 
 app.use("/uploads",express.static('uploads'))
 app.use("/notices",noticesRouter);
@@ -37,6 +40,9 @@ app.use("/students",studentRouter);
 app.use("/Subjects", subjectRoutes);
 app.use("/Teacher", teacherRoutes);
 app.use("/lectureslides", lectureslidesRouter);
+app.use("/attendance",AttendanceRouter);
+app.use("/users",UserRouter);
+app.use("/marks",MarksRouter);
 app.use("/outputFiles", express.static('outputFiles'));
 app.listen(PORT, () => {
     console.log("Server is up and running")
