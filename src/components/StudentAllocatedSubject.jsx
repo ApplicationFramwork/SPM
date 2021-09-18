@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import jwt_decord from "jwt-decode";
 import service from '../services/SchoolManagementSystemServices'
-import AdminSideNavBar from './Admin-SideNavBar';
+import StudentSideNavBar from "./Student-SideNavBar";
 
 export default class StudentAllocatedSubject extends Component {
     constructor(props) {
@@ -8,8 +9,8 @@ export default class StudentAllocatedSubject extends Component {
 
         this.state = {
             // view edit variables
-            viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
-            grade: '10',
+            viewTeacherDatabaseID: jwt_decord(localStorage.getItem("token")).id,
+            grade: jwt_decord(localStorage.getItem("token")).section,
             viewstudentSubjects: []
 
         }
@@ -34,7 +35,7 @@ export default class StudentAllocatedSubject extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-2">
-                            <AdminSideNavBar />
+                            <StudentSideNavBar />
                         </div>
                         <div className="col-md-10">
                                 <div className="container-fluid mt-5">

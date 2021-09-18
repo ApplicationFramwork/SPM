@@ -19,7 +19,7 @@ class Login extends Component {
     changePasswordHander = (event) =>{
         this.setState({password : event.target.value});
     }
-    User;
+
     Login = (e) =>{
         e.preventDefault();
         if(this.state.username != '' && this.state.password != ''){
@@ -32,18 +32,24 @@ class Login extends Component {
                 }).catch(err =>{
                     alert('Login failed!!!');
                 });
-
             }else if(this.state.username.startsWith('S') || this.state.username.startsWith('s')){
-                let user = {Username : this.state.username, password : this.state.password, type : 'Student'};
-                cms.Login(this.User).then(res =>{
+                let user = {Username : this.state.username, password: this.state.password, type : 'Student'};
+                cms.Login(user).then(res =>{
                     console.log(res.data.token);
                     localStorage.setItem("token",res.data.token);
                     this.props.history.push("/studentDashboard");
                 }).catch(err =>{
                     alert('Login failed!!!');
                 });
-            }else if(this.state.username =='Admin' && this.state.password == '123'){
-                this.props.history.push("/dashboard");
+            }else if(this.state.username.startsWith('A') || this.state.username.startsWith('a')){
+                let user = {Username : this.state.username, password: this.state.password, type : 'Admin'};
+                cms.Login(user).then(res =>{
+                    console.log(res.data.token);
+                    localStorage.setItem("token",res.data.token);
+                    this.props.history.push("/dashboard");
+                }).catch(err =>{
+                    alert('Login failed!!!');
+                });
             }else{
                 alert('Please enter your username!');
             }
@@ -63,7 +69,7 @@ class Login extends Component {
                 <div className="row">
                     <div className="col-sm-4">
                         <center>
-                            <h3 className="WelcomeText">Welcome Back</h3>
+                            <h3 className="WelcomeText" data-testid="test_header">Welcome Back</h3>
                             <h6 className="bodyText">This School Management Software has been designed to streamline school management and administrative functions through Information and Communication Technology .</h6>
                             <div id="carouselExampleControls" style={{width:"60%"}} className="carousel slide" data-ride="carousel">
                                 <ol className="carousel-indicators">
@@ -102,7 +108,7 @@ class Login extends Component {
                             <form action="#">
                                 <input type="text" placeholder="User Name" onChange={this.changeUserNameHander} className="form-control loginInputs mt-2"/> <br/>
                                 <input type="password" onChange={this.changePasswordHander} placeholder="Password" className="form-control loginInputs mt-2"/> <br/>
-                                <a href="#"> <small className="text-secondary">Forgot your password ? </small> </a> <br/>
+                                <a href="#"> <small data-testid="test_forgot" className="text-secondary">Forgot your password ? </small> </a> <br/>
                                 <button type="button" onClick={this.Login} className=" mt-2 btn-lg btn-signin">SIGN IN</button>
                             </form>
                         </center>

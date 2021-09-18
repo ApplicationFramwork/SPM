@@ -15,7 +15,6 @@ const Docurl = 'http://localhost:8070/outputFiles/teacher.xlsx'
 export default class backEndTeacherComponent extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       loading: false,
       // form Variables
@@ -26,19 +25,15 @@ export default class backEndTeacherComponent extends Component {
       profile_Picture: '',
       allocated_Grade: '',
       description: '',
-
       //get report
       report: [],
       report_grade: '',
-
       //asign subject variables
       allSubjects: [],
       options: [],
       selecteSubjects: [],
-
       //get all details variables
       teacher: [],
-
       // view edit variables
       viewTeacherDatabaseID: '',
       viewTeacherID: '',
@@ -210,7 +205,6 @@ export default class backEndTeacherComponent extends Component {
             formData.append('profile_Picture', this.state.profile_Picture)
             formData.append('allocated_Grade', this.state.allocated_Grade)
             formData.append('description', this.state.description)
-
             const config = {
               headers: {
                 'content-type': 'multipart/form-data',
@@ -225,7 +219,6 @@ export default class backEndTeacherComponent extends Component {
                 this.props.history.push('/BackendTeacher')
                 refreshPage()
               })
-
             console.log(this.state.subject)
           } else {
             Swal.fire({
@@ -419,9 +412,6 @@ export default class backEndTeacherComponent extends Component {
   }
 
   render() {
-    // if (this.state.loading === true) {
-    //     return <Animation />;
-    // } else {
     return (
       <div>
         <div className="container-fluid">
@@ -468,8 +458,7 @@ export default class backEndTeacherComponent extends Component {
                     boxShadow: '8px 8px  #dce3e0',
                     marginBottom: '20px',
                     marginTop: '20px',
-                  }}
-                >
+                  }}>
                   <thead>
                     <tr>
                       <th>TEACHER ID</th>
@@ -556,12 +545,10 @@ export default class backEndTeacherComponent extends Component {
                 tabindex="-1"
                 role="dialog"
                 aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
+                aria-hidden="true">
                 <div
                   class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
-                  role="document"
-                >
+                  role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h1 class="modal-title " id="exampleModalLongTitle">
@@ -571,8 +558,7 @@ export default class backEndTeacherComponent extends Component {
                         type="button"
                         class="close"
                         data-dismiss="modal"
-                        aria-label="Close"
-                      >
+                        aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -590,8 +576,7 @@ export default class backEndTeacherComponent extends Component {
                                   value={this.state.teacher_ID}
                                   onChange={this.changeTeacherIDHandler}
                                   required
-                                  maxlength="4"
-                                />
+                                  maxlength="4"/>
                               </div>
                             </div>
                             <div className="col-md-2 ml-2 mr-2 mt-3">
@@ -603,8 +588,7 @@ export default class backEndTeacherComponent extends Component {
                                     name="point"
                                     type="allocated_Grade"
                                     placeholder={'Allocated Grade'}
-                                    onChange={this.changeTeacherAllocatedGrade}
-                                  >
+                                    onChange={this.changeTeacherAllocatedGrade}>
                                     <option selected>Choose...</option>
                                     <option value="1">Grade-01</option>
                                     <option value="2">Grade-02</option>

@@ -19,7 +19,6 @@ class AddViewDeleteNotices extends Component {
             viewDescription: '',
             EditNoticePicture: '',
             ID: ''
-
         }
         //add notice handlers
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
@@ -53,7 +52,6 @@ class AddViewDeleteNotices extends Component {
         }else{
             alert("Cannot leave empty field");
         }
-
     }
     //for search notices
     changeNoticeSearchHandler = (notices)=> {
@@ -62,11 +60,13 @@ class AddViewDeleteNotices extends Component {
             this.setState({notices : res.data});
         })
     }
+    //delete notice
     delete(id){
        SchoolManagementSystemServices.deleteNotice(id).then(res=>{
             this.setState({notices: this.state.notices.filter(notice => notice._id !==id)});
         })
     }
+    //view notice
     viewNotice(e, noticeId) {
         e.preventDefault();
         SchoolManagementSystemServices.getNoticeByID(noticeId).then((res => {
@@ -81,6 +81,7 @@ class AddViewDeleteNotices extends Component {
             console.log(this.state.ID);
         }))
     }
+    //update notice
     editNotice = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -118,6 +119,7 @@ class AddViewDeleteNotices extends Component {
             this.setState({ notices: res.data});
         });
     }
+
     //add notice handlers
     changeImageHandler = (notices)=> {
         this.setState({image: notices.target.files[0]});
@@ -139,6 +141,15 @@ class AddViewDeleteNotices extends Component {
     EditDescriptionHandler = (notices) => {
         this.setState({ viewDescription: notices.target.value });
     }
+    //signout
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <div className="background">
@@ -167,7 +178,8 @@ class AddViewDeleteNotices extends Component {
                                     </ul>
                                     <form className="d-flex">
                                         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.title} onChange={this.changeNoticeSearchHandler}/>
-                                        <button className="btn btn-outline-success" type="submit">Search</button>
+                                        {/*Signout Button*/}
+                                        <button onClick={this.signout} className="btn btn-danger" type="submit">Logout</button>
                                     </form>
                                 </div>
                             </div>
@@ -200,6 +212,7 @@ class AddViewDeleteNotices extends Component {
                                                     <div className="row mt-8">
                                                         <div className="col-md-6">
                                                             <div className="p-3 text-center text-white mt-2 cursor">
+                                                                {/*View Button*/}
                                                                 <button className="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdropNoticeUpdate" onClick={e => this.viewNotice(e, notices._id)}>
                                                                     <i className="fas fa-edit"></i>&nbsp;
                                                                     View
@@ -209,6 +222,7 @@ class AddViewDeleteNotices extends Component {
                                                         </div>
                                                         <div className="col-md-6">
                                                             <div className="p-3 text-center text-white mt-2 cursor">
+                                                                {/*Delete Button*/}
                                                                 <button className="btn btn-danger btn-block" onClick={ () => this.delete(notices._id)}>
                                                                     <i className="fas fa-edit"></i>&nbsp;
                                                                     Delete
@@ -227,7 +241,6 @@ class AddViewDeleteNotices extends Component {
                         <div className="row">
                             <br/><br/><br/><br/><br/>
                         </div>
-
                         <div className="container">
                             <div className="row">
                                 {/*Add New Notice Interface Pop Up*/}
@@ -258,16 +271,17 @@ class AddViewDeleteNotices extends Component {
                                                 <div className="mb-3">
                                                     <div className="input-group mb-3">
                                                         <textarea type="text" name="description" id="description" value={this.state.description} onChange={this.changeDescriptionHandler} placeholder="Description" className="form-control" />
-                                                        {/*<input type="text" name="description" id="description" value={this.state.description} onChange={this.changeDescriptionHandler} placeholder="Description" className="form-control"/>*/}
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
                                         <div className="modal-footer">
+                                            {/*Cancel Button*/}
                                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                                 <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                                 Cancel
                                             </button>
+                                            {/*Add Notice Button*/}
                                             <button type="button" onClick={this.addNotice} className="btn btn-primary"><i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                                                 Save
                                             </button>
@@ -315,10 +329,12 @@ class AddViewDeleteNotices extends Component {
                                                 </form>
                                             </div>
                                             <div className="modal-footer">
+                                                {/*Cancel Button*/}
                                                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                                     <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                                     Cancel
                                                 </button>
+                                                {/*Edit Notice Button*/}
                                                 <button type="button" onClick={this.editNotice} className="btn btn-success">
                                                     <i className="fas fa-pen"></i>&nbsp;
                                                     Update

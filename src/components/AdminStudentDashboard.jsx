@@ -4,6 +4,7 @@ import SchoolManagementSystemServices from "../services/SchoolManagementSystemSe
 import axios from "axios";
 import AdminHeader from "./AdminHeader";
 const imageUrl = "http://localhost:8070/uploads/";
+
 class AdminStudentDashboard extends Component {
     constructor(props){
         super(props)
@@ -116,7 +117,6 @@ class AdminStudentDashboard extends Component {
         }else{
             alert("Cannot leave empty field");
         }
-        //console.log(this.state.subject)
     }
     //view student
     viewStudent(e, studentId) {
@@ -126,7 +126,6 @@ class AdminStudentDashboard extends Component {
             console.log(res.data)
             this.setState({
                 ID: student._id,
-
                 viewStudentPicture: student.image,
                 viewAdmissionNumber: student.admissionNumber,
                 viewFirstName: student.firstName,
@@ -146,6 +145,7 @@ class AdminStudentDashboard extends Component {
             console.log(this.state.ID);
         }))
     }
+    //Edit Student details
     editStudent = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -204,12 +204,22 @@ class AdminStudentDashboard extends Component {
             })
         }
     }
+    //Delete student
     deleteStudent(id){
         SchoolManagementSystemServices.deleteStudent(id).then(res=>{
             this.setState({students: this.state.students.filter(student => student._id !==id)});
         })
     }
-    //for search function
+    //Signout
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
+    }
+
+    //Handler for search
     changeClassSearchHandler = (students)=> {
         this.setState({className: students.target.value});
         SchoolManagementSystemServices.getStudentByClass(students.target.value).then(res=>{
@@ -307,9 +317,7 @@ class AdminStudentDashboard extends Component {
     editGuardianEmailHandler = (students) => {
         this.setState({ viewGuardianEmail: students.target.value });
     }
-
-
-
+    //get all students
     componentDidMount(){
         SchoolManagementSystemServices.getAllStudents().then((res) => {
             this.setState({ students: res.data});
@@ -320,12 +328,14 @@ class AdminStudentDashboard extends Component {
             <div className="background">
                 <div className="row">
                     <div className="col-sm-3">
+                        {/*Admin Side Navbar*/}
                         <AdminSideNavBar/>
                     </div>
                     <div className="col-sm-9">
                         <AdminHeader />
                         <nav className="navbar navbar-expand-lg navbar-light bg-warning m-2">
                             <div className="container-fluid">
+                                {/*Heading*/}
                                 <a className="navbar-brand" href="#">Student Management</a>
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon"></span>
@@ -341,9 +351,8 @@ class AdminStudentDashboard extends Component {
                                     </ul>
                                     <form className="d-flex">
                                         <input className="form-control me-2" type="search" placeholder="Filter by Class" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.className} onChange={this.changeClassSearchHandler}/>
-                                            <button className="btn btn-outline-success" type="submit">Search</button>
+                                            <button onClick={this.signout} className="btn btn-danger" type="submit">Logout</button>
                                     </form>
-
                                 </div>
                             </div>
                         </nav>
@@ -389,6 +398,7 @@ class AdminStudentDashboard extends Component {
                                                                                     </span>
                                                                         <div className="col-md-6">
                                                                             <div className="p-3 text-center text-white mt-2 cursor">
+                                                                                {/*View Button*/}
                                                                                 <button className="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdropUpdate"onClick={e => this.viewStudent(e, students._id)}>
                                                                                     <i className="fas fa-search"></i>&nbsp;
                                                                                     View
@@ -397,11 +407,11 @@ class AdminStudentDashboard extends Component {
                                                                         </div>
                                                                         <div className="col-md-6">
                                                                             <div className="p-3 text-center text-white mt-2 cursor">
+                                                                                {/*Delete Button*/}
                                                                                 <button className="btn btn-danger btn-block" onClick={ () => this.deleteStudent(students._id)}>
                                                                                     <i className="fas fa-trash-alt"></i>&nbsp;
                                                                                     Delete
                                                                                 </button>
-
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -540,10 +550,12 @@ class AdminStudentDashboard extends Component {
                                                 </form>
                                             </div>
                                             <div className="modal-footer">
+                                                {/*Cancel Button*/}
                                                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                                     <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                                     Cancel
                                                 </button>
+                                                {/*Save Button*/}
                                                 <button type="button" className="btn btn-primary" onClick={this.addStudent}><i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                                                     Save
                                                 </button>
@@ -679,10 +691,12 @@ class AdminStudentDashboard extends Component {
                                                 </form>
                                             </div>
                                             <div className="modal-footer">
+                                                {/*Cancel Button*/}
                                                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                                     <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                                     Cancel
                                                 </button>
+                                                {/*Update Button*/}
                                                 <button type="button" className="btn btn-success" onClick={this.editStudent}>
                                                     <i className="fas fa-pen"></i>&nbsp;
                                                     Update

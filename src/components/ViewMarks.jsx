@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import cms from '../services/SchoolManagementSystemServices';
 import logo from '../images/Best-School-in-Meerut-1.png'
+
 class ViewMarks extends Component {
     constructor(props){
         super(props)
@@ -9,8 +10,8 @@ class ViewMarks extends Component {
             id : '',
         }
         this.changeStudentIdHandeler = this.changeStudentIdHandeler.bind(this);
-
     }
+    //View marks
     changeStudentIdHandeler = (event) =>{
         if(event.target.value != ""){
             cms.ViewMarks(event.target.value).then((res) =>{
@@ -22,10 +23,9 @@ class ViewMarks extends Component {
     }
 
     render() {
-
         return (
-
             <div className={"m-2 reportdiv"} >
+                {/*Heading*/}
                 <h2 className={"m-2"}>Kidz School</h2>
                 <h5 className={"m-2"}>Kidz School, Stanmore Crescent, Colombo 07</h5>
                 <img src={logo} className={"reportLogo"}/>
@@ -46,18 +46,15 @@ class ViewMarks extends Component {
                         </div>
                     </div>
                 </div>
-
                 <small>{this.state.name}</small>
                 <div className={"row m-2"}>
                     {
                         this.state.marks.map(
                             mark =>
                                 <div className={"rowFull m-1"} key = {mark.StudentId}>
-
                                     <div className={"row rowHeader"}>
                                         <div className={"col-sm-3"}>
                                             Student Name : {mark.Name}
-
                                         </div>
                                         <div className={"col-sm-3"}>
                                            Grade : {mark.Grade}
@@ -89,13 +86,12 @@ class ViewMarks extends Component {
                                         </tbody>
                                     </table>
                                 </div>
-
                         )}
-
                 </div>
                 <center>
                     <small >Note : As this is a computer generated sheet, no signature is required.</small>
                 </center>
+                {/*Report Generation*/}
                 <div className={"textNote"}>
                     <i className="fas fa-print m-2 print"  onClick={window.print}></i>
                 </div>

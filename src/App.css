@@ -416,16 +416,13 @@ label #sidebar_btn:hover{
 }
 
 /* Responsive CSS */
-
 @media screen and (max-width: 780px){
     .sidebar{
         display: none;
     }
-
     #sidebar_btn{
         display: none;
     }
-
     .content{
         margin-left: 0;
         margin-top: 0;
@@ -441,7 +438,6 @@ label #sidebar_btn:hover{
         display: block;
         width: calc(100% - 0%);
     }
-
     .nav_bar{
         background: #222;
         width: (100% - 0px);
@@ -465,11 +461,9 @@ label #sidebar_btn:hover{
         transition: 0.5s;
         transition-property: color;
     }
-
     .nav_bar .nav_btn:hover{
         color: #19B3D3;
     }
-
     .mobile_nav_items{
         background: #2F323A;
         display: none;
@@ -493,42 +487,6 @@ label #sidebar_btn:hover{
     .mobile_nav_items i{
         padding-right: 10px;
     }
-
-    /* .active{
-      display: block;
-    } */
-
-    /*.mobile_nav_items{
-      background: #2F323A;
-      overflow: hidden;
-      max-height: 0;
-      transition: 0.5s;
-      transition-property: max-height;
-    }
-
-    .mobile_nav_items a{
-      color: #fff;
-      display: block;
-      text-align: center;
-      letter-spacing: 1px;
-      line-height: 60px;
-      text-decoration: none;
-      box-sizing: border-box;
-      transition: 0.5s;
-      transition-property: background;
-    }
-
-    .mobile_nav_items a:hover{
-      background: #19B3D3;
-    }
-
-    .mobile_nav_items i{
-      padding-right: 10px;
-    }
-
-    .active{
-      max-height: 1000px;
-    }*/
 }
 
 .indexBody{

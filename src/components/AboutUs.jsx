@@ -7,12 +7,15 @@ class AboutUs extends Component {
     render() {
         return (
             <div className="container-fluid about">
+                {/*Call the Header Component*/}
                 <IndexHeader/>
                 <div className="row">
                     <div className="col-sm-1"></div>
                     <div className="col-sm-11">
                         <br/>
-                        <h1 className="text headingText">About Us</h1>
+                        {/*Heading*/}
+                        <h1 data-testid="test_header" className="text headingText">About Us</h1>
+                        {/*Description*/}
                         <small className="smallText" style={{color:"#FFBA01",fontWeight: "bold",fontSize: "20px",fontFamily: "sans-serif"}}>
                             KIDZ School is an online based School Management System that provides educators with
                             the tools and
@@ -25,17 +28,17 @@ class AboutUs extends Component {
                             Grading, and Reporting, it results in improved efficiency and increased productivity. Both the teacher and
                             <br/>students are benefited from the system.
                             <br/>
-                            </small>
+                        </small>
                     </div>
                 </div>
                 <center>
                 <div className="row">
-
                     <div className="col-sm-12">
                         <br/>
-                        <h3 className="text-dark aboutText">Meet Our Team</h3>
+                        <h3 data-testid="test_header_team" className="text-dark aboutText">Meet Our Team</h3>
                         <hr/>
                         <br/>
+                        {/*Team Details*/}
                         <div className="row align-items-start">
                             <div className="col">
                                 <div className="card" style={{width: "18rem"}}>
@@ -45,7 +48,7 @@ class AboutUs extends Component {
                                                 <img src={author1} className="card-img-top flip"  alt="..."/>
                                             </div>
                                             <div className="flip-box-back">
-                                                <h2>Maleesha Wickramarathna</h2>
+                                                <h2 data-testid="test_header_lead">Maleesha Wickramarathna</h2>
                                                 <p>Software Engineering Undergraduate</p>
                                             </div>
                                         </div>
@@ -66,7 +69,7 @@ class AboutUs extends Component {
                                                 <img src={author2} className="card-img-top flip"  alt="..."/>
                                             </div>
                                             <div className="flip-box-back">
-                                                <h2>Kithmini De Silva</h2>
+                                                <h2 data-testid="test_header_member1">Kithmini De Silva</h2>
                                                 <p>Software Engineering Undergraduate</p>
                                             </div>
                                         </div>
@@ -87,7 +90,7 @@ class AboutUs extends Component {
                                                 <img src={author3} className="card-img-top flip"  alt="..."/>
                                             </div>
                                             <div className="flip-box-back">
-                                                <h2>Vihanga Lekamalage</h2>
+                                                <h2 data-testid="test_header_member2">Vihanga Lekamalage</h2>
                                                 <p>Software Engineering Undergraduate</p>
                                             </div>
                                         </div>

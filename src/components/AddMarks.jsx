@@ -12,7 +12,6 @@ function AddMarks(){
     const [Grade,SetGrade] = useState('');
     const [Term,SetTerm] = useState('');
     const [StudentId,SetStudentId] = useState('');
-
     const handleChangeInput = (index, event) =>{
         const values = [...inputFields];
         values[index][event.target.name] = event.target.value;
@@ -26,6 +25,7 @@ function AddMarks(){
         values.splice(index,1);
         setInputFields(values);
     }
+    //Add Marks
     const handleSubmit = (e) =>{
         e.preventDefault();
         let marks = {StudentId:StudentId,Name:'Amal',Grade:Grade,Term:Term,Status:'Pass',marks:inputFields}
@@ -33,7 +33,6 @@ function AddMarks(){
             alert("Successfully Added!");
         })
     }
-
 
     return(
         <Container class="backgroundnpm ">
@@ -43,11 +42,9 @@ function AddMarks(){
                 </div>
                 <div className="col-sm-9">
                     <AdminHeader />
-
                     <div className="row">
                         <h3><b>Add Student Marks</b></h3>
                     </div>
-
                     <div className="row m-2 searchRow">
                         <div className="col-sm-5">
                             <input type="text" className="form-control" onChange={e => SetStudentId(e.target.value)}  placeholder="Search By Student ID" aria-label="Username"
@@ -68,7 +65,6 @@ function AddMarks(){
                             </div>
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-sm-3 m-2">
                             <div className="row">
@@ -112,12 +108,11 @@ function AddMarks(){
                                                 <i onClick={()=>handleRemoveFields(index)} className="removeIcon fas fa-minus-circle"></i>
                                             </div>
                                         </div>
-
                                     </div>
                                 ))}
                                 <i onClick={()=>handleAddFields()} className="addIcon fas fa-plus-circle"></i>
-
                             </form>
+                            {/*Save Button*/}
                             <button onClick={handleSubmit} className={"addMarksBtn m-2"}>
                                 Save Changes
                             </button>

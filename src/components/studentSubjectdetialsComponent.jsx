@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import service from '../services/SchoolManagementSystemServices'
-import AdminSideNavBar from './Admin-SideNavBar';
+import StudentSideNavBar from "./Student-SideNavBar";
 const Imageurl = "http://localhost:8070/uploads/LectureSlides/";
 
 export default class studentSubjectdetialsComponent extends Component {
@@ -50,7 +50,7 @@ export default class studentSubjectdetialsComponent extends Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-2">
-                            <AdminSideNavBar />
+                            <StudentSideNavBar />
                         </div>
                         <div className="col-md-10">
                             <div className="container-fluid mt-5">

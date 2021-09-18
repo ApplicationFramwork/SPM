@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AdminSideNavBar from "./Admin-SideNavBar";
+import StudentSideNavBar from "./Student-SideNavBar";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 import AdminHeader from "./AdminHeader";
 const imageUrl = "http://localhost:8070/uploads/";
@@ -19,6 +19,13 @@ class StudentDashboard extends Component {
         SchoolManagementSystemServices.getAllNotices().then((res) => {
             this.setState({ notices: res.data});
         });
+    }
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
     }
     //for search notices
     changeNoticeSearchHandler = (notices)=> {
@@ -47,7 +54,7 @@ class StudentDashboard extends Component {
             <div className="background">
                 <div className="row">
                     <div className="col-sm-3">
-                        <AdminSideNavBar/>
+                        <StudentSideNavBar/>
                     </div>
                     <div className="col-sm-9">
                         <AdminHeader />
@@ -60,7 +67,7 @@ class StudentDashboard extends Component {
                                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                     <form className="d-flex">
                                         <input className="form-control me-2" type="search" placeholder="Filter by Title" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.title} onChange={this.changeNoticeSearchHandler}/>
-                                        <button className="btn btn-outline-success" type="submit">Search</button>
+                                        <button onClick={this.signout} className="btn btn-danger" type="submit">Logout</button>
                                     </form>
 
                                 </div>

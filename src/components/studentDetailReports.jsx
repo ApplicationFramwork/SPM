@@ -220,6 +220,13 @@ class StudentDetailReports extends Component {
             saveAs(pdfBlob, 'StudentDetailReport.pdf')
         }))
     }
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div className="background">
@@ -245,7 +252,7 @@ class StudentDetailReports extends Component {
                                     </ul>
                                     <form className="d-flex">
                                         <input className="form-control me-2" type="search" placeholder="Search by Admission" aria-label="Search" name="searchQuery"aria-label="Search" value={this.state.admissionNumber} onChange={this.changeAdmissionHandler}/>
-                                        <button className="btn btn-outline-success" type="submit">Search</button>
+                                        <button onClick={this.signout} className="btn btn-danger" type="submit">Logout</button>
                                     </form>
                                 </div>
                             </div>

@@ -12,7 +12,6 @@ const Docurl = "http://localhost:8070/outputFiles/Subject.xlsx";
 export default class BackEndSubjectComponent extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             loading: false,
             // form Variables
@@ -20,14 +19,11 @@ export default class BackEndSubjectComponent extends Component {
             subject_Name: '',
             allocated_Grade: '',
             description: '',
-
             //get all details variables
             allSubjects: [],
-
             //get report
             report: [],
             report_grade:'',
-
         }
         // //add Handlers
         this.changeSUbjectIDHandler = this.changeSUbjectIDHandler.bind(this);
@@ -54,16 +50,19 @@ export default class BackEndSubjectComponent extends Component {
     ReportTeacherAllocatedGrade = (event) => {
         this.setState({ report_grade: event.target.value });
     }
-    
+
+    //Get all subjecys
     componentDidMount() {
         service.getAllSubjects().then(res => {
             this.setState({ allSubjects: res.data });
         });
     }
+
     componentDidUpdate() {
         this.$el = $(this.el);
         this.$el.DataTable();
     }
+    //Add a subject
     addSubject = (e) => {
         e.preventDefault();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -73,7 +72,6 @@ export default class BackEndSubjectComponent extends Component {
             },
             buttonsStyling: false
         })
-
         swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
             text: "Do you want to Add New Subject?",
@@ -96,12 +94,10 @@ export default class BackEndSubjectComponent extends Component {
                         description: this.state.description
                     };
                     console.log('Subject => ' + JSON.stringify(Subject));
-
                     service.addNewSubject(Subject).then(res => {
                         this.props.history.push('/BackendSubject');
                         refreshPage();
                     })
-
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -109,11 +105,10 @@ export default class BackEndSubjectComponent extends Component {
                         text: 'All Input Fields Should Fill!'
                     })
                 }
-
             }
         })
-
     }
+    //Delete a subject
     delete(e, subjectid) {
         e.preventDefault();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -137,11 +132,10 @@ export default class BackEndSubjectComponent extends Component {
                     this.props.history.push('/BackendSubject');
                     window.location.reload();
                 });
-
-
             }
         })
     }
+    //Generate PDF
     createAndDownloadPdf = (e) => {
         e.preventDefault();
         service.getAllSubjects().then(res => {
@@ -151,11 +145,11 @@ export default class BackEndSubjectComponent extends Component {
         })
         console.log(this.state.report);
     }
+    //Generate PDF for grade
     createAndDownloadGradePdf = (e) => {
         e.preventDefault();
         service.getAllsubjectUsingSection(this.state.report_grade).then((res => {
             this.setState({ report: res.data });
-
         })).then(() => {
             axios.post('http://localhost:8070/Subjects/print', this.state)
         })
@@ -170,21 +164,22 @@ export default class BackEndSubjectComponent extends Component {
                         </div>
                         <div className="col-md-10 background">
                             <AdminHeader />
-
                             <div className="container-fluid">
                                 <div className="row glass bg-info text-center mt-3">
+                                    {/*Heading*/}
                                     <h1>SUBJECTS'S INFORMATION</h1>
                                 </div>
                                 <div className="row mt-5 d-flex justify-content-center">
                                     <div className="col-md-8">
-
                                     </div>
                                     <div className="col-md-2">
+                                        {/*Add a new Subject*/}
                                         <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#exampleModalCenter">
                                             ADD NEW SUBJECT
                                         </button>
                                     </div>
                                     <div className="col-md-2">
+                                        {/*Generate Report*/}
                                         <button type="button" class="btn  btn-danger" data-toggle="modal" data-target="#datareport">
                                             Genarate Report 
                                         </button>
@@ -195,8 +190,7 @@ export default class BackEndSubjectComponent extends Component {
                                 <table
                                     className="display"
                                     ref={(el) => (this.el = el)}
-                                    style={{ boxShadow: "8px 8px  #dce3e0", marginBottom: "20px", marginTop: "20px" }}
-                                >
+                                    style={{ boxShadow: "8px 8px  #dce3e0", marginBottom: "20px", marginTop: "20px" }}>
                                     <thead>
                                         <tr>
                                             <th>SUBJECT ID</th>
@@ -207,26 +201,23 @@ export default class BackEndSubjectComponent extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {
                                             this.state.allSubjects.map(
                                                 allSubjects =>
                                                     <tr>
-
                                                         <th>{allSubjects.subject_ID}</th>
                                                         <th>{allSubjects.subject_Name}</th>
                                                         <th>Grade-{allSubjects.allocated_Grade}</th>
                                                         <th>{allSubjects.description}</th>
                                                         <th>
                                                             <div className="row">
+                                                                {/*Delete Button*/}
                                                                 <div className="col-12">
                                                                     <button className="btn btn-danger btn-block fa fa-trash" onClick={e => this.delete(e, allSubjects._id)}></button>
                                                                 </div>
                                                             </div>
                                                         </th>
-
                                                     </tr>
-
                                             )
                                         }
                                     </tbody>
@@ -311,7 +302,9 @@ export default class BackEndSubjectComponent extends Component {
                                             </div>
                                         </div>
                                         <div class="modal-footer">
+                                            {/*Add Subject*/}
                                             <button type="button" class="btn btn-success" onClick={this.addSubject}>Add Details</button>
+                                            {/*Close Button*/}
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -372,7 +365,6 @@ export default class BackEndSubjectComponent extends Component {
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>

@@ -19,7 +19,6 @@ class UpdateStudentDetails extends Component {
                                         </button>
                                     </div>
                                 </center>
-
                                 <div className="mb-3">
                                     <label className="form-label">
                                         <i className="fa fa-user-o" aria-hidden="true"></i>&nbsp;
@@ -135,10 +134,10 @@ class UpdateStudentDetails extends Component {
                                                        className="form-control"/>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div className="row mt-2">
                                         <div className="col-sm-6">
+                                            {/*Cancel Button*/}
                                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                                 <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                                 Cancel
@@ -155,10 +154,12 @@ class UpdateStudentDetails extends Component {
 
                                 </div>
                                 <div className="modal-footer">
+                                    {/*Cancel Button*/}
                                     <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                         <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
                                         Cancel
                                     </button>
+                                    {/*Save Button*/}
                                     <button type="button" className="btn btn-primary"><i className="fa fa-floppy-o"
                                                                                          aria-hidden="true"></i>&nbsp;
                                         Save

@@ -9,17 +9,17 @@ class ViewAttendance extends Component {
         this.state = {
             Students:[],
             status:'',
-
         }
         this.changeClassnameHander = this.changeClassnameHander.bind(this);
     }
+    //Handlers
     changeStatus = (event) => {
         this.setState({ status: event.target.value });
-
     }
     changeClassnameHander = (event) =>{
         this.setState({cName : event.target.value});
     }
+    //View Details
     ViewDetails(e,admissionNumber,AtId){
         e.preventDefault();
         this.setState({
@@ -28,7 +28,7 @@ class ViewAttendance extends Component {
             }
         )
     }
-
+    //Save Details
     saveChanges =(e) =>{
         e.preventDefault();
         console.log(this.state.attId,this.state.status)
@@ -46,7 +46,7 @@ class ViewAttendance extends Component {
             alert("Can not delete" + attId);
         })
     }
-
+    //View students
     VIewStudents = (e) =>{
         e.preventDefault();
         if(this.state.cName != ""){
@@ -65,11 +65,9 @@ class ViewAttendance extends Component {
                 </div>
                 <div className="col-sm-9">
                     <AdminHeader />
-
                     <div className="row">
                         <h3><b>View Attendance</b></h3>
                     </div>
-
                     <div className="row m-2 searchRow">
                         <div className="col-sm-5">
                             <input type="text" className="form-control" onChange={this.changeClassnameHander} value={this.state.cName} placeholder="Search By Class ID" aria-label="Username"
@@ -91,13 +89,11 @@ class ViewAttendance extends Component {
                             </div>
                         </div>
                     </div>
-
                     <div className="row">
                         <div className="col-sm-6">
                             <h6>Students List</h6>
                         </div>
                     </div>
-
                     <div>
                         {
                             this.state.Students.map(
@@ -144,8 +140,10 @@ class ViewAttendance extends Component {
 
                                 </div>
                                 <div className="modal-footer">
+                                    {/*Close Button*/}
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
+                                    {/*Save Button*/}
                                     <button type="button" className="btn btn-primary" onClick={this.saveChanges}>Save
                                         changes
                                     </button>

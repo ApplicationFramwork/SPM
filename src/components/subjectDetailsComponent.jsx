@@ -4,11 +4,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 const Imageurl = "http://localhost:8070/uploads/LectureSlides/";
 
-
 export default class subjectDetailsComponent extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             // view variables
             viewSubjectDatabaseID: this.props.match.params.id,
@@ -41,6 +39,7 @@ export default class subjectDetailsComponent extends Component {
     changeFilenameHandler = (event) => {
         this.setState({ filename: event.target.files[0] });
     }
+    //get all lecture notices
     componentDidMount() {
         service.getalllecturenotices(this.state.viewSubjectDatabaseID).then((res => {
             this.setState({ notices: res.data });
@@ -65,9 +64,7 @@ export default class subjectDetailsComponent extends Component {
         }
         ))
     }
-
-
-
+    //add a notice
     addNotice = (e) => {
         e.preventDefault();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -77,7 +74,6 @@ export default class subjectDetailsComponent extends Component {
             },
             buttonsStyling: false
         })
-
         swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
             text: "Do you want to Add New Notice?",
@@ -105,7 +101,6 @@ export default class subjectDetailsComponent extends Component {
                         this.props.history.push('/subjectdetails/' + this.state.viewSubjectDatabaseID);
                         refreshPage();
                     })
-
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -113,11 +108,11 @@ export default class subjectDetailsComponent extends Component {
                         text: 'All Input Fields Should Fill!'
                     })
                 }
-
             }
         })
-
     }
+
+    //add lecture slides
     addLectureSlides = (e) => {
         e.preventDefault();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -127,7 +122,6 @@ export default class subjectDetailsComponent extends Component {
             },
             buttonsStyling: false
         })
-
         swalWithBootstrapButtons.fire({
             title: 'Are you sure?',
             text: "Do you want to Add New Lecture Slides?",
@@ -139,14 +133,12 @@ export default class subjectDetailsComponent extends Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 if (this.state.Topic !== "" && this.state.Description !== '' && this.state.filename !== '') {
-
                     const formData = new FormData();
                     formData.append('subject_ID', this.state.viewSubjectDatabaseID);
                     formData.append('Topic', this.state.Topic);
                     formData.append('Description', this.state.Description);
                     formData.append('type', "LectureSlides");
                     formData.append('lectureslide', this.state.filename);
-
                     const config = {
                         headers: {
                             'content-type': 'multipart/form-data'
@@ -159,9 +151,7 @@ export default class subjectDetailsComponent extends Component {
                         this.props.history.push('/subjectdetails/' + this.state.viewSubjectDatabaseID);
                         refreshPage();
                     })
-
                     console.log(this.state.subject)
-
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -169,11 +159,10 @@ export default class subjectDetailsComponent extends Component {
                         text: 'All Input Fields Should Fill!'
                     })
                 }
-
             }
         })
-
     }
+    //delete notice
     deletenotice(e, id) {
         e.preventDefault();
         const swalWithBootstrapButtons = Swal.mixin({
@@ -197,8 +186,6 @@ export default class subjectDetailsComponent extends Component {
                     this.props.history.push('/subjectdetails/' + this.state.viewSubjectDatabaseID);
                     window.location.reload();
                 });
-
-
             }
         })
     }
@@ -225,8 +212,6 @@ export default class subjectDetailsComponent extends Component {
                     this.props.history.push('/subjectdetails/' + this.state.viewSubjectDatabaseID);
                     window.location.reload();
                 });
-
-
             }
         })
     }

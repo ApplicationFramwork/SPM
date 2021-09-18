@@ -6,7 +6,6 @@ const StudentImageurl = "http://localhost:8070/uploads/"
 export default class teacherDashboardComponent extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             // view edit variables
             viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
@@ -19,12 +18,11 @@ export default class teacherDashboardComponent extends Component {
             viewTeacherDescription: '',
             viewTeacherProdilePicture: '',
             EditProdilePicture: '',
-
             //get allocated Student Varianle
             Student: []
-
         }
     }
+    //View Teacher Details
     componentDidMount() {
         service.GetOneTeachers(this.state.viewTeacherDatabaseID).then((res => {
             let OneTeacher = res.data;
@@ -48,7 +46,6 @@ export default class teacherDashboardComponent extends Component {
     }
     render() {
         return (
-
             // navbar
             <div>
                 <input type="checkbox" id="check"></input>
@@ -163,7 +160,6 @@ export default class teacherDashboardComponent extends Component {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="container  mb-3">
                                 <div className="row ">
                                     <div className="col-12 mt-3 ml-2">
@@ -216,16 +212,9 @@ export default class teacherDashboardComponent extends Component {
                                 }
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
-
-
-
-
         )
     }
 }

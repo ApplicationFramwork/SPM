@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 import ukFlag from "../images/uk.png";
+import jwt_decord from "jwt-decode";
 class AdminHeader extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            name: jwt_decord(localStorage.getItem("token")).name
+        }
+    }
     render() {
         return (
             <div className="row headerBody" >
@@ -23,7 +30,7 @@ class AdminHeader extends Component {
                             <small className="p-2 text-muted">English</small>
                         </li>
                         <li>
-                            <small className="p-2 text-muted"><i style={{color:"green"}} className="fas fa-dot-circle p-2"></i>User Name</small>
+                            <small className="p-2 text-muted"><i style={{color:"green"}} className="fas fa-dot-circle p-2"></i>{this.state.name}</small>
                             <i className="fas fa-user-alt"></i>
                         </li>
                     </ul>

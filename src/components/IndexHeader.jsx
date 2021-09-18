@@ -8,9 +8,9 @@ class IndexHeader extends Component {
                     <div className="col-sm-4 mt-2 mb-2  text-light">
                         <center>
                             <h1 className="topicRowHeader">KIDZ SCHOOL</h1>
-                            <small className="ULlist" href={"/"}><a className="text-light" >Home</a></small>
-                            <small className="ULlist" href={"/about"}><a className="text-light" >About us</a></small>
-                            <small className="ULlist"><a className="text-light" >Contact us</a></small>
+                            <small className="ULlist" ><a className="text-light" href={"/"} >Home</a></small>
+                            <small className="ULlist" ><a className="text-light" href={"/about"}>About us</a></small>
+                            <small className="ULlist"><a className="text-light" href={"/contact"}>Contact us</a></small>
                         </center>
                     </div>
                 </div>

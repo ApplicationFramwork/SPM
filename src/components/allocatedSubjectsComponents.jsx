@@ -4,14 +4,13 @@ import service from '../services/SchoolManagementSystemServices'
 export default class allocatedSubjectsComponents extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             // view edit variables
             viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
             viewTeacherSubjects: []
-
         }
     }
+    //Get one Teacher
     componentDidMount() {
         service.GetOneTeachers(this.state.viewTeacherDatabaseID).then((res => {
             let OneTeacher = res.data;
@@ -23,10 +22,10 @@ export default class allocatedSubjectsComponents extends Component {
 
         }))
     }
+    //View subject details
     ViewSubjectsInside(e, subjectid) {
         e.preventDefault();
         this.props.history.push('/subjectdetails/' + subjectid);
-        
     }
     render() {
         return (
@@ -44,7 +43,6 @@ export default class allocatedSubjectsComponents extends Component {
                         <a href="/" class="logout_btn">Log Out</a>
                     </div>
                 </header>
-
                 <div class="mobile_nav">
                     <div class="nav_bar">
                         <i class="fa fa-bars nav_btn"></i>
@@ -57,7 +55,6 @@ export default class allocatedSubjectsComponents extends Component {
                         <a href="/"><i class="fas fa-tasks"></i><span>Notice</span></a>
                     </div>
                 </div>
-
                 <div class="sidebar">
                     <a href="/teacherDashboard"><i class="fas fa-desktop mt-4 mb-4"></i><span>Dashboard</span></a>
                     <a href="/"><i class="fas fa-user-graduate mt-4 mb-4"></i><span>Student</span></a>
@@ -71,6 +68,7 @@ export default class allocatedSubjectsComponents extends Component {
                         <div className="glass scroll">
                             <div className="row  text-center">
                                 <div className="col-12 mt-2">
+                                    {/*Heading*/}
                                     <h1>ALLOCATED SUBJECTS</h1>
                                     <div className="row ">
                                         <div className="col-md-4"></div>
@@ -101,11 +99,7 @@ export default class allocatedSubjectsComponents extends Component {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
             </div >
         )
     }

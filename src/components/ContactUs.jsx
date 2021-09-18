@@ -9,7 +9,7 @@ class ContactUs extends Component {
                     <div className="col-sm-2"></div>
                     <div className="col-sm-10 bodyText">
                         <br/>
-                        <h1 className="text headingText">Contact Us</h1>
+                        <h1 data-testid="test_header" className="text headingText">Contact Us</h1>
                         <small className="smallText" style={{color:"#FFBA01",fontWeight: "bold",fontSize: "20px",fontFamily: "sans-serif"}}>
                             KIDZ School is an online based School Management System that provides educators with
                             the tools and
@@ -24,9 +24,9 @@ class ContactUs extends Component {
                             <br/>
                             <br/>
                             <br/>
-                            <h7>SLIIT, New Kandy Road, Malabe, Sri Lanka</h7>
+                            <h6 data-testid="test_address">SLIIT, New Kandy Road, Malabe, Sri Lanka</h6>
                             <br/>
-                            <h7>T: +94 11 7544806</h7>
+                            <h6 data-testid="test_number">T: +94 11 7544806</h6>
                         </small>
                     </div>
                 </div>

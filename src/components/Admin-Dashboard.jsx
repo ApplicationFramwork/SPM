@@ -13,6 +13,13 @@ class AdminDashboard extends Component {
             currentDateTime: Date().toLocaleString()
         }
     }
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
+    }
     render() {
         return (
             <div className="container-fluid background dashBody">
@@ -20,7 +27,6 @@ class AdminDashboard extends Component {
                     <div className="col-sm-3" style={{height:"100%"}}>
                         <Adm />
                     </div>
-
                     {/*Page Header*/}
                     <div className="pt-2 col-sm-9">
                         <AdminHeader />
@@ -32,7 +38,7 @@ class AdminDashboard extends Component {
                                 <ul className="buttonList">
                                     <li><small className="DashDateTime text-muted">{this.state.currentDateTime }</small></li>
                                     <li> <p className="shareButton">Share</p></li>
-                                    <li> <p className="moreDetailsButton">More Details</p> </li>
+                                    <li> <button onClick={this.signout} className="btn btn-danger" type="submit">Logout</button> </li>
                                 </ul>
                             </div>
                         </div>
@@ -40,7 +46,6 @@ class AdminDashboard extends Component {
 
                         {/*Card views*/}
                         <div className="row">
-
                             {/*1st card view*/}
                             <div className="col-sm-4">
                                 <div className="card DashCard1">

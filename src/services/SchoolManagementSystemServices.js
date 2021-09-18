@@ -28,34 +28,57 @@ const Notices_API_GET_BY_ID = "http://localhost:8070/notices/get";
 const UpdateNoticeAPI = "http://localhost:8070/notices/update"
 //get notice by title
 const Notices_API_GET_NOTICE_BY_TITLE = "http://localhost:8070/notices/getNotice";
-
-
+//Add a new Teacher
 const AddNewTeacherAPI = "http://localhost:8070/Teacher/add";
+//Add a new Subject
 const AddNewSubjectrAPI = "http://localhost:8070/Subjects/add";
+//Add a new lecture notice
 const AddNewLectureNoticeAPI = "http://localhost:8070/lectureslides/add";
+//Assign a subjcet to a Teacher
 const AssignSubjectTeacherAPI = "http://localhost:8070/Teacher/assgin"
+//Delete a Notice
 const DeletelectureNoticeAPI = "http://localhost:8070/lectureslides/Deletenotice";
+//Delete a lecture slide
 const DeletelectureslidesAPI = "http://localhost:8070/lectureslides/Deletelectures";
+//Delete a Teacher
 const DeleteTeacherAPI = "http://localhost:8070/Teacher/Delete";
+//Delete a subject
 const DeleteSubjectAPI = "http://localhost:8070/Subjects/Delete";
+//Get a subject of a student by the section
 const GetoneStudentSubjectUsingSectionAPI = "http://localhost:8070/Subjects/GetSubjectusignSection";
+//Get all students by the section
 const GetAllStudentUsingSectionAPI = "http://localhost:8070/students/getpStudentUsingSection";
+//Get all subjects
 const GetAllSubjectsAPI = "http://localhost:8070/Subjects/GetAllSubjects";
+//Get all lecture notices
 const GetAllLectureNotices = "http://localhost:8070/lectureslides/getsubjectNotices"
+//Get all Lecture slides
 const GetAllLectureslides = "http://localhost:8070/lectureslides/getsubjeclectureslides"
+//Get one subject
 const GetAllOneSubjectsAPI = "http://localhost:8070/Subjects/GetSubject";
+//Get all teachers by grade
 const GetAllTeachersUsingGradeAPI = "http://localhost:8070/Teacher/GetAllTeacaherUsingGrade";
+//Get all Teachers
 const GetAllTeachersAPI = "http://localhost:8070/Teacher/GetAllTeacaher";
+//Get one Teacher
 const GetAllOneTeachersAPI = "http://localhost:8070/Teacher/GetTeacher";
+//Update a Teacher
 const UpdateTeacherAPI = "http://localhost:8070/Teacher/update"
-
+//Get student to mark the attendance
 const getStudentsForMarkAttendance = "http://localhost:8070/students/getStudentsByClassName";
+//Add attendance
 const addAttendanceDetails = "http://localhost:8070/attendance/mark";
+//Add marks
 const addMarks = "http://localhost:8070/marks/add";
+//View attendance by class
 const viewAttendanceByClassName = "http://localhost:8070/attendance";
+//Delete attendance
 const deleteAttendance = "http://localhost:8070/attendance/delete";
+//Login
 const login = "http://localhost:8070/users/login";
+//View Marks
 const viewMark = "http://localhost:8070/marks/report";
+//Update Attendance
 const updateAttendance =  "http://localhost:8070/attendance/editAttendance";
 
 class SchoolManagementSystemServices{
@@ -104,10 +127,8 @@ class SchoolManagementSystemServices{
         return axios.delete(Notices_API_DELETE + '/' + id);
     }
     //get notice by ID
-    //get conference events by ID
     getNoticeByID(id){
         return axios.get(Notices_API_GET_BY_ID + '/' + id);
-
     }
     //update notice without new image
     updateNoticeWithoutImage(notices,ID) {
@@ -116,9 +137,7 @@ class SchoolManagementSystemServices{
     //get notice by name
     getNoticeByTitle(title){
         return axios.get(Notices_API_GET_NOTICE_BY_TITLE + '/' + title);
-
     }
-
     //Add New teacher
     addNewTeacher(teacher) {
         return axios.post(AddNewTeacherAPI,teacher);
@@ -191,15 +210,15 @@ class SchoolManagementSystemServices{
     updateTeacherwithoutimage(Teacher,ID) {
         return axios.put(UpdateTeacherAPI + '/' + ID, Teacher);
     }
-
+    //update attendance
     UpdateAttendance(attendance){
         return axios.post(updateAttendance,attendance);
     }
-
+    //view marks
     ViewMarks(id){
         return axios.get(viewMark + '/' + id);
     }
-
+    //add marks
     AddMarks(marks){
         return axios.post(addMarks,marks);
     }
@@ -207,21 +226,19 @@ class SchoolManagementSystemServices{
     GetAllStudentsForAttendanceMark(className) {
         return axios.get(getStudentsForMarkAttendance + '/' + className);
     }
-
     //Mark Attendance
     MarkAttendance(attendance){
         return axios.post(addAttendanceDetails,attendance);
     }
-
     //View Attendance by class name
     ViewAttendance(className){
         return axios.get(viewAttendanceByClassName + '/' + className);
     }
-
+    //Delete attendance
     DeleteAttendance(attId){
         return axios.delete(deleteAttendance +'/'+ attId);
     }
-
+    //Login
     Login(user){
         return axios.post(login,user);
     }
