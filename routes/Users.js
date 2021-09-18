@@ -5,6 +5,7 @@ const Student = require('../models/Students');
 const Admin = require("../models/Admin");
 const JWT_SECRET = 'dseiow985344he02-238hfsdy22@@@sdtjerltmdjdguot';
 
+//Add a new user
 router.route("/login").post(async (req,res)=>{
    const {Username,password,type} = req.body;
    let user;
@@ -58,7 +59,8 @@ router.route("/login").post(async (req,res)=>{
        }
    }
 });
-//Add Admin
+
+//Add an Admin
 router.route("/addAdmin").post(async (req,res)=>{
     const {userName, password} = req.body;
     const newAdmin = new Admin({
@@ -68,6 +70,6 @@ router.route("/addAdmin").post(async (req,res)=>{
     newAdmin.save().then(() =>{
         res.status(200).send({status: "Admin Added!"});
     })
-
 })
+
 module.exports = router;

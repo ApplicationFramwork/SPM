@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+//Lecture Slide Schema
 const LectureSlideSchema = new Schema({
-
     subject_ID: {
         type: String,
         required: true
@@ -27,5 +26,4 @@ const LectureSlideSchema = new Schema({
 })
 
 const lectureslides = mongoose.model("LectureSlides", LectureSlideSchema);
-
 module.exports = lectureslides;

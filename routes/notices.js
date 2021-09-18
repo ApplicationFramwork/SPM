@@ -42,6 +42,7 @@ router.route("/addNotices").post(upload.single('image'),(req,res)=>{
         console.log(err);
     })
 })
+
 //get all Notices
 router.route("/allNotices").get((req,res)=>{
     Notices.find().then((notices =>{
@@ -85,6 +86,7 @@ router.route("/update/:id/:picturename").put(upload.single('image'), (req, res) 
             res.status(500).send({ status: "Error with Updating data" })
         })
 })
+
 //update notice without new image
 router.route("/update/:id").put(async (req, res) => {
     let noticeID = req.params.id;
@@ -100,8 +102,8 @@ router.route("/update/:id").put(async (req, res) => {
             console.log(err);
             res.status(500).send({ status: "Error with Updating data" })
         })
-
 })
+
 //get notice by ID
 router.route("/get/:id").get(async (req, res)=>{
     let noticeId = req.params.id;
@@ -111,6 +113,7 @@ router.route("/get/:id").get(async (req, res)=>{
         console.log(err);
     })
 })
+
 //search notice by title
 router.route("/getNotice/:notice").get((req,res)=>{
     let notice = req.params.notice;
@@ -120,4 +123,5 @@ router.route("/getNotice/:notice").get((req,res)=>{
         console.log(err);
     })
 })
+
 module.exports = router;

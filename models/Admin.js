@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-//Student Schema
+//Admin Schema
 const adminSchema = new Schema({
     userName : {
         type : String,
@@ -11,9 +11,7 @@ const adminSchema = new Schema({
         type : String,
         required: false
     },
-
 })
 
 const Admin = mongoose.model("Admin",adminSchema);
-
 module.exports = Admin;

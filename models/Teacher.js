@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+//Teacher Schema
 const teacherSchema = new Schema({
-
     teacher_ID: {
         type: String,
         required: true

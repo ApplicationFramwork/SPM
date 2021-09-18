@@ -5,6 +5,7 @@ const multer = require('multer');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
+//set the mail credentials
 let mailTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -13,12 +14,12 @@ let mailTransporter = nodemailer.createTransport({
     }
 });
 
+//File Handling
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/LectureSlides');
     },
     filename: function (req, file, cb) {
-
         console.log(file.originalname);
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
@@ -36,16 +37,13 @@ var upload = multer({
 
 //add new lecture notice
 router.route("/add").post((req, res) => {
-
     const { subject_ID, Topic, Description, type } = req.body;
-
     const newlectureSlides = new lectureSlides({
         subject_ID,
         Topic,
         Description,
         type
     })
-
     newlectureSlides.save().then(() => {
         res.json("Subject Added")
     }).catch((err) => {
@@ -55,10 +53,8 @@ router.route("/add").post((req, res) => {
 
 //add new lecture slides
 router.route("/addlectures").post(upload.single('lectureslide'), (req, res) => {
-
     const { subject_ID, Topic, Description, type } = req.body;
     const lectureslide = req.file.filename;
-
     const newlectureSlides = new lectureSlides({
         subject_ID,
         Topic,
@@ -66,13 +62,13 @@ router.route("/addlectures").post(upload.single('lectureslide'), (req, res) => {
         type,
         lectureslide
     })
-
     newlectureSlides.save().then(() => {
         res.json("Subject Added")
     }).catch((err) => {
         console.log(err);
     })
 })
+
 //get all subjects details
 router.route("/GetAllSubjects").get((req, res) => {
     lectureSlides.find().then((events => {
@@ -84,20 +80,17 @@ router.route("/GetAllSubjects").get((req, res) => {
 
 //get subjects details using subject id
 router.route("/GetSubject/:id").get((req, res) => {
-
     let subjectID = req.params.id;
     lectureSlides.findById(subjectID).then((subject) => {
         res.json(subject)
     }).catch((err) => {
         console.log(err);
     })
-
 })
+
 //get all subject notices
 router.route("/getsubjectNotices/:subjectid").get((req, res) => {
-
     let subjectid = req.params.subjectid;
-
     lectureSlides.find({ subject_ID: subjectid, type: "Notice" })
         .then((notice) => {
             res.json(notice)
@@ -105,9 +98,9 @@ router.route("/getsubjectNotices/:subjectid").get((req, res) => {
             console.log(err);
         })
 })
+
 //get all subject lecture slides
 router.route("/getsubjeclectureslides/:subjectid").get((req, res) => {
-
     let subjectid = req.params.subjectid;
     lectureSlides.find({ subject_ID: subjectid, type: "LectureSlides" })
         .then((lectures) => {
@@ -116,11 +109,10 @@ router.route("/getsubjeclectureslides/:subjectid").get((req, res) => {
             console.log(err);
         })
 })
+
 //delete the lecture notice
 router.route("/Deletenotice/:id").delete(async (req, res) => {
-
     let subjectID = req.params.id;
-
     await lectureSlides.findByIdAndDelete(subjectID)
         .then(() => {
             res.status(200).send({ status: "lecture notice Deleted" })
@@ -132,10 +124,8 @@ router.route("/Deletenotice/:id").delete(async (req, res) => {
 
 //delete the  lecture with file
 router.route("/Deletelectures/:id/:filename").delete(async (req, res) => {
-
     let ID = req.params.id;
     let filename = req.params.filename;
-
     await lectureSlides.findByIdAndDelete(ID)
         .then(() => {
             fs.unlink('C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/LectureSlides/' + filename, function (err) {

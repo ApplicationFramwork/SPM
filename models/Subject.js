@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+//Subject Schema
 const subjectSchema = new Schema({
-
     subject_ID: {
         type: String,
         required: true

@@ -37,13 +37,13 @@ router.route("/:className").get((req, res) => {
     const day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
     const date = year + "/" + month + "/" + day;
-
     Attendance.find({className:className, date:date}).then((Attendance) =>{
         res.json(Attendance);
     }).catch((err)=>{
         console.log(err);
     })
 })
+
 //Edit attendance
 router.route("/editAttendance").post(async (req,res) =>{
     const {_id,StudentId,status,className} = req.body;
@@ -51,7 +51,6 @@ router.route("/editAttendance").post(async (req,res) =>{
         StudentId,
         status,
         className
-
     }
     await Attendance.findByIdAndUpdate(_id,UpdateAttendance).then(()=>{
         res.status(200).send({status: "Updated!"});
@@ -71,7 +70,7 @@ router.route("/delete/:id").delete(async (req,res)=>{
     })
 })
 
-//report
+//report generation
 router.route("/report/:id").get(async (req,res)=>{
     let id = req.params.id;
     Attendance.find({StudentId:id}).then((Attendance) =>{

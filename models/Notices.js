@@ -18,5 +18,4 @@ const noticesSchema = new Schema({
 })
 
 const Notices = mongoose.model("Notices",noticesSchema);
-
 module.exports = Notices;

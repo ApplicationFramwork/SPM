@@ -20,12 +20,10 @@ router.route("/add").post(async (req,res)=>{
         Term,
         Status,
         marks
-
     });
     newMark.save().then(() =>{
         res.status(200).send({status: "Marks Added!"});
     })
-
 })
 
 //Delete Mark
@@ -39,7 +37,7 @@ router.route("/delete/:id").delete(async (req,res)=>{
     });
 });
 
-//Marks Report
+//Generate Report for Marks
 router.route("/report/:id").get(async (req,res)=>{
     const id = req.params.id;
     Marks.find({StudentId:id}).then((Marks) =>{

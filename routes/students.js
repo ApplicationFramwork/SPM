@@ -5,13 +5,13 @@ const multer = require('multer');
 const fs = require('fs');
 const pdf = require('html-pdf');
 const pdfTemplate = require('./documents');
+
 //multer for image handling
 var storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'uploads');
     },
     filename:function(req,file,cb){
-
         console.log(file.originalname);
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
@@ -68,6 +68,7 @@ router.route("/addStudents").post(upload.single('image'),(req,res)=>{
         console.log(err);
     })
 })
+
 //get all students
 router.route("/allStudents").get((req,res)=>{
     Students.find().then((students =>{
@@ -76,6 +77,7 @@ router.route("/allStudents").get((req,res)=>{
         console.log(err)
     })
 })
+
 //delete Student
 router.route("/delete/:id").delete(async (req, res)=>{
     let studentId= req.params.id;
@@ -86,6 +88,7 @@ router.route("/delete/:id").delete(async (req, res)=>{
         res.status(500).send({status: "Error with delete ", studenterror: err.message});
     })
 })
+
 //get student by ID
 router.route("/get/:id").get(async (req, res)=>{
     let studentId = req.params.id;
@@ -144,6 +147,7 @@ router.route("/update/:id/:picturename").put(upload.single('image'), (req, res) 
             res.status(500).send({ status: "Error with Updating data" })
         })
 })
+
 //update student without new image
 router.route("/update/:id").put(async (req, res) => {
     let studentID = req.params.id;
@@ -185,6 +189,7 @@ router.route("/update/:id").put(async (req, res) => {
             res.status(500).send({ status: "Error with Updating data" })
         })
 })
+
 //get student by admissionNumber
 router.route("/getStudent/:studentNumber").get((req,res)=>{
     let studentNumber = req.params.studentNumber;
@@ -194,6 +199,7 @@ router.route("/getStudent/:studentNumber").get((req,res)=>{
         console.log(err);
     })
 })
+
 //get student by section
 router.route("/getStudentBySection/:grade").get((req,res)=>{
     let grade = req.params.grade;
@@ -203,6 +209,7 @@ router.route("/getStudentBySection/:grade").get((req,res)=>{
         console.log(err);
     })
 })
+
 //get student by class
 router.route("/getStudentByClass/:classname").get((req,res)=>{
     let classname = req.params.classname;
@@ -212,6 +219,7 @@ router.route("/getStudentByClass/:classname").get((req,res)=>{
         console.log(err);
     })
 })
+
 //get student by name
 router.route("/getStudentByName/:studentName").get((req,res)=>{
     let studentName = req.params.studentName;
@@ -221,11 +229,10 @@ router.route("/getStudentByName/:studentName").get((req,res)=>{
         console.log(err);
     })
 })
-//create pdf
+
+//Generate PDF Report
 router.post('/create-pdf', (req, res) => {
-
     pdf.create(pdfTemplate(req.body), {}).toFile('student.pdf', (err) => {
-
         if(err) {
             return console.log('error');
         }
@@ -233,15 +240,14 @@ router.post('/create-pdf', (req, res) => {
     });
 })
 
+//Get the PDF report from the frontend
 router.get('/getpdf', (req, res) => {
     res.sendFile('D:\\Y3S2\\SPM\\SPM\\BACKEND\\student.pdf');
 });
 
 // get student using section number
 router.route("/getpStudentUsingSection/:SectionNumber").get((req, res) => {
-
     let SectionNumber = req.params.SectionNumber;
-
     Students.find({ section: SectionNumber }).then((Students) => {
         res.json(Students)
     }).catch((err) => {

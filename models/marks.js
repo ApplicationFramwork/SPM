@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+//Marks Schema
 const MarksSchema = new mongoose.Schema({
     StudentId :{
         type: String,
@@ -36,5 +36,4 @@ const MarksSchema = new mongoose.Schema({
 });
 
 const Marks = mongoose.model("marks",MarksSchema);
-
 module.exports = Marks;

@@ -8,6 +8,7 @@ const exportUsersToExcel = require('./documents/exportService')
 const pdfTemplate = require('./documents/pdftemplate')
 const pdf = require('html-pdf');
 
+//Credentials for mail sending
 let mailTransporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -16,6 +17,7 @@ let mailTransporter = nodemailer.createTransport({
   },
 })
 
+//Multer for file storage
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/teachers')
@@ -58,7 +60,6 @@ router.route('/add').post(upload.single('profile_Picture'), (req, res) => {
     description,
   } = req.body
   const profile_Picture = req.file.filename
-
   const newTeacher = new Teacher({
     teacher_ID,
     teacher_Name,
@@ -69,7 +70,6 @@ router.route('/add').post(upload.single('profile_Picture'), (req, res) => {
     allocated_Grade,
     description,
   })
-
   newTeacher
     .save()
     .then(() => {
@@ -116,6 +116,7 @@ router.route('/GetAllTeacaher').get((req, res) => {
       console.log(err)
     })
 })
+
 //get all Teacher details using grade
 router.route('/GetAllTeacaherUsingGrade/:grade').get((req, res) => {
   let grade = req.params.grade
@@ -141,6 +142,7 @@ router.route('/GetTeacher/:id').get((req, res) => {
       console.log(err)
     })
 })
+
 //update only teacher details without picture using teacher id
 router.route('/assgin/:id').put(async (req, res) => {
   let TeacherID = req.params.id
@@ -165,7 +167,6 @@ router.route('/assgin/:id').put(async (req, res) => {
     subject,
     description,
   }
-
   const update = await Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
     .then(() => {
       res.status(200).send({ status: 'Teacher Updated' })
@@ -177,8 +178,7 @@ router.route('/assgin/:id').put(async (req, res) => {
 })
 
 //update teacher with new image
-router
-  .route('/update/:id/:picturename')
+router.route('/update/:id/:picturename')
   .put(upload.single('profile_Picture'), (req, res) => {
     let TeacherID = req.params.id
     const {
@@ -191,7 +191,6 @@ router
     } = req.body
     const profile_Picture = req.file.filename
     let picturename = req.params.picturename
-
     const updateTeacher = {
       teacher_ID,
       teacher_Name,
@@ -201,7 +200,6 @@ router
       profile_Picture,
       description,
     }
-
     const update = Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
       .then(() => {
         res.status(200).send({ status: 'Teacher Updated' })
@@ -219,6 +217,7 @@ router
         res.status(500).send({ status: 'Error with Updating data' })
       })
   })
+
 //update teacher without new image
 router.route('/update/:id').put(async (req, res) => {
   let TeacherID = req.params.id
@@ -231,7 +230,6 @@ router.route('/update/:id').put(async (req, res) => {
     profile_Picture,
     description,
   } = req.body
-
   const updateTeacher = {
     teacher_ID,
     teacher_Name,
@@ -241,7 +239,6 @@ router.route('/update/:id').put(async (req, res) => {
     allocated_Grade,
     description,
   }
-
   const update = await Teacher.findByIdAndUpdate(TeacherID, updateTeacher)
     .then(() => {
       res.status(200).send({ status: 'Reviwer Updated' })
@@ -274,10 +271,10 @@ router.route('/Delete/:id/:filename').delete(async (req, res) => {
       res.status(500).send({ status: 'Error with deleting data' })
     })
 })
-//genrate report
+
+//generate report
 router.route('/print').post((req, res) => {
   let teachers = req.body.report
-
   const workSheetColumnName = [
     'ID',
     'Name',
@@ -286,10 +283,8 @@ router.route('/print').post((req, res) => {
     'Allocated Grade',
     'Description',
   ]
-
   const workSheetName = 'Teachers'
   const filePath = './outputFiles/teacher.xlsx'
-
   exportUsersToExcel(teachers, workSheetColumnName, workSheetName, filePath)
 })
 router.post('/createpdf', (req, res) => {
@@ -303,4 +298,5 @@ router.post('/createpdf', (req, res) => {
 router.get('/getpdf', (req, res) => {
   res.sendFile(__dirname + '/TeacherDetails.pdf');
 })
+
 module.exports = router
