@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //import components
-import IndexPageComponent from './components/index';
+import Index from "./components";
 import AdminStudentDashboard from "./components/AdminStudentDashboard";
 import UpdateStudentDetails from "./components/UpdateStudentDetails";
 import AdminSideNavBar from "./components/Admin-SideNavBar";
@@ -21,12 +21,25 @@ import BackEndSubjectComponent from './components/BackEndSubjectComponent';
 import subjectDetailsComponent from './components/subjectDetailsComponent';
 import StudetnsubjectDetailsComponent from './components/studentSubjectdetialsComponent';
 import sstudentallocatedsubjects from './components/StudentAllocatedSubject';
+
+import AdminDashboard from "./components/Admin-Dashboard";
+import AttendanceMark from "./components/AttendanceMark";
+import AddMarks from "./components/AddMarks";
+import ViewAttendance from "./components/ViewAttendance";
+import Login from "./components/login";
+import ViewMarks from "./components/ViewMarks";
 function App() {
   return (
     <Router>
       <Switch>
           <div>
-              <Route path="/" exact component={IndexPageComponent}></Route>
+              <Route path="/" exact component={Index} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/viewMarks" exact component={ViewMarks} />
+              <Route path="/dashboard" exact component={AdminDashboard} />
+              <Route path="/MarkAttendance" exact component={AttendanceMark} />
+              <Route path="/AddMarks" exact component={AddMarks} />
+              <Route path="/ViewAttendance" exact component={ViewAttendance} />
               <Route path="/adminStudentDashboard" component={AdminStudentDashboard}></Route>
               <Route path="/updateStudent" component={UpdateStudentDetails}></Route>
               <Route path="/addNotice" component={AddNotices}></Route>
@@ -47,7 +60,7 @@ function App() {
 
 
           </div>
-        <Route path="/" exact component={IndexPageComponent}></Route>
+
 
 
       </Switch>

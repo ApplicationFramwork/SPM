@@ -9,8 +9,8 @@ class AboutUs extends Component {
             <div className="container-fluid about">
                 <IndexHeader/>
                 <div className="row">
-                    <div className="col-sm-2"></div>
-                    <div className="col-sm-10 bodyText">
+                    <div className="col-sm-1"></div>
+                    <div className="col-sm-11">
                         <br/>
                         <h1 className="text headingText">About Us</h1>
                         <small className="smallText" style={{color:"#FFBA01",fontWeight: "bold",fontSize: "20px",fontFamily: "sans-serif"}}>
@@ -28,10 +28,10 @@ class AboutUs extends Component {
                             </small>
                     </div>
                 </div>
-
+                <center>
                 <div className="row">
-                    <div className="col-sm-2 bodyText"></div>
-                    <div className="col-sm-8 bodyText">
+
+                    <div className="col-sm-12">
                         <br/>
                         <h3 className="text-dark aboutText">Meet Our Team</h3>
                         <hr/>
@@ -104,6 +104,7 @@ class AboutUs extends Component {
                         <br/>
                     </div>
                 </div>
+                </center>
             </div>
         );
     }

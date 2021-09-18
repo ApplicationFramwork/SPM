@@ -7,6 +7,7 @@ import AdminSideNavBar from './Admin-SideNavBar'
 import { saveAs } from 'file-saver'
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import $ from 'jquery'
+import AdminHeader from "./AdminHeader";
 $.DataTable = require('datatables.net')
 const Imageurl = 'http://localhost:8070/uploads/teachers/'
 const Docurl = 'http://localhost:8070/outputFiles/teacher.xlsx'
@@ -429,6 +430,7 @@ export default class backEndTeacherComponent extends Component {
               <AdminSideNavBar />
             </div>
             <div className="col-md-10 background">
+              <AdminHeader />
               <div className="container-fluid">
                 <div className="row glass bg-info text-center mt-3">
                   <h1>TEACHER'S INFORMATION</h1>

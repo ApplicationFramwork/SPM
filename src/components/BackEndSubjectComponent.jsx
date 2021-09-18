@@ -5,6 +5,7 @@ import service from '../services/SchoolManagementSystemServices'
 import AdminSideNavBar from './Admin-SideNavBar';
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css'
 import $ from 'jquery'
+import AdminHeader from "./AdminHeader";
 $.DataTable = require('datatables.net');
 const Docurl = "http://localhost:8070/outputFiles/Subject.xlsx";
 
@@ -168,7 +169,7 @@ export default class BackEndSubjectComponent extends Component {
                             <AdminSideNavBar />
                         </div>
                         <div className="col-md-10 background">
-
+                            <AdminHeader />
 
                             <div className="container-fluid">
                                 <div className="row glass bg-info text-center mt-3">

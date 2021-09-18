@@ -4,6 +4,7 @@ import axios from "axios";
 import AdminSideNavBar from "./Admin-SideNavBar";
 import {Table} from "react-bootstrap";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
+import AdminHeader from "./AdminHeader";
 const imageUrl = "http://localhost:8070/uploads/";
 
 
@@ -228,8 +229,9 @@ class StudentDetailReports extends Component {
                         <AdminSideNavBar/>
                     </div>
                     <div className="col-sm-9">
+                        <AdminHeader />
                         {/*Notices Management Navigation Bar*/}
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <nav className="navbar navbar-expand-lg navbar-light bg-warning m-2">
                             <div className="container-fluid">
                                 <a className="navbar-brand" href="/adminStudentDashboard">Student Management</a>
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

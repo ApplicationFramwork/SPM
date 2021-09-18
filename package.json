@@ -40,13 +40,14 @@
     ]
   },
   "devDependencies": {
-    "axios": "^0.21.1",
-    "datatables.net": "^1.11.2",
-    "jquery": "^3.6.0",
-    "sweetalert2": "^11.1.5",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
-    "datatables.net-dt": "^1.10.24"
+    "axios": "^0.21.1",
+    "datatables.net": "^1.11.2",
+    "datatables.net-dt": "^1.10.24",
+    "jquery": "^3.6.0",
+    "react-calendar": "^3.4.0",
+    "sweetalert2": "^11.1.5"
   }
 }

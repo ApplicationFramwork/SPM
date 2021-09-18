@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import AdminSideNavBar from "./Admin-SideNavBar";
 import SchoolManagementSystemServices from "../services/SchoolManagementSystemServices";
 import axios from "axios";
+import AdminHeader from "./AdminHeader";
 const imageUrl = "http://localhost:8070/uploads/";
 class AdminStudentDashboard extends Component {
     constructor(props){
@@ -75,6 +76,7 @@ class AdminStudentDashboard extends Component {
         this.editGuardianMobileNumberHandler = this.editGuardianMobileNumberHandler.bind(this);
         this.editGuardianEmailHandler = this.editGuardianEmailHandler.bind(this);
     }
+
     //add student
     addStudent = (e) => {
         e.preventDefault();
@@ -321,7 +323,8 @@ class AdminStudentDashboard extends Component {
                         <AdminSideNavBar/>
                     </div>
                     <div className="col-sm-9">
-                        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <AdminHeader />
+                        <nav className="navbar navbar-expand-lg navbar-light bg-warning m-2">
                             <div className="container-fluid">
                                 <a className="navbar-brand" href="#">Student Management</a>
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -398,6 +401,7 @@ class AdminStudentDashboard extends Component {
                                                                                     <i className="fas fa-trash-alt"></i>&nbsp;
                                                                                     Delete
                                                                                 </button>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
