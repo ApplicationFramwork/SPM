@@ -128,7 +128,7 @@ router.route("/Deletelectures/:id/:filename").delete(async (req, res) => {
     let filename = req.params.filename;
     await lectureSlides.findByIdAndDelete(ID)
         .then(() => {
-            fs.unlink('C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/LectureSlides/' + filename, function (err) {
+            fs.unlink('C:/Users/JontyRulz/Desktop/backend/uploads/LectureSlides/' + filename, function (err) {
                 if (err) throw err;
                 console.log('File deleted!');
             });

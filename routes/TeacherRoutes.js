@@ -6,7 +6,7 @@ const fs = require('fs')
 const nodemailer = require('nodemailer')
 const exportUsersToExcel = require('./documents/exportService')
 const pdfTemplate = require('./documents/pdftemplate')
-const pdf = require('html-pdf');
+const pdf = require('html-pdf')
 
 //Credentials for mail sending
 let mailTransporter = nodemailer.createTransport({
@@ -178,7 +178,8 @@ router.route('/assgin/:id').put(async (req, res) => {
 })
 
 //update teacher with new image
-router.route('/update/:id/:picturename')
+router
+  .route('/update/:id/:picturename')
   .put(upload.single('profile_Picture'), (req, res) => {
     let TeacherID = req.params.id
     const {
@@ -204,8 +205,7 @@ router.route('/update/:id/:picturename')
       .then(() => {
         res.status(200).send({ status: 'Teacher Updated' })
         fs.unlink(
-          'C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/teachers/' +
-            picturename,
+          'C:/Users/JontyRulz/Desktop/backend/uploads/teachers' + picturename,
           function (err) {
             if (err) throw err
             console.log('File deleted!')
@@ -257,7 +257,7 @@ router.route('/Delete/:id/:filename').delete(async (req, res) => {
   await Teacher.findByIdAndDelete(teacherID)
     .then(() => {
       fs.unlink(
-        'C:/Users/JontyRulz/Desktop/SPM project/BACKEND/uploads/teachers/' +
+        'C:/Users/JontyRulz/Desktop/backend/uploads/teachers' +
           filename,
         function (err) {
           if (err) throw err
@@ -288,15 +288,17 @@ router.route('/print').post((req, res) => {
   exportUsersToExcel(teachers, workSheetColumnName, workSheetName, filePath)
 })
 router.post('/createpdf', (req, res) => {
-  pdf.create(pdfTemplate(req.body), {}).toFile('./routes/TeacherDetails.pdf', (err) => {
-    if (err) {
-      return console.log('error')
-    }
-    res.send(Promise.resolve())
-  })
+  pdf
+    .create(pdfTemplate(req.body), {})
+    .toFile('./routes/TeacherDetails.pdf', (err) => {
+      if (err) {
+        return console.log('error')
+      }
+      res.send(Promise.resolve())
+    })
 })
 router.get('/getpdf', (req, res) => {
-  res.sendFile(__dirname + '/TeacherDetails.pdf');
+  res.sendFile(__dirname + '/TeacherDetails.pdf')
 })
 
 module.exports = router
