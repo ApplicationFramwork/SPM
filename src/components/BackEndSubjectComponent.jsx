@@ -180,7 +180,7 @@ export default class BackEndSubjectComponent extends Component {
                                     </div>
                                     <div className="col-md-2">
                                         {/*Generate Report*/}
-                                        <button type="button" class="btn  btn-danger" data-toggle="modal" data-target="#datareport">
+                                        <button type="button" class="btn  btn-warning" data-toggle="modal" data-target="#datareport">
                                             Genarate Report 
                                         </button>
                                     </div>

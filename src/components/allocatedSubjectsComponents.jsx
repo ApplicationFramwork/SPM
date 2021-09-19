@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import jwt_decord from "jwt-decode";
 import service from '../services/SchoolManagementSystemServices'
 
 export default class allocatedSubjectsComponents extends Component {
@@ -6,9 +7,17 @@ export default class allocatedSubjectsComponents extends Component {
         super(props)
         this.state = {
             // view edit variables
-            viewTeacherDatabaseID: '6117e6a3f6cc893e0c6b5dea',
+            viewTeacherDatabaseID:  jwt_decord(localStorage.getItem("token")).id,
             viewTeacherSubjects: []
         }
+    }
+     //sign out
+    signout = (e) =>{
+        e.preventDefault();
+        localStorage.removeItem("token");
+        localStorage.clear();
+        console.log('helloo');
+        this.props.history.push('/');
     }
     //Get one Teacher
     componentDidMount() {
@@ -49,18 +58,12 @@ export default class allocatedSubjectsComponents extends Component {
                     </div>
                     <div class="mobile_nav_items">
                         <a href="/teacherDashboard"><i class="fas fa-desktop"></i><span>Dashboard</span></a>
-                        <a href="/"><i class="fas fa-user-graduate"></i><span>Students</span></a>
                         <a href="/allocatedSub"><i class="fa fa-book"></i><span>Subjects</span></a>
-                        <a href="/"><i class="fa fa-address-book"></i><span>Attendance</span></a>
-                        <a href="/"><i class="fas fa-tasks"></i><span>Notice</span></a>
                     </div>
                 </div>
                 <div class="sidebar">
                     <a href="/teacherDashboard"><i class="fas fa-desktop mt-4 mb-4"></i><span>Dashboard</span></a>
-                    <a href="/"><i class="fas fa-user-graduate mt-4 mb-4"></i><span>Student</span></a>
                     <a className="active" href="/allocatedSub"><i class="fa fa-book mt-4 mb-4"></i><span>Subjects</span></a>
-                    <a href="/"><i class="fa fa-address-book mt-4 mb-4"></i><span>Attendance</span></a>
-                    <a href="/"><i class="fas fa-tasks mt-4 mb-4"></i><span>Notice</span></a>
                 </div>
                 {/* end navbar */}
                 <div class="content mt-4" >

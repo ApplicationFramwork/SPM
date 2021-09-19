@@ -51,18 +51,14 @@ export default class backEndTeacherComponent extends Component {
     this.changeTeacherNameHandler = this.changeTeacherNameHandler.bind(this)
     this.changeTeacherEmailHandler = this.changeTeacherEmailHandler.bind(this)
     this.changeTeacherNICHandler = this.changeTeacherNICHandler.bind(this)
-    this.changeTeacherAllocatedGrade = this.changeTeacherAllocatedGrade.bind(
-      this,
-    )
-    this.changeTeacherDescriptionHandler = this.changeTeacherDescriptionHandler.bind(
-      this,
-    )
-    this.changeTeacherSubjectsHandler = this.changeTeacherSubjectsHandler.bind(
-      this,
-    )
-    this.changeTeacherProfilePictureHandler = this.changeTeacherProfilePictureHandler.bind(
-      this,
-    )
+    this.changeTeacherAllocatedGrade = this.changeTeacherAllocatedGrade.bind(this
+)
+    this.changeTeacherDescriptionHandler = this.changeTeacherDescriptionHandler.bind(this
+)
+    this.changeTeacherSubjectsHandler = this.changeTeacherSubjectsHandler.bind(this
+)
+    this.changeTeacherProfilePictureHandler = this.changeTeacherProfilePictureHandler.bind(this
+)
     //edit handlers
     this.EditChangeTeacherIDHandler = this.EditChangeTeacherIDHandler.bind(this)
     this.EditChangeTeacherNameHandler = this.EditChangeTeacherNameHandler.bind(
@@ -440,7 +436,7 @@ export default class backEndTeacherComponent extends Component {
                   <div className="col-md-2">
                     <button
                       type="button"
-                      class="btn  btn-danger"
+                      class="btn  btn-warning"
                       data-toggle="modal"
                       data-target="#datareport"
                     >
