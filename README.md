@@ -27,7 +27,11 @@ Node JS(Backend), React JS(Frontend), Express JS, MongoDB(Database), Node Mailer
 ### How to get started with your app
 
 **Prerequisites**
-Locally installed Node JS 
+
+Locally installed Node JS, React JS and Express JS | Valid User Account in MongoDB Atlas | Visual Studio Code or Webstorm(IDE's)
 
 **Procedure of setting up Prerequisites and run the project**
 
+1. Pull the source code from FINAL_FRONTEND and FINAL_BACKEND branches and open in preferred IDE
+2. In the Terminal give the command **npm install**
+3. When all the required dependencies installed successfully, run both frontend and backend by **npm start** command in the Terminal or simply click the run button next to start: nodemon in package.json files.
