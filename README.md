@@ -22,6 +22,7 @@ With the current pandemic, the School Management Systems plays a significant rol
 
 ### Technologies
 
+Node JS(Backend), React JS(Frontend), Express JS, MongoDB(Database), Node Mailer, JSON Web Token, Multer
 
 ### How to get started with your app
 
