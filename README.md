@@ -27,6 +27,7 @@ Node JS(Backend), React JS(Frontend), Express JS, MongoDB(Database), Node Mailer
 ### How to get started with your app
 
 **Prerequisites**
+Locally installed Node JS 
 
-**Procedure of setting up Prerequisites and run the project **
+**Procedure of setting up Prerequisites and run the project**
 
